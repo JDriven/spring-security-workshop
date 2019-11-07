@@ -1,6 +1,7 @@
 = Custom Access Decision Voter
 
 The goal of this workshop is to restrict access to spreadsheets based on the active user.
+
 The access permissions are stored in a repository; Up to you to verify access through a voter!
 
 == Solution

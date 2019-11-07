@@ -19,7 +19,7 @@
 		<module>audit-spring-data-entities</module>
 		<module>limit-spring-data-queries</module>
 		<module>permission-evaluator</module>
-		<module>spring-cloud-gateway-oidc-tokenrelay</module>
+		<!-- <module>spring-cloud-gateway-oidc-tokenrelay</module> -->
 	</modules>
 		<repositories>
 		<repository>

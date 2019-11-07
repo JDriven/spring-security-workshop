@@ -1,6 +1,7 @@
 = Auditing Spring Data Entities
 
 The goal of this workshop is to have JPA link BlogPosts to the correct Author, based on the active user.
+
 A first draft of the entities and repositories has been provided; Up to you to wire up auditing!
 
 == Solution

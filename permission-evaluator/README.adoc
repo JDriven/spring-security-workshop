@@ -1,6 +1,7 @@
 = Custom Permission Evaluator
 
 The goal of this workshop is to restrict access to spreadsheets based on the active user, with separate rights to read/write/print spreadsheets.
+
 The access permissions are stored in a repository; Up to you to verify access through a permission evaluator!
 
 == Solution

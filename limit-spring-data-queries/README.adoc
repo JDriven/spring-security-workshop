@@ -1,6 +1,7 @@
 = Securing Spring Data methods
 
 The goal of this workshop is to integrate Spring Data with Spring Security, such that we do not have to explicitly pass our active user as argument when retrieving user preferences.
+
 A PreferencesRepository has been provided with annotated methods containing placeholder security expressions;
 Up to you to implement these and have them checked by Spring Security.
 

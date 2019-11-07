@@ -1,0 +1,13 @@
+= Spring Security Workshop
+
+A collection of Spring Security 5.2+ challenges; Part of a https://blog.jdriven.com/category/security/[JDriven Spring Security blog series].
+
+The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
+While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.
+
+== Submodules
+
+- link:audit-spring-data-entities/README.adoc[Auditing Spring Data Entities]
+- link:limit-spring-data-queries/README.adoc[Securing Spring Data Queries]
+- link:access-decision-voter/README.adoc[Custom Access Decision Voter]
+- link:permission-evaluator/README.adoc[Custom Permission Evaluator]
