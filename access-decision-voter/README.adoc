@@ -4,9 +4,8 @@ The goal of this workshop is to restrict access to spreadsheets based on the act
 
 The access permissions are stored in a repository; Up to you to verify access through a voter!
 
-== Solution
-
-https://blog.jdriven.com/2019/10/spring-security-custom-access-decision-voter/
-
 == References
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#authz-voting-based[Voting-Based AccessDecisionManager Implementations]
+
+== Solution
+https://blog.jdriven.com/2019/10/spring-security-custom-access-decision-voter/
