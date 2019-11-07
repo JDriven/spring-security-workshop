@@ -1,0 +1,13 @@
+= Securing Spring Data methods
+
+The goal of this workshop is to integrate Spring Data with Spring Security, such that we do not have to explicitly pass our active user as argument when retrieving user preferences.
+A PreferencesRepository has been provided with annotated methods containing placeholder security expressions;
+Up to you to implement these and have them checked by Spring Security.
+
+== Solution
+
+https://blog.jdriven.com/2019/10/spring-security-securing-spring-data-methods/
+
+== References
+- https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#method-security-expressions[Method Security Expressions] +
+- https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#data-configuration[Spring Data & Spring Security Configuration] +
