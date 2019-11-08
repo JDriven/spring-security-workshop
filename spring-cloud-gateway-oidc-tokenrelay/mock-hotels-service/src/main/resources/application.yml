@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: hotels-service
+
+# TODO Configure token handling with Keycloak
+
+# Match gateway port & path
+server:
+  port: 8082
+  servlet:
+    context-path: /hotels/

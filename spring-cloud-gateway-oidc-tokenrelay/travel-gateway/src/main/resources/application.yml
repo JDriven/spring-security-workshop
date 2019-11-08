@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: travel-gateway
+
+  cloud:
+    gateway:
+      routes:
+      - id: httpbin
+        uri: https://httpbin.org
+        predicates:
+        - Path=/httpbin/**
+        filters:
+        - StripPrefix=1
+
+      - id: flights-service
+        uri: http://127.0.0.1:8081/flights
+        predicates:
+        - Path=/flights/**
+
+      - id: hotels-service
+        uri: http://127.0.0.1:8082/hotels
+        predicates:
+        - Path=/hotels/**
+
+# TODO Configure token forwarding
+
+# TODO Configure authentication through Keycloak
