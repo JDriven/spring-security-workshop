@@ -15,6 +15,7 @@ public class FlightsApplication {
 		SpringApplication.run(FlightsApplication.class, args);
 	}
 
+	//TODO: provide your user and a custom role and perform a custom role check here
 	@GetMapping("/")
 	public String getIndex() {
 		return "index";

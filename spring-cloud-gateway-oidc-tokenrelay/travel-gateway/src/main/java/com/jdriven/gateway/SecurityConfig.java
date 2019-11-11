@@ -9,18 +9,19 @@ import org.springframework.security.web.server.header.XFrameOptionsServerHttpHea
 @Configuration
 public class SecurityConfig {
 
-	@Bean
-	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-		// TODO Authenticate through configured OpenID Provider
-		// TODO Also logout at the OpenID Connect provider
+    @Bean
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        // TODO Authenticate through configured OpenID Provider
 
-		// Require authentication for all requests
-		http.authorizeExchange().anyExchange().authenticated();
-		// Allow showing /home within a frame
-		http.headers().frameOptions().mode(Mode.SAMEORIGIN);
-		// Disable CSRF in the gateway to prevent conflicts with proxied service CSRF
-		http.csrf().disable();
-		return http.build();
-	}
+        // TODO Configure logout to use the OpenID Connect specific success handler
+
+        // Require authentication for all requests
+        http.authorizeExchange().anyExchange().authenticated();
+        // Allow showing /home within a frame
+        http.headers().frameOptions().mode(Mode.SAMEORIGIN);
+        // Disable CSRF in the gateway to prevent conflicts with proxied service CSRF
+        http.csrf().disable();
+        return http.build();
+    }
 
 }

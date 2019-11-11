@@ -2,26 +2,39 @@ spring:
   application:
     name: travel-gateway
 
+  # TODO Configure token forwarding
   cloud:
     gateway:
       routes:
-      - id: httpbin
-        uri: https://httpbin.org
-        predicates:
-        - Path=/httpbin/**
-        filters:
-        - StripPrefix=1
+        # this route can be used to see how/if the token is send to the backend
+        # i.e. using curl -H "Cookie: <your_cookie>" http://localhost:8080/httpbin/test
+        - id: httpbin
+          uri: https://httpbin.org
+          predicates:
+          - Path=/httpbin/**
+          filters:
+          - StripPrefix=1
 
-      - id: flights-service
-        uri: http://127.0.0.1:8081/flights
-        predicates:
-        - Path=/flights/**
+        - id: flights-service
+          uri: http://127.0.0.1:8081/flights
+          predicates:
+          - Path=/flights/**
 
-      - id: hotels-service
-        uri: http://127.0.0.1:8082/hotels
-        predicates:
-        - Path=/hotels/**
+        - id: hotels-service
+          uri: http://127.0.0.1:8082/hotels
+          predicates:
+          - Path=/hotels/**
 
-# TODO Configure token forwarding
 
 # TODO Configure authentication through Keycloak
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+#            issuer-uri: TODO: what is the base-url of the keycloak part we want to use?
+#            user-name-attribute: TODO: find out the name of the claim best-suited as username in the JWT???
+        registration:
+          keycloak:
+            client-id: spring-cloud-gateway-client
+            client-secret: <your_secret>

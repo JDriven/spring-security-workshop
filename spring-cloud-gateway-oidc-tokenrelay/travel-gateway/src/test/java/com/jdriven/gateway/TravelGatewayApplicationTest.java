@@ -27,7 +27,8 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-@AutoConfigureWireMock(port = 8090)
+//TODO: add wire mock ('docker stop keycloak' before running)
+//@AutoConfigureWireMock(port = 8090)
 class TravelGatewayApplicationTest {
 	@Autowired
 	private WebTestClient client;

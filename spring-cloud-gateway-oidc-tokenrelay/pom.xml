@@ -9,7 +9,7 @@
 	<artifactId>spring-cloud-gateway-oidc-tokenrelay</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>travel-spring-cloud-gateway</module>
+		<module>travel-gateway</module>
 		<module>mock-flights-service</module>
 		<module>mock-hotels-service</module>
 	</modules>

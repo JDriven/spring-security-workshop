@@ -18,11 +18,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-		<!-- TokenRelayGatewayFilterFactory pending https://github.com/spring-cloud/spring-cloud-security/issues/175 -->
-		<dependency>
+
+		<!-- TODO: add this dependency to make the TokenRelay GatewayFilter available -->
+		<!--dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-security</artifactId>
-		</dependency>
+		</dependency-->
+		<!-- NOTE: TokenRelayGatewayFilterFactory does not yet refreshes the token
+			 pending https://github.com/spring-cloud/spring-cloud-security/issues/175 -->
+
 		<!-- Mock OpenID Connect server -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

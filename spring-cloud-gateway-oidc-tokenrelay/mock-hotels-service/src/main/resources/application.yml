@@ -2,9 +2,12 @@ spring:
   application:
     name: hotels-service
 
-# TODO Configure token handling with Keycloak
+  security:
+    oauth2:
+      resourceserver:
+      # TODO Configure resource server to handle token from Keycloak
 
-# Match gateway port & path
+# Match gateway route port & path
 server:
   port: 8082
   servlet:
