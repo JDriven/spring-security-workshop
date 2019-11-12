@@ -15,6 +15,7 @@
 		<java.version>11</java.version>
 	</properties>
 	<modules>
+		<module>adding-spring-security</module>
 		<module>access-decision-voter</module>
 		<module>audit-spring-data-entities</module>
 		<module>limit-spring-data-queries</module>

@@ -1,0 +1,22 @@
+= Adding Spring Security
+
+Adding Spring Security to an existing application can be quite a daunting prospect.
+Merely adding the required dependencies to your project sets off a chain of events which can break your application and tests.
+
+Maybe you're suddenly shown a login prompt which expects a generated password logged on startup. +
+Maybe your tests now get the dreaded `401 Unauthorized`, or a subsequently a `403 Forbidden`. +
+Maybe you get a `ClassCastException` when trying to use your `Authentication#getPrincipal()`. +
+So this should be fun!
+
+The goal of this workshop is to add Spring Security to an existing application.
+
+Imagine a Human Resources department that has a small application to track and approve/deny leave requests.
+Initially this application was only used from within the HR department, who received requests via phone or email.
+You can see the application in this state in `leaveapp-initial`, along with the current set of application tests.
+
+Now we want to open up this application to all employees, so they can view and file (only their own) leave requests themselves.
+Anyone from the HR department can then either approve or deny a leave request, and view all requests.
+Up to you to implement these requirements for this small application, starting from the commented out dependency.
+
+If you get stuck at any point, `leaveapp-complete` shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
+Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
