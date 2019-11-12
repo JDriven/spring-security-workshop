@@ -12,11 +12,20 @@ The goal of this workshop is to add Spring Security to an existing application.
 
 Imagine a Human Resources department that has a small application to track and approve/deny leave requests.
 Initially this application was only used from within the HR department, who received requests via phone or email.
-You can see the application in this state in `leaveapp-initial`, along with the current set of application tests.
+You can see the application in this state in link:leaveapp-initial/[leaveapp-initial], along with the current set of application tests.
 
 Now we want to open up this application to all employees, so they can view and file (only their own) leave requests themselves.
 Anyone from the HR department can then either approve or deny a leave request, and view all requests.
 Up to you to implement these requirements for this small application, starting from the commented out dependency.
 
-If you get stuck at any point, `leaveapp-complete` shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
+If you get stuck at any point, link:leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
+
+== References
+https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/oauth2.html#oauth2resourceserver[OAuth 2.0 Resource Server] +
+https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html[Authorization Chapter] +
+https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html#jc-method[Method Security] +
+https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/test.html[Testing Chapter] +
+
+== Solution
+link:leaveapp-complete/[leaveapp-complete]
