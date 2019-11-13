@@ -28,4 +28,5 @@ https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorizat
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/test.html[Testing Chapter] +
 
 == Solution
-link:leaveapp-complete/[leaveapp-complete]
+Complete example: link:leaveapp-complete/[leaveapp-complete]
+https://blog.jdriven.com/2019/11/Adding-Spring-Security/
