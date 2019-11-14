@@ -4,6 +4,9 @@ The goal of this workshop is to secure a gateway with OpenID, and have JSON Web 
 An OpenID provider, gateway and two backend services have been provided;
 Up to you to connect the gateway and backend services to Keycloak, and have the Gateway propagate tokens to the backend.
 
+This workshop requires an OpenID Connect provider, client and user to complete.
+We cover link:keycloak/README.adoc[Keycloak setup in our example].
+
 == References
 https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.0.RC1/reference/html/[Spring Cloud Gateway] +
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#oauth2login[OAuth 2.0 Login] +
