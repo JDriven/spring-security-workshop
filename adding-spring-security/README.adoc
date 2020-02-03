@@ -22,14 +22,14 @@ To save you from having to setup an OpenID Connect provider just yet, we've reco
 These recordings come from Keycloak, with setup covered in the link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect workshop].
 
 If you get stuck at any point, link:leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
+
+A gentler walk through of this assignement can be followed along to in https://blog.jdriven.com/2019/11/Adding-Spring-Security/[the accompanying blogpost].
+
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
 
 == References
+https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#hello-spring-security[Hello Spring Security] +
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/oauth2.html#oauth2resourceserver[OAuth 2.0 Resource Server] +
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html[Authorization Chapter] +
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html#jc-method[Method Security] +
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/test.html[Testing Chapter] +
-
-== Solution
-Complete example: link:leaveapp-complete/[leaveapp-complete]
-https://blog.jdriven.com/2019/11/Adding-Spring-Security/
