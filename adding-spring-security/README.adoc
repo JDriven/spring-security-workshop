@@ -18,9 +18,11 @@ Now we want to open up this application to all employees, so they can view and f
 Anyone from the HR department can then either approve or deny a leave request, and view all requests.
 Up to you to implement these requirements for this small application, starting from the commented out dependency.
 
+== Keycloak
 To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop, which you can link:leaveapp-complete/src/test/resources/README.adoc[replay with WireMock].
 These recordings come from Keycloak, with setup covered in the link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect workshop].
 
+== Getting help
 If you get stuck at any point, link:leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 
 A gentler walk through of this assignement can be followed along to in https://blog.jdriven.com/2019/11/Adding-Spring-Security/[the accompanying blogpost].

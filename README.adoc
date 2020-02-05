@@ -6,11 +6,13 @@ and closely linked to the https://github.com/timtebeek/spring-security-samples[S
 The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
 While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.
 
+NOTE: If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
+
 == Submodules
 
-link:adding-spring-security/README.adoc[Adding Spring Security] +
-link:audit-spring-data-entities/README.adoc[Auditing Spring Data Entities] +
-link:limit-spring-data-queries/README.adoc[Securing Spring Data Queries] +
-link:access-decision-voter/README.adoc[Custom Access Decision Voter] +
-link:permission-evaluator/README.adoc[Custom Permission Evaluator] +
-link:spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect and TokenRelay] +
+. link:adding-spring-security/README.adoc[Adding Spring Security]
+. link:audit-spring-data-entities/README.adoc[Auditing Spring Data Entities]
+. link:limit-spring-data-queries/README.adoc[Securing Spring Data Queries]
+. link:access-decision-voter/README.adoc[Custom Access Decision Voter]
+. link:permission-evaluator/README.adoc[Custom Permission Evaluator]
+. link:spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect and TokenRelay]
