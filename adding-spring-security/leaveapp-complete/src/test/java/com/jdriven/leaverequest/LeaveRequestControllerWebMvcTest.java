@@ -42,7 +42,7 @@ class LeaveRequestControllerWebMvcTest {
 		when(service.request(anyString(), any(), any()))
 				.thenReturn(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.PENDING));
 		mockmvc.perform(post("/request/{employee}", "Alice")
-				.with(jwt(builder -> builder.subject("Alice")))
+				.with(jwt().jwt(builder -> builder.subject("Alice")))
 				.param("from", "2019-11-30")
 				.param("to", "2019-12-03"))
 				.andExpect(status().isAccepted())
@@ -87,7 +87,7 @@ class LeaveRequestControllerWebMvcTest {
 		when(service.retrieve(any()))
 				.thenReturn(Optional.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
 		mockmvc.perform(get("/view/id/{id}", UUID.randomUUID())
-				.with(jwt(builder -> builder.subject("Alice"))))
+				.with(jwt().jwt(builder -> builder.subject("Alice"))))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.employee").value("Alice"))
@@ -106,7 +106,7 @@ class LeaveRequestControllerWebMvcTest {
 		when(service.retrieveFor("Alice"))
 				.thenReturn(List.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
 		mockmvc.perform(get("/view/employee/{employee}", "Alice")
-				.with(jwt(builder -> builder.subject("Alice"))))
+				.with(jwt().jwt(builder -> builder.subject("Alice"))))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].employee").value("Alice"))
