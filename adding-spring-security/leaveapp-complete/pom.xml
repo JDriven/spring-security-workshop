@@ -7,9 +7,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>leaveapp-complete</artifactId>
-	<properties>
-		<spring-cloud.version>Hoxton.SR11</spring-cloud.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -45,7 +42,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<version>2020.0.3</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
