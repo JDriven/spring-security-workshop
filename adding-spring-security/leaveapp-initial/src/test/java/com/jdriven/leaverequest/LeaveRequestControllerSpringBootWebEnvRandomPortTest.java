@@ -44,6 +44,11 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 	@Nested
 	class AuthorizeUser {
 
+		@BeforeEach
+		void beforeEach() {
+			// TODO Ensure below requests are executed as user alice
+		}
+
 		@Test
 		void testRequest() {
 			LocalDate from = of(2019, 11, 30);
@@ -86,6 +91,11 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 	@Nested
 	class AuthorizeRole {
+
+		@BeforeEach
+		void beforeEach() {
+			// TODO Ensure below requests are executed as user with role HR
+		}
 
 		@Test
 		void testApprove() {

@@ -73,10 +73,12 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 					.andExpect(jsonPath("$[0].employee").value("Alice"))
 					.andExpect(jsonPath("$[0].status").value("APPROVED"));
 		}
+
 	}
 
 	@Nested
 	class AuthorizeRole {
+
 		@Test
 		void testApprove() throws Exception {
 			LeaveRequest saved = repository
@@ -124,5 +126,7 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 					.andExpect(jsonPath("$[0].employee").value("Alice"))
 					.andExpect(jsonPath("$[0].status").value("APPROVED"));
 		}
+
 	}
+
 }

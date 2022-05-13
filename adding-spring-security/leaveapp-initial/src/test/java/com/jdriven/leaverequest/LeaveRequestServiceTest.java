@@ -27,16 +27,19 @@ class LeaveRequestServiceTest {
 
 	@Nested
 	class AuthorizeUser {
+
 		@Test
 		// XXX Authenticate as Alice when making this request
 		void testRequest() {
 			LeaveRequest leaveRequest = service.request("Alice", of(2019, 11, 30), of(2019, 12, 03));
 			verify(repository).save(leaveRequest);
 		}
+
 	}
 
 	@Nested
 	class AuthorizeRole {
+
 		@Test
 		// XXX Authenticate with HR role when making this request
 		void testApprove() {
@@ -60,5 +63,7 @@ class LeaveRequestServiceTest {
 			assertThat(denied).get().isSameAs(saved);
 			assertThat(denied.get().getStatus()).isSameAs(DENIED);
 		}
+
 	}
+
 }
