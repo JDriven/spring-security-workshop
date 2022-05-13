@@ -2,6 +2,7 @@ package com.jdriven.leaverequest;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,33 +25,45 @@ class LeaveRequestServiceTest {
 	@Autowired
 	private LeaveRequestService service;
 
-	@Test
-	// XXX Authenticate as Alice when making this request
-	void testRequest() {
-		LeaveRequest leaveRequest = service.request("Alice", of(2019, 11, 30), of(2019, 12, 03));
-		verify(repository).save(leaveRequest);
+	@Nested
+	class AuthorizeUser {
+
+		@Test
+		// XXX Authenticate as Alice when making this request
+		void testRequest() {
+			LeaveRequest leaveRequest = service.request("Alice", of(2019, 11, 30), of(2019, 12, 03));
+			verify(repository).save(leaveRequest);
+		}
+
 	}
 
-	@Test
-	// XXX Authenticate with HR role when making this request
-	void testApprove() {
-		LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 03), PENDING));
-		Optional<LeaveRequest> approved = service.approve(saved.getId());
-		verify(repository).findById(saved.getId());
-		assertThat(approved).isPresent();
-		assertThat(approved).get().isSameAs(saved);
-		assertThat(approved.get().getStatus()).isSameAs(APPROVED);
-	}
+	@Nested
+	class AuthorizeRole {
 
-	@Test
-	// XXX Authenticate with HR role when making this request
-	void testDeny() {
-		LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 03), PENDING));
-		Optional<LeaveRequest> denied = service.deny(saved.getId());
-		verify(repository).findById(saved.getId());
-		assertThat(denied).isPresent();
-		assertThat(denied).get().isSameAs(saved);
-		assertThat(denied.get().getStatus()).isSameAs(DENIED);
+		@Test
+		// XXX Authenticate with HR role when making this request
+		void testApprove() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 03), PENDING));
+			Optional<LeaveRequest> approved = service.approve(saved.getId());
+			verify(repository).findById(saved.getId());
+			assertThat(approved).isPresent();
+			assertThat(approved).get().isSameAs(saved);
+			assertThat(approved.get().getStatus()).isSameAs(APPROVED);
+		}
+
+		@Test
+		// XXX Authenticate with HR role when making this request
+		void testDeny() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 03), PENDING));
+			Optional<LeaveRequest> denied = service.deny(saved.getId());
+			verify(repository).findById(saved.getId());
+			assertThat(denied).isPresent();
+			assertThat(denied).get().isSameAs(saved);
+			assertThat(denied.get().getStatus()).isSameAs(DENIED);
+		}
+
 	}
 
 }
