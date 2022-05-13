@@ -5,7 +5,7 @@ The goal of this workshop is to restrict access to spreadsheets based on the act
 The access permissions are stored in a repository; Up to you to verify access through a permission evaluator!
 
 == References
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#el-permission-evaluator[The PermissionEvaluator interface]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/expression-based.html#el-permission-evaluator[The PermissionEvaluator interface]
 
 == Solution
-https://blog.jdriven.com/2019/10/spring-security-custom-permission-evaluator/
+https://github.com/timtebeek/spring-security-samples/tree/master/permission-evaluator

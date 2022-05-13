@@ -30,8 +30,8 @@ A gentler walk through of this assignement can be followed along to in https://b
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
 
 == References
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#hello-spring-security[Hello Spring Security] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/oauth2.html#oauth2resourceserver[OAuth 2.0 Resource Server] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html[Authorization Chapter] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html#jc-method[Method Security] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/test.html[Testing Chapter] +
+- https://docs.spring.io/spring-security/reference/servlet/getting-started.html[Hello Spring Security]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/index.html[Authorization Chapter]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/method-security.html[Method Security]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/test/index.html[Testing Chapter]
