@@ -2,8 +2,6 @@ package com.jdriven.leaverequest;
 
 import java.util.UUID;
 
-import com.jdriven.leaverequest.LeaveRequest;
-import com.jdriven.leaverequest.LeaveRequestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.jdriven.leaverequest.LeaveRequest.Status.APPROVED;
 import static com.jdriven.leaverequest.LeaveRequest.Status.PENDING;
 import static java.time.LocalDate.of;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,9 +42,9 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 		@Test
 		void testRequest() throws Exception {
 			mockmvc.perform(post("/request/{employee}", "Alice")
-							// XXX Authenticate as Alice when making this request
-							.param("from", "2019-11-30")
-							.param("to", "2019-12-03"))
+					// XXX Authenticate as Alice when making this request
+					.param("from", "2019-11-30")
+					.param("to", "2019-12-03"))
 					.andExpect(status().isAccepted())
 					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 					.andExpect(jsonPath("$.employee").value("Alice"))
