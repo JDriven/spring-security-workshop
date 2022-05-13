@@ -19,12 +19,13 @@ Anyone from the HR department can then either approve or deny a leave request, a
 Up to you to implement these requirements for this small application, starting from the commented out dependency.
 
 == Mock Keycloak
-To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop Follow link:leaveapp-complete/src/test/resources/README.adoc[these] instructions to run WireMock.
+To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop.
+link:leaveapp-complete/src/test/resources/README.adoc[Follow these instructions to run WireMock].
 These recordings come from Keycloak, with setup covered in the link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect workshop].
 
 == Getting things done
-* Read link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#what-happens-when-you-add-the-dependency[What happens when you add the dependency?] and add the Spring Security dependencies to the project in the link:pom.xml[pom].
-* link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AutoriseUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
+* Read link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#what-happens-when-you-add-the-dependency[What happens when you add the dependency?] and add the Spring Security dependencies to the project in the link:pom.xml[pom.xml].
+* link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AuthoriseUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
 
 Now we have secured the application on a user level, but what about roles?
 
@@ -36,20 +37,19 @@ If you get stuck at any point, link:leaveapp-complete/[leaveapp-complete] shows 
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
 
 == What's next?
-Congratulations, you have it all fixed! 🥳
+Congratulations, you solved the first challenge! 🥳
 
-We have additional modules for you. You can choose from:
+You can now choose to:
 
-* link:../audit-spring-data-entities/README.adoc[Auditing Spring Data Entities]
-* link:../limit-spring-data-queries/README.adoc[Securing Spring Data Queries]
-* link:../access-decision-voter/README.adoc[Custom Access Decision Voter]
-* link:../permission-evaluator/README.adoc[Custom Permission Evaluator]
-* link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect and TokenRelay]
-
+* link:../audit-spring-data-entities/README.adoc[automatically track who modifies an entry, and when]
+* link:../limit-spring-data-queries/README.adoc[limit your query results to the active user]
+* link:../access-decision-voter/README.adoc[restrict which users can access what objects]
+* link:../permission-evaluator/README.adoc[separate read and write permissions on objects]
+* link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[route requests through a gateway]
 
 == References
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#hello-spring-security[Hello Spring Security] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/oauth2.html#oauth2resourceserver[OAuth 2.0 Resource Server] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html[Authorization Chapter] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/authorization.html#jc-method[Method Security] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/html/test.html[Testing Chapter] +
+- https://docs.spring.io/spring-security/reference/servlet/getting-started.html[Hello Spring Security]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/index.html[Authorization Chapter]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/method-security.html[Method Security]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/test/index.html[Testing Chapter]
