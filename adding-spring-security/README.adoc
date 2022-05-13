@@ -41,11 +41,11 @@ Congratulations, you solved the first challenge! 🥳
 
 You can now choose to:
 
-* link:../audit-spring-data-entities/README.adoc[automatically track who modifies an entry, and when]
-* link:../limit-spring-data-queries/README.adoc[limit your query results to the active user]
-* link:../access-decision-voter/README.adoc[restrict which users can access what objects]
-* link:../permission-evaluator/README.adoc[separate read and write permissions on objects]
-* link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[route requests through a gateway]
+* link:../audit-spring-data-entities/[automatically track who modifies an entry, and when]
+* link:../limit-spring-data-queries/[limit your query results to the active user]
+* link:../access-decision-voter/[restrict which users can access what objects]
+* link:../permission-evaluator/[separate read and write permissions on objects]
+* link:../spring-cloud-gateway-oidc-tokenrelay/[route requests through a gateway]
 
 == References
 - https://docs.spring.io/spring-security/reference/servlet/getting-started.html[Hello Spring Security]
