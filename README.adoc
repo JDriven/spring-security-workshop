@@ -11,9 +11,9 @@ NOTE: If you are new to Spring Security, start with link:adding-spring-security/
 
 == Submodules
 
-. link:adding-spring-security/README.adoc[Adding Spring Security]
-. link:audit-spring-data-entities/README.adoc[Auditing Spring Data Entities]
-. link:limit-spring-data-queries/README.adoc[Securing Spring Data Queries]
-. link:access-decision-voter/README.adoc[Custom Access Decision Voter]
-. link:permission-evaluator/README.adoc[Custom Permission Evaluator]
-. link:spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect and TokenRelay]
+. link:adding-spring-security/[Adding Spring Security]
+. link:audit-spring-data-entities/[Auditing Spring Data Entities]
+. link:limit-spring-data-queries/[Securing Spring Data Queries]
+. link:access-decision-voter/[Custom Access Decision Voter]
+. link:permission-evaluator/[Custom Permission Evaluator]
+. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]
