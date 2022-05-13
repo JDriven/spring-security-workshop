@@ -1,6 +1,6 @@
 = Spring Security Workshop
 
-A collection of Spring Security 5.2+ challenges; Part of a https://blog.jdriven.com/category/spring-security/[JDriven Spring Security blog series],
+A collection of Spring Security 5.2+ challenges; Part of a https://github.com/timtebeek/spring-security-samples[Spring Security blog series],
 and closely linked to the https://github.com/timtebeek/spring-security-samples[Spring Security Samples repository].
 
 The project is divided into separate submodules, each of which demonstrates a single feature in isolation.

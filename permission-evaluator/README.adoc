@@ -8,4 +8,4 @@ The access permissions are stored in a repository; Up to you to verify access th
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#el-permission-evaluator[The PermissionEvaluator interface]
 
 == Solution
-https://blog.jdriven.com/2019/10/spring-security-custom-permission-evaluator/
+https://github.com/timtebeek/spring-security-samples/tree/master/permission-evaluator

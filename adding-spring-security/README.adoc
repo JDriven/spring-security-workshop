@@ -18,16 +18,34 @@ Now we want to open up this application to all employees, so they can view and f
 Anyone from the HR department can then either approve or deny a leave request, and view all requests.
 Up to you to implement these requirements for this small application, starting from the commented out dependency.
 
-== Keycloak
-To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop, which you can link:leaveapp-complete/src/test/resources/README.adoc[replay with WireMock].
+== Mock Keycloak
+To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop Follow link:leaveapp-complete/src/test/resources/README.adoc[these] instructions to run WireMock.
 These recordings come from Keycloak, with setup covered in the link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect workshop].
 
-== Getting help
+== Getting things done
+* Read link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#what-happens-when-you-add-the-dependency[What happens when you add the dependency?] and add the Spring Security dependencies to the project in the link:pom.xml[pom].
+* link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AutoriseUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
+
+Now we have secured the application on a user level, but what about roles?
+
+* Read about link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#roles-and-authorizations[authorization on role level] and apply the suggested changes in the application.
+* link:https://github.com/timtebeek/spring-security-samples/blob/master/adding-spring-security/README.adoc#fixing-our-tests-part-2[Fix the role authorization tests] in the `AuthorizeRole` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
+
 If you get stuck at any point, link:leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 
-A gentler walk through of this assignement can be followed along to in https://blog.jdriven.com/2019/11/Adding-Spring-Security/[the accompanying blogpost].
-
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
+
+== What's next?
+Congratulations, you have it all fixed! 🥳
+
+We have additional modules for you. You can choose from:
+
+* link:../audit-spring-data-entities/README.adoc[Auditing Spring Data Entities]
+* link:../limit-spring-data-queries/README.adoc[Securing Spring Data Queries]
+* link:../access-decision-voter/README.adoc[Custom Access Decision Voter]
+* link:../permission-evaluator/README.adoc[Custom Permission Evaluator]
+* link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect and TokenRelay]
+
 
 == References
 https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#hello-spring-security[Hello Spring Security] +
