@@ -8,10 +8,9 @@ This workshop requires an OpenID Connect provider, client and user to complete.
 We cover link:keycloak/README.adoc[Keycloak setup in our example].
 
 == References
-https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.0.RC1/reference/html/[Spring Cloud Gateway] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#oauth2login[OAuth 2.0 Login] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#oauth2resourceserver[OAuth 2.0 Resource Server] +
-https://cloud.spring.io/spring-cloud-static/spring-cloud-security/2.2.0.M3/reference/html/[Spring Cloud Security] +
+- https://cloud.spring.io/spring-cloud-gateway/reference/html/[Spring Cloud Gateway]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/oauth2/login/core.html[OAuth 2.0 Login]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
 
 == Solution
-https://blog.jdriven.com/2019/11/spring-cloud-gateway-with-openid-connect-and-token-relay/
+https://github.com/timtebeek/spring-security-samples/tree/master/spring-cloud-gateway-oidc-tokenrelay

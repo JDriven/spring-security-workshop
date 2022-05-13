@@ -6,8 +6,8 @@ A PreferencesRepository has been provided with annotated methods containing plac
 Up to you to implement these and have them checked by Spring Security.
 
 == References
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#method-security-expressions[Method Security Expressions] +
-https://docs.spring.io/spring-security/site/docs/5.2.x/reference/htmlsingle/#data-configuration[Spring Data & Spring Security Configuration] +
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/authorization/expression-based.html#_method_security_expressions[Method Security Expressions]
+- https://docs.spring.io/spring-security/reference/5.6.3/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
 
 == Solution
-https://blog.jdriven.com/2019/10/spring-security-securing-spring-data-methods/
+https://github.com/timtebeek/spring-security-samples/tree/master/limit-spring-data-queries
