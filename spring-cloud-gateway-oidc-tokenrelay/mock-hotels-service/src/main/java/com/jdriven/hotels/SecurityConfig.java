@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// TODO Validate tokens through configured OpenID Provider (also requires application.yml changes)
 
 		// Require authentication for all requests
@@ -31,40 +31,42 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	// this part configures the extraction of custom roles from the JWT
-
-	//TODO: configure the use of this converter
-	static class KeycloakRealmRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
-		@Override
-		public Collection<GrantedAuthority> convert(Jwt jwt) {
-			// TODO Convert realm_access.roles claims to granted authorities, for further use in access decisions (RBAC)
-			return Collections.emptyList();
-		}
-	}
-
-	// this part configures the extraction of the username from the JWT
-
 	@Bean
-	public JwtDecoder jwtDecoderByIssuerUri(OAuth2ResourceServerProperties properties) {
+	JwtDecoder jwtDecoderByIssuerUri(OAuth2ResourceServerProperties properties) {
 		String issuerUri = properties.getJwt().getIssuerUri();
 		NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder) JwtDecoders.fromIssuerLocation(issuerUri);
 		jwtDecoder.setClaimSetConverter(new UsernameSubClaimAdapter());
 		return jwtDecoder;
 	}
 
-	static class UsernameSubClaimAdapter implements Converter<Map<String, Object>, Map<String, Object>> {
+}
 
-		private final MappedJwtClaimSetConverter delegate = MappedJwtClaimSetConverter
-				.withDefaults(Collections.emptyMap());
+// this part configures the extraction of custom roles from the JWT
 
-		@Override
-		public Map<String, Object> convert(Map<String, Object> claims) {
-			Map<String, Object> convertedClaims = this.delegate.convert(claims);
-			//TODO: manually map another claim to sub to prevent the user UUID being used as authentication name
-			convertedClaims.put("sub", convertedClaims.get("sub"));
-			return convertedClaims;
-		}
+//TODO: configure the use of this converter
+class KeycloakRealmRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
+	@Override
+	public Collection<GrantedAuthority> convert(Jwt jwt) {
+		// TODO Convert realm_access.roles claims to granted authorities, for further use in access decisions (RBAC)
+		return Collections.emptyList();
+	}
+
+}
+
+// this part configures the extraction of the username from the JWT
+
+class UsernameSubClaimAdapter implements Converter<Map<String, Object>, Map<String, Object>> {
+
+	private final MappedJwtClaimSetConverter delegate = MappedJwtClaimSetConverter
+			.withDefaults(Collections.emptyMap());
+
+	@Override
+	public Map<String, Object> convert(Map<String, Object> claims) {
+		Map<String, Object> convertedClaims = this.delegate.convert(claims);
+		//TODO: manually map another claim to sub to prevent the user UUID being used as authentication name
+		convertedClaims.put("sub", convertedClaims.get("sub"));
+		return convertedClaims;
 	}
 
 }
