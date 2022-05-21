@@ -10,7 +10,7 @@ import org.springframework.security.web.server.header.XFrameOptionsServerHttpHea
 public class SecurityConfig {
 
 	@Bean
-	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 		// TODO Authenticate through configured OpenID Provider
 
 		// TODO Configure logout to use the OpenID Connect specific success handler
