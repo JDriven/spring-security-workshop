@@ -6,7 +6,7 @@ A PreferencesRepository has been provided with annotated methods containing plac
 Up to you to implement these and have them checked by Spring Security.
 
 == Getting things done
-* link:https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#entities--repositories[PreAuthorize, PostAuthorize and configure] the application enabling the user to save and find preferences by id
+* https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#entities--repositories[PreAuthorize, PostAuthorize and configure] the application enabling the user to save and find preferences by id
 * Now make sure only the link:https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#limit-query-result[preferences are returned] for the authorized user
 * link:src/test/java/com/jdriven/PreferencesRepositoryIntegrationTest.java[Run the tests] to verify your implementation
 
