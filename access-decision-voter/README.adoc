@@ -4,6 +4,11 @@ The goal of this workshop is to restrict access to spreadsheets based on the act
 
 The access permissions are stored in a repository; Up to you to verify access through a voter!
 
+== Getting things done
+* First we are going to add a `SpreadsheetAccessDecisionVoter` to the application as described link:https://github.com/timtebeek/spring-security-samples/tree/main/access-decision-voter#accessdecisionvoter[here]. We'll complete the implementation of the `hasSpreadsheetAccess` method in step 3.
+* Now we have to configure the application properly, so the voter will be picked up by the configuration as described link:https://github.com/timtebeek/spring-security-samples/tree/main/access-decision-voter#configuration[here]
+* Now we go back to our `SpreadsheetAccessDecisionVoter` and implement the `hasSpreadsheetAccess` method so our test will succeed.Don't forget to make use of the link:src/main/java/com/jdriven/access/SpreadsheetAccessStore.java[access store] to verify the access. Some hints can be found link:https://github.com/timtebeek/spring-security-samples/tree/main/access-decision-voter#tests[here]
+
 == References
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/architecture.html#authz-voter-adaptation[AuthorizationManager]
 
