@@ -4,6 +4,11 @@ The goal of this workshop is to have JPA link BlogPosts to the correct Author, b
 
 A first draft of the entities and repositories has been provided; Up to you to wire up auditing!
 
+== Getting things done
+* Make sure the entities are link:https://github.com/timtebeek/spring-security-samples/tree/main/audit-spring-data-entities#entities--repositories[auditable with the `AuditingEntityListener`]
+* Add proper configuration to link:https://github.com/timtebeek/spring-security-samples/tree/main/audit-spring-data-entities#enable-jpa-auditing[authorize the author to post a blog]
+* Verify you implementation by link:src/test/java/com/jdriven/AuditSecurityConfigurationTest.java[running the tests]
+
 == References
 - https://docs.spring.io/spring-data/jpa/docs/2.7.x/reference/html/#auditing[Spring Data JPA Reference on Auditing]
 
