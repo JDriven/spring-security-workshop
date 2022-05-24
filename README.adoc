@@ -17,3 +17,14 @@ NOTE: If you are new to Spring Security, start with link:adding-spring-security/
 . link:access-decision-voter/[Custom Access Decision Voter]
 . link:permission-evaluator/[Custom Permission Evaluator]
 . link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]
+
+== Requirements
+
+In order to participate, you will need the following:
+
+- Basic Spring knowledge
+- Java 11, or 17
+- IDE of your choice
+- https://projectlombok.org/[Lombok IDE plugin]
+
+TIP: Use https://sdkman.io/ to easily install Java.
