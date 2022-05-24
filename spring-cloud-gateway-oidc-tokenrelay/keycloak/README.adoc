@@ -8,7 +8,7 @@ We use keycloak as our OpenID Connect provider. To set it up:
 2. Open http://localhost:8090 and login with username `admin` and password `Pa55w0rd`.
 3. Add a new realm named `spring-cloud-gateway-realm`.
 4. Import `realm-export.json`, with `If a resource exists: Skip`.
-5. On the `spring-cloud-gateway-client` client Credentials tab, `Regenerate Secret` and store value in gateway `application.yml`.
+5. On the `spring-cloud-gateway-client` client Credentials tab, `Regenerate Secret` and replace `<your secret> in link:../travel-gateway/src/main/resources/application.yml[`application.yml`] with generated secret.
 6. Add a new user with username `spring-cloud-gateway-user`.
 7. Under credentials set user password to `password` with `Temporary: OFF`.
 
