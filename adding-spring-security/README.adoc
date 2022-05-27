@@ -25,7 +25,7 @@ These recordings come from Keycloak, with setup covered in the link:../spring-cl
 
 == Getting things done
 * Read link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#what-happens-when-you-add-the-dependency[What happens when you add the dependency?] and add the Spring Security dependencies to the project in the link:pom.xml[pom.xml].
-* link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AuthoriseUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
+* link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AuthorizeUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
 
 Now we have secured the application on a user level, but what about roles?
 
