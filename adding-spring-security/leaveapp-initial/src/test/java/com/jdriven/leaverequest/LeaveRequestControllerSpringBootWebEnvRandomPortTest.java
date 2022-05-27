@@ -68,8 +68,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 		void testViewId() {
 			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
 			// XXX Authenticate as Alice when making this request
-			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/approve/{id}", null,
-					LeaveRequestDTO.class, saved.getId());
+			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/id/{id}", LeaveRequestDTO.class, saved.getId());
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("Alice");
