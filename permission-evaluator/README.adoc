@@ -14,4 +14,4 @@ The access permissions are stored in a repository; Up to you to verify access th
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/expression-based.html#el-permission-evaluator[The PermissionEvaluator interface]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/master/permission-evaluator
+https://github.com/timtebeek/spring-security-samples/tree/main/permission-evaluator
