@@ -51,8 +51,8 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testRequest() {
-			LocalDate from = of(2019, 11, 30);
-			LocalDate to = of(2019, 12, 3);
+			LocalDate from = of(2022, 11, 30);
+			LocalDate to = of(2022, 12, 3);
 			// XXX Authenticate as Alice when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/request/{employee}?from={from}&to={to}",
 					null, LeaveRequestDTO.class, "Alice", from, to);
@@ -66,7 +66,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testViewId() {
-			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
+			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate as Alice when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/id/{id}", LeaveRequestDTO.class, saved.getId());
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
@@ -77,7 +77,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testViewEmployee() {
-			repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
+			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate as Alice when making this request
 			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/employee/{employee}", GET, null,
 					TYPE_REFERENCE, "Alice");
@@ -98,7 +98,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testApprove() {
-			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
+			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/approve/{id}", null,
 					LeaveRequestDTO.class, saved.getId());
@@ -118,7 +118,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testDeny() {
-			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
+			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/deny/{id}", null,
 					LeaveRequestDTO.class, saved.getId());
@@ -138,7 +138,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
 		@Test
 		void testViewAll() {
-			repository.save(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), PENDING));
+			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/all", GET, null, TYPE_REFERENCE);
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
