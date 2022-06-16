@@ -23,10 +23,10 @@ The application exposes a REST API, which you can access with either `httpie` or
 [source,bash]
 ----
 # Create a leave request for a specific user and time window
-http POST ':8080/request/tim?from=2022-08-21&to=2022-09-11'
+http POST ':8080/request/alice?from=2022-08-21&to=2022-09-11'
 
 # View leave requests for employee
-http :8080/view/employee/tim
+http :8080/view/employee/alice
 
 # Approve leave request
 http POST :8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
@@ -45,10 +45,10 @@ http :8080/view/all
 [source,bash]
 ----
 # Create a leave request for a specific user and time window
-curl -X POST 'http://localhost:8080/request/tim?from=2022-08-21&to=2022-09-11'
+curl -X POST 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
 
 # View leave requests for employee
-curl http://localhost:8080/view/employee/tim
+curl http://localhost:8080/view/employee/alice
 
 # Approve leave request
 curl -X POST http://localhost:8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
