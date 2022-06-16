@@ -17,4 +17,5 @@ jobs:
       run: ./mvnw -B test-compile --file pom.xml
     - name: Adding Spring Security tests
       run: ./mvnw -B verify --file adding-spring-security/pom.xml
-      
+    - name: Spotless Check
+      run: ./mvnw -B spotless:check
