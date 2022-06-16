@@ -10,14 +10,12 @@ While submodules can be combined to form a larger solution, we thought separatin
 
 == Submodules
 
-NOTE: If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
-
-. link:adding-spring-security/[Adding Spring Security]
-. link:audit-spring-data-entities/[Auditing Spring Data Entities]
-. link:limit-spring-data-queries/[Securing Spring Data Queries]
-. link:access-decision-voter/[Custom Access Decision Voter]
-. link:permission-evaluator/[Custom Permission Evaluator]
-. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]
+. link:adding-spring-security/[Adding Spring Security]: Secure an existing application.
+. link:audit-spring-data-entities/[Auditing Spring Data Entities]: Automatically track who modifies an entry, and when.
+. link:limit-spring-data-queries/[Securing Spring Data Queries]: Limit your query results to the active user.
+. link:access-decision-voter/[Custom Access Decision Voter]: Restrict which users can access what objects.
+. link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
+. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
 
 == Requirements
 
@@ -27,5 +25,20 @@ In order to participate, you will need the following:
 - Java 11, or 17
 - IDE of your choice
 - https://projectlombok.org/[Lombok IDE plugin]
+- `https://curl.se/[curl]` or `https://httpie.io/[httpie]`
 
 TIP: Use https://sdkman.io/ to easily install Java.
+
+== Getting started
+
+1. Clone this Git repository
+
+  git clone https://github.com/timtebeek/spring-security-workshop.git
+
+2. Verify the tests for adding-spring-security
+
+  ./mvnw -B verify --file adding-spring-security/pom.xml
+
+3. If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
+
+4. Once you have completed the basics, continue with any of the other modules.
