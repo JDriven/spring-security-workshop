@@ -6,14 +6,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.jdriven.leaverequest.LeaveRequest.Status;
-
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LeaveRequestService {
+class LeaveRequestService {
 
 	private final LeaveRequestRepository repo;
 

@@ -52,10 +52,10 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 		}
 
 		@Test
-		void testViewId() throws Exception {
+		void testViewRequest() throws Exception {
 			LeaveRequest saved = repository
 					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED));
-			mockmvc.perform(get("/view/id/{id}", saved.getId()))
+			mockmvc.perform(get("/view/request/{id}", saved.getId()))
 					// XXX Authenticate as Alice when making this request
 					.andExpect(status().isOk())
 					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -110,8 +110,8 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 		}
 
 		@Test
-		void testViewIdMissing() throws Exception {
-			mockmvc.perform(get("/view/id/{id}", UUID.randomUUID()))
+		void testViewRequestMissing() throws Exception {
+			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
 					// XXX Authenticate with HR role when making this request
 					.andExpect(status().isNoContent());
 		}

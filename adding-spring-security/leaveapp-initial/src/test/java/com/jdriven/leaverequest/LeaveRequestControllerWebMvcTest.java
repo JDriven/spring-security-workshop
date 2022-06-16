@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.jdriven.leaverequest.LeaveRequest.Status;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +49,12 @@ class LeaveRequestControllerWebMvcTest {
 		}
 
 		@Test
-		void testViewId() throws Exception {
+		void testViewRequest() throws Exception {
 			when(service.retrieve(any()))
 					.thenReturn(
 							Optional.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), Status.APPROVED)));
 			// XXX Authenticate as Alice when making this request
-			mockmvc.perform(get("/view/id/{id}", UUID.randomUUID()))
+			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 					.andExpect(jsonPath("$.employee").value("Alice"))
@@ -113,9 +112,9 @@ class LeaveRequestControllerWebMvcTest {
 		}
 
 		@Test
-		void testViewIdMissing() throws Exception {
+		void testViewRequestMissing() throws Exception {
 			// XXX Authenticate with HR role when making this request
-			mockmvc.perform(get("/view/id/{id}", UUID.randomUUID()))
+			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
 					.andExpect(status().isNoContent());
 		}
 

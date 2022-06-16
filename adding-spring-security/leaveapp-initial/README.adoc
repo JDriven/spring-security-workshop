@@ -1,0 +1,64 @@
+= Leave app
+
+Imagine a Human Resources department that has a small application to track and approve/deny leave requests.
+Initially this application was only used from within the HR department, who received requests via phone or email.
+
+Now we want to open up this application to all employees, so they can view and file (only their own) leave requests themselves.
+Anyone from the HR department can then either approve or deny a leave request, and view all requests.
+Up to you to implement these requirements for this small application.
+
+== Usage
+
+Start the application by either running LeaveRequestApplication directly from your IDE, or by running this command from the workshop repository root:
+
+[source,bash]
+----
+# ~/workspace/spring-security-workshop $
+./mvnw spring-boot:run --file adding-spring-security/leaveapp-initial/pom.xml
+----
+
+The application exposes a REST API, which you can access with either `httpie` or `curl`.
+
+=== HTTPie
+[source,bash]
+----
+# Create a leave request for a specific user and time window
+http POST ':8080/request/tim?from=2022-08-21&to=2022-09-11'
+
+# View leave requests for employee
+http :8080/view/employee/tim
+
+# Approve leave request
+http POST :8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# Deny leave request
+http POST :8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View leave request
+http :8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View all leave requests
+http :8080/view/all
+----
+
+=== curl
+[source,bash]
+----
+# Create a leave request for a specific user and time window
+curl -X POST 'http://localhost:8080/request/tim?from=2022-08-21&to=2022-09-11'
+
+# View leave requests for employee
+curl http://localhost:8080/view/employee/tim
+
+# Approve leave request
+curl -X POST http://localhost:8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# Deny leave request
+curl -X POST http://localhost:8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View leave request
+curl http://localhost:8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View all leave requests
+curl http://localhost:8080/view/all
+----

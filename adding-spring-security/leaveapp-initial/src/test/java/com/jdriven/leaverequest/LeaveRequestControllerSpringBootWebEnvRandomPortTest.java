@@ -28,7 +28,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 
-	private static final ParameterizedTypeReference<List<LeaveRequestDTO>> TYPE_REFERENCE = new ParameterizedTypeReference<>() {};
+	private static final ParameterizedTypeReference<List<LeaveRequestDTO>> TYPE_REFERENCE = new ParameterizedTypeReference<>() {
+	};
 
 	@Autowired
 	private LeaveRequestRepository repository;
@@ -54,7 +55,8 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			LocalDate from = of(2022, 11, 30);
 			LocalDate to = of(2022, 12, 3);
 			// XXX Authenticate as Alice when making this request
-			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/request/{employee}?from={from}&to={to}",
+			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity(
+					"/request/{employee}?from={from}&to={to}",
 					null, LeaveRequestDTO.class, "Alice", from, to);
 			assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
@@ -65,10 +67,11 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 		}
 
 		@Test
-		void testViewId() {
+		void testViewRequest() {
 			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate as Alice when making this request
-			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/id/{id}", LeaveRequestDTO.class, saved.getId());
+			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/request/{id}",
+					LeaveRequestDTO.class, saved.getId());
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("Alice");
@@ -79,7 +82,8 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 		void testViewEmployee() {
 			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate as Alice when making this request
-			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/employee/{employee}", GET, null,
+			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/employee/{employee}", GET,
+					null,
 					TYPE_REFERENCE, "Alice");
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
@@ -129,9 +133,10 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 		}
 
 		@Test
-		void testViewIdMissing() {
+		void testViewRequestMissing() {
 			// XXX Authenticate with HR role when making this request
-			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/id/{id}", LeaveRequestDTO.class,
+			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/request/{id}",
+					LeaveRequestDTO.class,
 					UUID.randomUUID());
 			assertThat(response.getStatusCode()).isEqualByComparingTo(NO_CONTENT);
 		}
@@ -140,7 +145,8 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 		void testViewAll() {
 			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			// XXX Authenticate with HR role when making this request
-			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/all", GET, null, TYPE_REFERENCE);
+			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/all", GET, null,
+					TYPE_REFERENCE);
 			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().get(0).getEmployee()).isEqualTo("Alice");
