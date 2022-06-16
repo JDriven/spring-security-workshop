@@ -7,16 +7,6 @@ and closely linked to the https://github.com/timtebeek/spring-security-samples[S
 The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
 While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.
 
-
-== Submodules
-
-. link:adding-spring-security/[Adding Spring Security]: Secure an existing application.
-. link:audit-spring-data-entities/[Auditing Spring Data Entities]: Automatically track who modifies an entry, and when.
-. link:limit-spring-data-queries/[Securing Spring Data Queries]: Limit your query results to the active user.
-. link:access-decision-voter/[Custom Access Decision Voter]: Restrict which users can access what objects.
-. link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
-. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
-
 == Requirements
 
 In order to participate, you will need the following:
@@ -31,14 +21,26 @@ TIP: Use https://sdkman.io/ to easily install Java.
 
 == Getting started
 
-1. Clone this Git repository
+1. Clone this Git repository.
 
   git clone https://github.com/timtebeek/spring-security-workshop.git
 
-2. Verify the tests for adding-spring-security
+2. Verify the tests for the `adding-spring-security` module (only).
 
   ./mvnw -B verify --file adding-spring-security/pom.xml
 
-3. If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
+3. The other modules will have failing tests, as their implementation is (intentionally) incomplete.
+It's up to you to implement the functionality to fix the tests!
 
-4. Once you have completed the basics, continue with any of the other modules.
+4. If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
+
+5. Once you have completed the basics, continue with any of the other modules.
+
+== Submodules
+
+. link:adding-spring-security/[Adding Spring Security]: Secure an existing application. Start here!
+. link:audit-spring-data-entities/[Auditing Spring Data Entities]: Automatically track who modifies an entry, and when.
+. link:limit-spring-data-queries/[Securing Spring Data Queries]: Limit your query results to the active user.
+. link:access-decision-voter/[Custom Access Decision Voter]: Restrict which users can access what objects.
+. link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
+. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
