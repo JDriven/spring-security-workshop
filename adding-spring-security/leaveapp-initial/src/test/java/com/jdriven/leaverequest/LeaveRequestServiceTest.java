@@ -28,8 +28,9 @@ class LeaveRequestServiceTest {
 	@Nested
 	class AuthorizeUser {
 
+		// TODO Authenticate as Alice when making this request
+
 		@Test
-		// XXX Authenticate as Alice when making this request
 		void testRequest() {
 			LeaveRequest leaveRequest = service.request("Alice", of(2022, 11, 30), of(2022, 12, 03));
 			verify(repository).save(leaveRequest);
@@ -40,8 +41,9 @@ class LeaveRequestServiceTest {
 	@Nested
 	class AuthorizeRole {
 
+		// TODO Authenticate with HR role when making these request
+
 		@Test
-		// XXX Authenticate with HR role when making this request
 		void testApprove() {
 			LeaveRequest saved = repository
 					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
@@ -53,7 +55,6 @@ class LeaveRequestServiceTest {
 		}
 
 		@Test
-		// XXX Authenticate with HR role when making this request
 		void testDeny() {
 			LeaveRequest saved = repository
 					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
