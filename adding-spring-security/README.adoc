@@ -8,15 +8,67 @@ Maybe your tests now get the dreaded `401 Unauthorized`, or subsequently a `403 
 Maybe you get a `ClassCastException` when trying to use your `Authentication#getPrincipal()`. +
 So this should be fun!
 
-The goal of this workshop is to add Spring Security to an existing application.
+We will walk you through adding Spring Security to an existing application,
+by explaining what happens when you first add the dependencies, what to do next, and how to fix your tests.
 
+== Context: Leave application
 Imagine a Human Resources department that has a small application to track and approve/deny leave requests.
 Initially this application was only used from within the HR department, who received requests via phone or email.
 You can see the application in this state in link:leaveapp-initial/[leaveapp-initial], along with the current set of application tests.
 
 Now we want to open up this application to all employees, so they can view and file (only their own) leave requests themselves.
 Anyone from the HR department can then either approve or deny a leave request, and view all requests.
-Up to you to implement these requirements for this small application, starting from the commented out dependency.
+Up to you to implement these requirements for this small application.
+
+== 0. Verify initial application
+Before we make any changes, it's good to get familiar with link:leaveapp-initial/[the leave application] that we will work on.
+Look through the code to see there's a single
+link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestController.java[controller],
+backed by a link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[service],
+which connects to a link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestRepository.java[repository],
+to store link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequest.java[LeaveRequest]s.
+
+=== Running the tests
+In terms of tests, there's a single link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestServiceTest.java[test for the service],
+and three different ways to test the controller:
+
+1. once link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerWebMvcTest.java[through @WebMvcTest],
+2. once more link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvMockTest.java[through @SpringBootTest(webEnvironment = WebEnvironment.MOCK)],
+3. and finally link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java[through @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)].
+
+That way, ideally, at least one of these methods will look familiar to what you know from your own projects.
+
+All these tests should already pass on your machine as well, so go ahead and give that a try, either through your IDE,
+or using the below command as run from the workshop repository root.
+
+[source,bash]
+----
+# ~/workspace/spring-security-workshop $
+./mvnw verify --file adding-spring-security/leaveapp-initial/pom.xml
+----
+
+=== Running the application
+You should also be able to start the application through `LeaveRequestApplication` without any further changes,
+either through your IDE, or again, using the below command as run from the workshop repository root.
+
+[source,bash]
+----
+# ~/workspace/spring-security-workshop $
+./mvnw spring-boot:run --file adding-spring-security/leaveapp-initial/pom.xml
+----
+
+Once running you can immediately see an empty array of leave requests using this url: http://localhost:8080/view/all.
+
+
+
+== 1. Adding Spring Security dependency
+
+== 2. Configure OAuth2 resource server
+
+
+
+
+////
 
 == Mock Keycloak
 To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop.
@@ -53,3 +105,4 @@ You can now choose to:
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/index.html[Authorization Chapter]
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/method-security.html[Method Security]
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/index.html[Testing Chapter]
+////
