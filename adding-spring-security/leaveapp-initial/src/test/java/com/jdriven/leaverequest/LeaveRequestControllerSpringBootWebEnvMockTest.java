@@ -39,16 +39,18 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 	@Nested
 	class AuthorizeUser {
 
+		// TODO Authenticate as user Alice when making these requests
+
 		@Test
 		void testRequest() throws Exception {
 			mockmvc.perform(post("/request/{employee}", "Alice")
-					// XXX Authenticate as Alice when making this request
 					.param("from", "2022-11-30")
 					.param("to", "2022-12-03"))
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("PENDING"));
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("PENDING"));
 		}
 
 		@Test
@@ -56,22 +58,22 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 			LeaveRequest saved = repository
 					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED));
 			mockmvc.perform(get("/view/request/{id}", saved.getId()))
-					// XXX Authenticate as Alice when making this request
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("APPROVED"));
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("APPROVED"));
 		}
 
 		@Test
 		void testViewEmployee() throws Exception {
 			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED));
 			mockmvc.perform(get("/view/employee/{employee}", "Alice"))
-					// XXX Authenticate as Alice when making this request
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$[0].employee").value("Alice"))
-					.andExpect(jsonPath("$[0].status").value("APPROVED"));
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$[0].employee").value("Alice"),
+							jsonPath("$[0].status").value("APPROVED"));
 		}
 
 	}
@@ -79,22 +81,23 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 	@Nested
 	class AuthorizeRole {
 
+		// TODO Authenticate with HR role when making these requests
+
 		@Test
 		void testApprove() throws Exception {
 			LeaveRequest saved = repository
 					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			mockmvc.perform(post("/approve/{id}", saved.getId()))
-					// XXX Authenticate with HR role when making this request
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("APPROVED"));
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("APPROVED"));
 		}
 
 		@Test
 		void testApproveMissing() throws Exception {
 			mockmvc.perform(post("/approve/{id}", UUID.randomUUID()))
-					// XXX Authenticate with HR role when making this request
 					.andExpect(status().isNoContent());
 		}
 
@@ -102,17 +105,16 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 		void testDeny() throws Exception {
 			LeaveRequest saved = repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			mockmvc.perform(post("/deny/{id}", saved.getId()))
-					// XXX Authenticate with HR role when making this request
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("DENIED"));
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("DENIED"));
 		}
 
 		@Test
 		void testViewRequestMissing() throws Exception {
 			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
-					// XXX Authenticate with HR role when making this request
 					.andExpect(status().isNoContent());
 		}
 
@@ -120,11 +122,11 @@ class LeaveRequestControllerSpringBootWebEnvMockTest {
 		void testViewAll() throws Exception {
 			repository.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED));
 			mockmvc.perform(get("/view/all"))
-					// XXX Authenticate with HR role when making this request
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$[0].employee").value("Alice"))
-					.andExpect(jsonPath("$[0].status").value("APPROVED"));
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$[0].employee").value("Alice"),
+							jsonPath("$[0].status").value("APPROVED"));
 		}
 
 	}
