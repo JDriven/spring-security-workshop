@@ -41,6 +41,7 @@ That way, ideally, at least one of these methods will look familiar to what you 
 All these tests should already pass on your machine as well, so go ahead and give that a try, either through your IDE,
 or using the below command as run from the workshop repository root.
 
+.Run the tests
 [source,bash]
 ----
 # ~/workspace/spring-security-workshop $
@@ -51,6 +52,7 @@ or using the below command as run from the workshop repository root.
 You should also be able to start the application through `LeaveRequestApplication` without any further changes,
 either through your IDE, or again, using the below command as run from the workshop repository root.
 
+.Run the application
 [source,bash]
 ----
 # ~/workspace/spring-security-workshop $
@@ -115,6 +117,25 @@ All of the above should just work on your machine.
 If it did, you're ready to start making changes.
 
 == 1. Adding Spring Security dependency
+
+
+
+[source,xml]
+----
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+</dependency>
+----
+
+[source,xml]
+----
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-test</artifactId>
+	<scope>test</scope>
+</dependency>
+----
 
 == 2. Configure OAuth2 resource server
 
