@@ -151,7 +151,7 @@ Add the below dependency to link:leaveapp-initial/pom.xml[leaveapp-initial/pom.x
 
 When you rerun the tests, you will notice all web related tests now fail with either a HTTP `401 Unauthorized` or `403 Forbidden` response, depending on whether it's a `GET` or `POST` request.
 
-When you run `LeaveRequestApplication` as before, and again open http://localhost:8080/view/all, you are now presented with a login dialog.
+When you run `LeaveRequestApplication` as before, and again open http://localhost:8080/view/all in the browser, you are now presented with a login dialog.
 
 .Please sign in
 image:docs/signin.png[alt='Please sign in']
@@ -196,16 +196,110 @@ spring:
 Add the above snippet to link:leaveapp-initial/src/main/resources/application.yml[application.yml].
 
 Once added, the application will call out to the configured `issuer-uri` during startup, to configure the `JwtDecoder` through the
-https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig[OpenID Provider Configuration Information endpoint].
+https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig[OpenID Provider Configuration Information endpoint] at:
+http://localhost:8090/auth/realms/spring-cloud-gateway-realm/.well-known/openid-configuration
 
+=== Running Keycloak (or WireMock stubs)
 During development we will either
 link:adding-spring-security/keycloak/[use Keycloak] or 
 link:adding-spring-security/wiremock/[WireMock] to serve the configured `issuer-uri` endpoint.
-WireMock is the easiest one to get working quickly; Keycloak takes some more effort, but can be used for your own projects as well.
+WireMock is the easiest one to get working quickly, as it does not require Docker compose;
+Keycloak takes some more effort, but can be used for your own projects as well.
 
+Go ahead and run either Keycloak, or the WireMock stubs using the linked instructions.
 
+=== Authenticated requests
+Next, launch the `LeaveRequestApplication` again, as you did before.
+
+Now, when you open http://localhost:8080/view/all in the browser, you are no longer presented with a login dialog.
+Instead, you immediately get a `401 Unauthorized` error response. _"Progress"_!
+
+The `UserDetailsServiceAutoConfiguration` warning about a `generated security password` has disappeared from the logs.
+The `UserDetailsServiceAutoConfiguration` from before has instead been replaced by
+https://github.com/spring-projects/spring-boot/blob/2.7.x/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/resource/servlet/OAuth2ResourceServerJwtConfiguration.java#L138[`OAuth2ResourceServerJwtConfiguration`],
+which has provided us with a `JwtDecoder` to handle incoming tokens.
+Unless you provide your own `SecurityFilterChain`, this sets up your application to require a JSON Web Token for each request.
+
+The reason we're now getting `40x` responses, is because our requests lack an `Authorization` header with `Bearer eyJhbGciOiJ...` JSON Web Token.
+To solve this, we have to actually pass a Bearer token along with our requests.
+Here's a token value to get your requests through with a `HTTP/1.1 20x` response:
+
+.Show full JSON Web Token valid through August 7th 2022 
+[%collapsible]
+====
+  eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRSS1mdW1sLTRyTnBrdVZxWVg0elpuZlRUZW1hSkxoZ183Z0dULTZiSFlVIn0.eyJqdGkiOiI0OWFkZmVlOS02MGEwLTQxMTItOGI1OS1hZWEwOTliYjlmYTIiLCJleHAiOjE2NTk4OTg3NjYsIm5iZiI6MCwiaWF0IjoxNTczNDk4NzY2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYWQ4MjRkZmMtNmFmZi00NWEzLWJlOWQtOTU0ZDUwZmJkYjdhIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJwMGtsejZlc0VYNnYtWU8tXzVGd2JITk95N2NudklibEsweTBiWi1iUVpNIiwiYXV0aF90aW1lIjoxNTczNDk4NzY2LCJzZXNzaW9uX3N0YXRlIjoiZjIyMjY4ZTAtOTJlZS00MDU4LTgzMzctMzkyNDg4YjJlNTQwIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcGhvbmUgbWljcm9wcm9maWxlLWp3dCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIGFkZHJlc3MiLCJ1cG4iOiJhbGljZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhZGRyZXNzIjp7fSwibmFtZSI6IkFsaWNlIiwiZ3JvdXBzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWxpY2UiLCJnaXZlbl9uYW1lIjoiQWxpY2UifQ.hHK8E-01eFb4UZtBjclVronp-6jfVbhxh9U0m0DEdYQE8YGWFCjMxUcfeI0Rx9zueeC_HJsFT4wcegs8Qh6Z2n7IGWbf0Vtg0fzVH9vFXkwbFBdbCZJz4MZ1Zc3cpC2UrSnuPDc8EIn1FQrKIEF8nqEcNzcL3ujxligvOern2A4xUS1GLqrLKmbPPbKocESZb75EMbmEPFDoctgI1n4vniOz9j242WxbcMjM7INeIsPCKWqvgaeYHOKlgW2CfHfsLPr_XQw5VvCMWJ1GHficCwwjyL-PeemHmBS6eO6EnHpl5Ftm7siATcZuJXQHTosb6b38Gkw2s6-yGQJcbQc01g
+====
+
+If you're curious what information is contained within this token, you can easily decode the token into it's three parts using https://jwt.io.
+
+.Show decoded JSON Web Token payload
+[%collapsible]
+====
+[source,json]
+----
+{
+  "jti": "49adfee9-60a0-4112-8b59-aea099bb9fa2",
+  "exp": 1659898766,
+  "nbf": 0,
+  "iat": 1573498766,
+  "iss": "http://localhost:8090/auth/realms/spring-cloud-gateway-realm",
+  "aud": "account",
+  "sub": "ad824dfc-6aff-45a3-be9d-954d50fbdb7a",
+  "typ": "Bearer",
+  "azp": "spring-cloud-gateway-client",
+  "nonce": "p0klz6esEX6v-YO-_5FwbHNOy7cnvIblK0y0bZ-bQZM",
+  "auth_time": 1573498766,
+  "session_state": "f22268e0-92ee-4058-8337-392488b2e540",
+  "acr": "1",
+  "realm_access": {
+    "roles": [
+      "offline_access",
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "scope": "openid phone microprofile-jwt offline_access profile email address",
+  "upn": "alice",
+  "email_verified": true,
+  "address": {},
+  "name": "Alice",
+  "groups": [
+    "offline_access",
+    "uma_authorization"
+  ],
+  "preferred_username": "alice",
+  "given_name": "Alice"
+}
+----
+====
+
+The below `HTTPie` and `curl` commands should all produce `20x` responses when both Keycloak (stubs) and `LeaveRequestApplication` are running.
+
+.Requests authenticated through a JSON Web Token.
+[source,bash]
+----
+# Store full token
+export token=eyJhbGciOiJ...
+
+# Create a leave request for a specific user and time window
+http POST ':8080/request/alice?from=2022-08-21&to=2022-09-11' "Authorization: Bearer ${token}"
+curl -X POST -H "Authorization: Bearer ${token}" 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
+
+# View all leave requests
+http :8080/view/all "Authorization: Bearer ${token}"
+curl -H "Authorization: Bearer ${token}" http://localhost:8080/view/all
+----
 
 == 3. Fixing our tests
+Our web related tests still fail.
 
 .spring-security-test dependency snippet
 [source,xml]
