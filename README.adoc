@@ -16,6 +16,7 @@ In order to participate, you will need the following:
 - IDE of your choice
 - https://projectlombok.org/[Lombok IDE plugin]
 - `https://curl.se/[curl]` or `https://httpie.io/[httpie]`
+- `docker-compose`, for Keycloak (optional)
 
 TIP: Use https://sdkman.io/ to easily install Java.
 

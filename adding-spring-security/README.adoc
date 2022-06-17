@@ -178,6 +178,31 @@ After all, if you're adding Spring Security to your class path you will want som
 At the very least the log line and dialog serve as a reminder to configure exactly what you want in your application.
 
 == 2. Configure OAuth2 resource server
+Since we wish to configure our application to function as an OAuth2 resource server,
+we can provide the required configuration to make the generated security password go away.
+https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
+
+.application.yml snippet to configure oauth2 resource server
+[source,yaml]
+----
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/auth/realms/spring-cloud-gateway-realm
+----
+
+Add the above snippet to link:leaveapp-initial/src/main/resources/application.yml[application.yml].
+
+Once added, the application will call out to the configured `issuer-uri` during startup, to configure the `JwtDecoder` through the
+https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig[OpenID Provider Configuration Information endpoint].
+
+During development we will either
+link:adding-spring-security/keycloak/[use Keycloak] or 
+link:adding-spring-security/wiremock/[WireMock] to serve the configured `issuer-uri` endpoint.
+WireMock is the easiest one to get working quickly; Keycloak takes some more effort, but can be used for your own projects as well.
+
 
 
 == 3. Fixing our tests
