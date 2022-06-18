@@ -448,9 +448,13 @@ void testRequest() throws Exception {
 	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
 }
 ----
-<1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.0/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in.
-<2> We mock the `JwtDecoder.decode(String)` to always return the same `Jwt` value.
-<3> We provide a dummy value for the `Authentication: Bearer` header.
+<1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in. +
+If we do not add the mock bean, the application will call out to the `issuer-uri` upon receiving the first `Authorization` header.
+And hosting a OIDC server for your tests is just not feasible or desirable.
+<2> We mock the `JwtDecoder.decode(String)` to always return the same `Jwt` value. +
+The response should match your actually decoded tokens, which can be hard to keep in sync.
+<3> We provide a dummy value for the `Authorization: Bearer` header. +
+This ensures the JWT handling is triggered, to decode the dummy value.
 <4> We wrap the headers into a `HttpEntity`.
 <5> We switch from `TestRestTemplate.postForEntity(...)` to `TestRestTemplate.exchange(...)`, as needed to pass the header.
 
@@ -462,6 +466,117 @@ You might want to get some practice if these types of tests are common in your a
 
 
 == 4. Adding authorization
+Our application now requires a JWT with every request, and decodes that into an Authentication object.
+While this is all fine and needed; it does not yet achieve much in terms of security;
+anyone can authenticate, file and view leave requests and approve or deny them as they see fit.
+We need to configure our application with some common sense roles and restrictions.
+For instance:
+
+- we want users to only submit and view requests for themselves;
+- only HR employees can approve or deny requests, and view all requests.
+
+=== Configuring method security
+Since all requests pass through `LeaveRequestService`, this seems like the perfect place to add our security restrictions.
+We'll add a variety of security annotation and expressions, all of which are documented extensively in 
+https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/method-security.html[the Authorization chapter of Spring Security].
+
+The security annotation handling needs to be enabled through `@EnableMethodSecurity(jsr250Enabled = true)`,
+as without this annotation the security annotations will not enforce anything!
+
+NOTE: Previously one might have used `@EnableGlobalMethodSecurity`, but this has been simplified as of Spring Security 5.6.
+
+Add the annotation to a new configuration class.
+The class itself does not have to be annotated with `@Configuration`, as `@EnableMethodSecurity` is already meta-annotated.
+
+.Enable method security through a new configuration class
+[source,java]
+----
+@EnableMethodSecurity(jsr250Enabled = true)
+public class MethodSecurityConfig {
+	// ...
+}
+----
+
+=== Require HR role
+The easiest methods to secure are the ones that are only accessible to users with the `HR` role.
+For this we will use the `@javax.annotation.security.RolesAllowed` annotation, with an argument value of `HR`.
+
+Go ahead and add these annotations now.
+
+[source,java]
+----
+@RolesAllowed("HR")
+public Optional<LeaveRequest> approve(UUID id) {
+	Optional<LeaveRequest> found = repo.findById(id);
+	found.ifPresent(lr -> lr.setStatus(Status.APPROVED));
+	return found;
+}
+
+@RolesAllowed("HR")
+public Optional<LeaveRequest> deny(UUID id) {
+	Optional<LeaveRequest> found = repo.findById(id);
+	found.ifPresent(lr -> lr.setStatus(Status.DENIED));
+	return found;
+}
+
+@RolesAllowed("HR")
+public List<LeaveRequest> retrieveAll() {
+	return repo.findAll();
+}
+----
+
+If you rerun all tests, you will immediately notice any tests from classes annotated with `@SpringBootTest` using methods will fail.
+`LeaveRequestControllerWebMvcTest` is unaffected, as it uses a `@MockBean LeaveRequestService`, that does not trigger method security.
+
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)
+Our `LeaveRequestServiceTest` methods now need an active user, where this was not needed before.
+We use the `@WithMockUser` annotation from `spring-security-test`, with arguments added to match the required `HR` role.
+
+.Add mock user with HR role to all `AuthorizeRole` tests
+[source,java]
+----
+@Nested
+@WithMockUser(roles = "HR")
+class AuthorizeRole {
+	...
+}
+----
+
+This should immediately fix all test failures in `LeaveRequestServiceTest.AuthorizeRole`.
+
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+Previously we got away with passing in just any `jwt()` to our web controller tests using `@SpringBootTest`.
+Now, with the addition of `RolesAllowed`, tests such as `LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeRole`
+also need to pass a JSON Web Token with the `HR` role.
+Luckily that's easy enough; Add the following to each of the authorized role test methods.
+
+.MockMvc test to approve a leave request as a user with HR role
+[source,java]
+----
+@Test
+void testApprove() throws Exception {
+	LeaveRequest saved = repository
+		.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+	mockmvc.perform(post("/approve/{id}", saved.getId())
+		.with(jwt().authorities(new SimpleGrantedAuthority("ROLE_HR")))) <1>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.status").value("APPROVED"));
+}
+----
+<1> The `jwt()` call from before, now adds a known authority to pass the authorization requirement on the service method.
+
+With these roles added to each of the authorized roles tests, these should again pass.
+
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+These tests now also fail, but before we fix these we first need to introduce a few more components.
+Check back after we discussed converting JWT claims, and ignore these failing tests for now.
+
+=== Require user _or_ HR role
+
+== 5. Convert JWT claims
 
 
 ////
