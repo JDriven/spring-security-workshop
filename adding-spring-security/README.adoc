@@ -116,6 +116,7 @@ curl http://localhost:8080/view/all
 All of the above should just work on your machine.
 If it did, you're ready to start making changes.
 
+
 == 1. Adding Spring Security dependency
 The first step in adding security to our application is picking the right dependency to add to our project.
 However, even figuring out which dependency to add can be difficult these days!
@@ -176,6 +177,7 @@ This auto configuration triggers when no other security configuration has been p
 It sets up our application with a default user and generated password, as a fallback of sorts.
 After all, if you're adding Spring Security to your class path you will want some form of security.
 At the very least the log line and dialog serve as a reminder to configure exactly what you want in your application.
+
 
 == 2. Configure OAuth2 resource server
 Since we wish to configure our application to function as an OAuth2 resource server,
@@ -301,6 +303,7 @@ curl -H "Authorization: Bearer ${token}" http://localhost:8080/view/all
 Perfect; our application now at the very least requires a valid JWT for any request.
 This covers our authentication needs for now; we will get to authorization at a later stage.
 
+
 == 3. Fixing the web tests
 Now we have an application that requires an OpenID Connect provider on startup, and a valid JWT for any request.
 Neither plays well with the tests we have, so we're going to have to fix each of the different test flavors we have.
@@ -380,10 +383,85 @@ If you repeat this pattern for all test methods and rerun the tests,
 you'll find all tests within `LeaveRequestControllerWebMvcTest` pass again!
 
 === Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+In short, for now, these tests need the same treatment as we saw with `@WebMvcMock`.
+So go ahead and add `jwt()` to the web requests to get these tests working again as well.
 
 === Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+The most challenging tests to adapt, are the ones using `TestRestTemplate`, mostly as the API makes it cumbersome to add headers.
+And even once you manage to add the `Authorization` header successfully to each request, you still have to mock the token handling.
+
+So let's have a look at a complete example, to give you an idea of what's involved.
+Here's an unaltered test not yet passing authorization headers.
+
+.Unaltered test to POST new leave request for user Alice.
+[source,java]
+----
+@Test
+void testRequest() {
+	LocalDate from = of(2022, 11, 30);
+	LocalDate to = of(2022, 12, 3);
+	ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity(
+		"/request/{employee}?from={from}&to={to}",
+		null, LeaveRequestDTO.class, "Alice", from, to);
+	assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+	assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
+	assertThat(response.getBody().getEmployee()).isEqualTo("Alice");
+	assertThat(response.getBody().getFromDate()).isEqualTo(from);
+	assertThat(response.getBody().getToDate()).isEqualTo(to);
+	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+}
+----
+
+Next, here's that same test, but now with all the bits and pieces to pass an authorization header, to trigger the JWT handling, which we mock to decode the token.
+
+.Test to POST new leave request for user Alice, with Authorization header.
+[source,java]
+----
+@MockBean
+private JwtDecoder jwtDecoder; <1>
+
+@BeforeEach
+void beforeEach() {
+	when(jwtDecoder.decode(anyString())) <2>
+		.thenReturn(Jwt.withTokenValue("token")
+			.subject("alice")
+			.header("alg", "none")
+			.build());
+}
+
+@Test
+void testRequest() throws Exception {
+	HttpHeaders headers = new HttpHeaders();
+	headers.setBearerAuth("some.random.token"); <3>
+	HttpEntity<?> httpEntity = new HttpEntity<>(headers); <4>
+	
+	LocalDate from = of(2022, 11, 30);
+	LocalDate to = of(2022, 12, 3);
+	ResponseEntity<LeaveRequestDTO> response = restTemplate.exchange( <5>
+		"/request/{employee}?from={from}&to={to}",
+		HttpMethod.POST, httpEntity, LeaveRequestDTO.class, "alice", from, to);
+	assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+	assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
+	assertThat(response.getBody().getEmployee()).isEqualTo("alice");
+	assertThat(response.getBody().getFromDate()).isEqualTo(from);
+	assertThat(response.getBody().getToDate()).isEqualTo(to);
+	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+}
+----
+<1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.0/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in.
+<2> We mock the `JwtDecoder.decode(String)` to always return the same `Jwt` value.
+<3> We provide a dummy value for the `Authentication: Bearer` header.
+<4> We wrap the headers into a `HttpEntity`.
+<5> We switch from `TestRestTemplate.postForEntity(...)` to `TestRestTemplate.exchange(...)`, as needed to pass the header.
+
+As you can see, this quickly becomes cumbersome, even when common elements are extracted out into methods.
+Have a look at the reference implementation to see https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/leaveapp-complete/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java#L69[the complete converted test].
+
+There's little value in converting all these tests by hand; just know that it can be done, but try to limit or avoid these types of tests.
+You might want to get some practice if these types of tests are common in your application, but otherwise feel free to delete the test, or copy the complete sample.
 
 
+== 4. Adding authorization
 
 
 ////
