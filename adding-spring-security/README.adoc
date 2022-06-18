@@ -305,21 +305,33 @@ This covers our authentication needs for now; we will get to authorization at a 
 Now we have an application that requires an OpenID Connect provider on startup, and a valid JWT for any request.
 Neither plays well with the tests we have, so we're going to have to fix each of the different test flavors we have.
 
-We originally added four different types of tests which each use a full or partial Spring application context, to simulate what you might find in an existing application.
+The leave application has four different types of tests which each use a partial or full Spring application context, to simulate what you might find in an existing application.
 They are identified below using the annotation and argument that bootstraps the test application context.
 We'll go over each test and the changes needed to make them pass again.
 
 === Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 Tests not using any web request are not (yet) broken.
-But don't worry, we will break these as soon as we enforce authorization.
+But don't worry, we will break these as soon as we add authorization.
 
 === Tests using @WebMvcTest(controllers = LeaveRequestController.class)
+Next up, we want to make `LeaveRequestControllerWebMvcTest` pass again;
+We're testing the controller in isolation here, using `@WebMvcTest` together with `MockMvc`.
+Running the tests we see `GET` requests now get a `401 Unauthorized` response, while `POST` requests get a `403 Forbidden` response.
 
-=== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+- The `401 Unauthorized` response on `GET` requests we get because we're not yet passing an `Authorization: Bearer eyJhbGciOiJ...` header in our tests.
+- The `403 Forbidden` response takes a little more diving into; Debug logging through `logging.level.org.springframework.security: DEBUG` points us in the right direction:
+[source,text]
+----
+DEBUG --- [main] o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost/request/Alice
+DEBUG --- [main] o.s.s.w.access.AccessDeniedHandlerImpl   : Responding with 403 status code
+----
+By default Spring Security adds https://docs.spring.io/spring-security/reference/5.7.1/servlet/exploits/csrf.html[Cross Site Request Forgery] protection for `POST` requests.
+This protects our resource server from malicious requests; and it's best not to disable this.
+One way to get around this requirement for tests is to add `csrf` tokens to our POST requests, through 
+https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/csrf.html[`SecurityMockMvcRequestPostProcessors#csrf()`] from `spring-security-test`.
+But if we only do that, we would then get a `401 Unauthorized` response!
 
-=== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-
-
+So let's look into a proper fix; First, add the `spring-security-test` dependency to the link:leaveapp-initial/pom.xml[leaveapp-initial/pom.xml] file.
 
 .spring-security-test dependency snippet
 [source,xml]
@@ -327,9 +339,51 @@ But don't worry, we will break these as soon as we enforce authorization.
 <dependency>
 	<groupId>org.springframework.security</groupId>
 	<artifactId>spring-security-test</artifactId>
-	<scope>test</scope>
+	<scope>test</scope> <1>
 </dependency>
 ----
+<1> Notice how we use the `test` scope, as this library is only needed on the test classpath.
+
+This library provides us with `SecurityMockMvcRequestPostProcessors#jwt()`, among others,
+which we add to our test methods to have them pass a valid JWT along with each request.
+https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/oauth2.html#testing-jwt[The JWT can be configured] in a number of different ways.
+Update your tests with the callouts seen below.
+
+[source,java]
+----
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt; <1>
+
+...
+
+@Test
+void testRequest() throws Exception {
+	when(service.request(anyString(), any(), any()))
+		.thenReturn(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+	mockmvc.perform(post("/request/{employee}", "Alice")
+		.param("from", "2022-11-30")
+		.param("to", "2022-12-03")
+		.with(jwt())) <2>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.status").value("PENDING"));
+}
+----
+<1> To keep the tests readable, we will use a static import.
+<2> For now, we will use a plain `jwt()` with a `sub` (subject) claim of value `user`. +
+Later on, we will set the subject name to `Alice` to match our requests.
+
+Coincidentally, this also already resolves the CSRF issue with POST requests,
+as the CsrfFilter is skipped through the `JwtRequestPostProcessor`.
+If you repeat this pattern for all test methods and rerun the tests,
+you'll find all tests within `LeaveRequestControllerWebMvcTest` pass again!
+
+=== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+
+=== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+
+
 
 
 ////
