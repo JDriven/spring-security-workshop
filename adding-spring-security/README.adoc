@@ -575,6 +575,37 @@ These tests now also fail, but before we fix these we first need to introduce a 
 Check back after we discussed converting JWT claims, and ignore these failing tests for now.
 
 === Require user _or_ HR role
+The more challenging methods to secure are the methods that are accessible both to individual users, as well as users with the HR role.
+Users should only be able to submit and view their own leave requests, while users with HR role have no such restrictions.
+To protect these methods we will use a mix of pre- and post authorization annotations.
+
+.Pre- and PostAuthorizate annotations to allow both individual users and users with HR role.
+[source,java]
+----
+@PreAuthorize("#employee == authentication.name or hasRole('HR')")
+public LeaveRequest request(String employee, LocalDate from, LocalDate to) {
+	LeaveRequest leaveRequest = LeaveRequest.builder()
+		.employee(employee)
+		.fromDate(from)
+		.toDate(to)
+		.build();
+	return repo.save(leaveRequest);
+}
+
+@PreAuthorize("#employee == authentication.name or hasRole('HR')")
+public List<LeaveRequest> retrieveFor(String employee) {
+	return repo.findByEmployee(employee);
+}
+
+@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')")
+public Optional<LeaveRequest> retrieve(UUID id) {
+	return repo.findById(id);
+}
+----
+
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 
 == 5. Convert JWT claims
 
