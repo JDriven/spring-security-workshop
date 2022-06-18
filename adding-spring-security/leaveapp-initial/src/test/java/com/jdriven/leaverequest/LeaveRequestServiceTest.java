@@ -1,7 +1,9 @@
 package com.jdriven.leaverequest;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,15 @@ class LeaveRequestServiceTest {
 	@Autowired
 	private LeaveRequestService service;
 
+	@BeforeEach
+	void beforeEach() {
+		repository.clear();
+	}
+
 	@Nested
 	class AuthorizeUser {
 
-		// TODO Authenticate as Alice when making this request
+		// TODO Authenticate as Alice when making these requests
 
 		@Test
 		void testRequest() {
@@ -36,12 +43,56 @@ class LeaveRequestServiceTest {
 			verify(repository).save(leaveRequest);
 		}
 
+		@Test
+		void testRetrieveById() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			Optional<LeaveRequest> retrieved = service.retrieve(saved.getId());
+			verify(repository).findById(saved.getId());
+			assertThat(retrieved).isPresent();
+			assertThat(retrieved).get().isSameAs(saved);
+		}
+
+		@Test
+		void testRetrieveForEmployee() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			List<LeaveRequest> retrieved = service.retrieveFor("Alice");
+			verify(repository).findByEmployee("Alice");
+			assertThat(retrieved).containsExactly(saved);
+		}
+
 	}
 
 	@Nested
 	class AuthorizeRole {
 
-		// TODO Authenticate with HR role when making these request
+		// TODO Authenticate with HR role when making these requests
+
+		@Test
+		void testRequest() {
+			LeaveRequest leaveRequest = service.request("Alice", of(2022, 11, 30), of(2022, 12, 03));
+			verify(repository).save(leaveRequest);
+		}
+
+		@Test
+		void testRetrieveById() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			Optional<LeaveRequest> retrieved = service.retrieve(saved.getId());
+			verify(repository).findById(saved.getId());
+			assertThat(retrieved).isPresent();
+			assertThat(retrieved).get().isSameAs(saved);
+		}
+
+		@Test
+		void testRetrieveForEmployee() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			List<LeaveRequest> retrieved = service.retrieveFor("Alice");
+			verify(repository).findByEmployee("Alice");
+			assertThat(retrieved).containsExactly(saved);
+		}
 
 		@Test
 		void testApprove() {
@@ -63,6 +114,15 @@ class LeaveRequestServiceTest {
 			assertThat(denied).isPresent();
 			assertThat(denied).get().isSameAs(saved);
 			assertThat(denied.get().getStatus()).isSameAs(DENIED);
+		}
+
+		@Test
+		void testRetrieveAll() {
+			LeaveRequest saved = repository
+					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			List<LeaveRequest> denied = service.retrieveAll();
+			verify(repository).findAll();
+			assertThat(denied).containsExactly(saved);
 		}
 
 	}
