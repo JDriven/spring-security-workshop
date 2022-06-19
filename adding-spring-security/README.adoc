@@ -141,7 +141,7 @@ Both starters will provide you with any transitive dependencies you might need f
 === What happens when you add the dependency?
 Add the below dependency to link:leaveapp-initial/pom.xml[leaveapp-initial/pom.xml].
 
-.oauth2-resource-server dependency snippet
+.oauth2-resource-server dependency snippet.
 [source,xml]
 ----
 <dependency>
@@ -184,7 +184,7 @@ Since we wish to configure our application to function as an OAuth2 resource ser
 we can provide the required configuration to make the generated security password go away.
 https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
 
-.application.yml snippet to configure oauth2 resource server
+.application.yml snippet to configure oauth2 resource server.
 [source,yaml]
 ----
 spring:
@@ -226,7 +226,7 @@ The reason we're now getting `40x` responses, is because our requests lack an `A
 To solve this, we have to actually pass a Bearer token along with our requests.
 Here's a token value to get your requests through with a `HTTP/1.1 20x` response:
 
-.Show full JSON Web Token valid through August 7th 2022 
+.Show full JSON Web Token valid through August 7th 2022.
 [%collapsible]
 ====
   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRSS1mdW1sLTRyTnBrdVZxWVg0elpuZlRUZW1hSkxoZ183Z0dULTZiSFlVIn0.eyJqdGkiOiI0OWFkZmVlOS02MGEwLTQxMTItOGI1OS1hZWEwOTliYjlmYTIiLCJleHAiOjE2NTk4OTg3NjYsIm5iZiI6MCwiaWF0IjoxNTczNDk4NzY2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYWQ4MjRkZmMtNmFmZi00NWEzLWJlOWQtOTU0ZDUwZmJkYjdhIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJwMGtsejZlc0VYNnYtWU8tXzVGd2JITk95N2NudklibEsweTBiWi1iUVpNIiwiYXV0aF90aW1lIjoxNTczNDk4NzY2LCJzZXNzaW9uX3N0YXRlIjoiZjIyMjY4ZTAtOTJlZS00MDU4LTgzMzctMzkyNDg4YjJlNTQwIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcGhvbmUgbWljcm9wcm9maWxlLWp3dCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIGFkZHJlc3MiLCJ1cG4iOiJhbGljZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhZGRyZXNzIjp7fSwibmFtZSI6IkFsaWNlIiwiZ3JvdXBzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWxpY2UiLCJnaXZlbl9uYW1lIjoiQWxpY2UifQ.hHK8E-01eFb4UZtBjclVronp-6jfVbhxh9U0m0DEdYQE8YGWFCjMxUcfeI0Rx9zueeC_HJsFT4wcegs8Qh6Z2n7IGWbf0Vtg0fzVH9vFXkwbFBdbCZJz4MZ1Zc3cpC2UrSnuPDc8EIn1FQrKIEF8nqEcNzcL3ujxligvOern2A4xUS1GLqrLKmbPPbKocESZb75EMbmEPFDoctgI1n4vniOz9j242WxbcMjM7INeIsPCKWqvgaeYHOKlgW2CfHfsLPr_XQw5VvCMWJ1GHficCwwjyL-PeemHmBS6eO6EnHpl5Ftm7siATcZuJXQHTosb6b38Gkw2s6-yGQJcbQc01g
@@ -234,7 +234,7 @@ Here's a token value to get your requests through with a `HTTP/1.1 20x` response
 
 If you're curious what information is contained within this token, you can easily decode the token into it's three parts using https://jwt.io.
 
-.Show decoded JSON Web Token payload
+.Show decoded JSON Web Token payload.
 [%collapsible]
 ====
 [source,json]
@@ -336,7 +336,7 @@ But if we only do that, we would then get a `401 Unauthorized` response!
 
 So let's look into a proper fix; First, add the `spring-security-test` dependency to the link:leaveapp-initial/pom.xml[leaveapp-initial/pom.xml] file.
 
-.spring-security-test dependency snippet
+.spring-security-test dependency snippet.
 [source,xml]
 ----
 <dependency>
@@ -476,7 +476,7 @@ For instance:
 - only HR employees can approve or deny requests, and view all requests.
 
 === Configuring method security
-Since all requests pass through `LeaveRequestService`, this seems like the perfect place to add our security restrictions.
+Since all requests pass through link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[`LeaveRequestService`], this seems like the perfect place to add our security restrictions.
 We'll add a variety of security annotation and expressions, all of which are documented extensively in 
 https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/method-security.html[the Authorization chapter of Spring Security].
 
@@ -488,7 +488,7 @@ NOTE: Previously one might have used `@EnableGlobalMethodSecurity`, but this has
 Add the annotation to a new configuration class.
 The class itself does not have to be annotated with `@Configuration`, as `@EnableMethodSecurity` is already meta-annotated.
 
-.Enable method security through a new configuration class
+.Enable method security through a new configuration class.
 [source,java]
 ----
 @EnableMethodSecurity(jsr250Enabled = true)
@@ -501,7 +501,7 @@ public class MethodSecurityConfig {
 The easiest methods to secure are the ones that are only accessible to users with the `HR` role.
 For this we will use the `@javax.annotation.security.RolesAllowed` annotation, with an argument value of `HR`.
 
-Go ahead and add these annotations now.
+Go ahead and add these annotations to link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[`LeaveRequestService`] now.
 
 [source,java]
 ----
@@ -532,7 +532,7 @@ If you rerun all tests, you will immediately notice any tests from classes annot
 Our `LeaveRequestServiceTest` methods now need an active user, where this was not needed before.
 We use the `@WithMockUser` annotation from `spring-security-test`, with arguments added to match the required `HR` role.
 
-.Add mock user with HR role to all `AuthorizeRole` tests
+.Add mock user with HR role to all `AuthorizeRole` tests.
 [source,java]
 ----
 @Nested
@@ -550,7 +550,7 @@ Now, with the addition of `RolesAllowed`, tests such as `LeaveRequestControllerS
 also need to pass a JSON Web Token with the `HR` role.
 Luckily that's easy enough; Add the following to each of the authorized role test methods.
 
-.MockMvc test to approve a leave request as a user with HR role
+.MockMvc test to approve a leave request as a user with HR role.
 [source,java]
 ----
 @Test
@@ -576,13 +576,17 @@ Check back after we discussed converting JWT claims, and ignore these failing te
 
 === Require user _or_ HR role
 The more challenging methods to secure are the methods that are accessible both to individual users, as well as users with the HR role.
-Users should only be able to submit and view their own leave requests, while users with HR role have no such restrictions.
-To protect these methods we will use a mix of pre- and post authorization annotations.
+Users should only be able to submit and view their own leave requests (only), while users with HR role have no such restrictions.
+
+To protect these methods we will use a mix of https://docs.spring.io/spring-security/reference/servlet/authorization/expression-based.html#el-pre-post-annotations[pre- and post authorization annotations].
+These annotations take a Spring-EL expression as argument, which has access to the method arguments and returned object, as well as the authenticated user and built-in expressions.
+
+Add the below annotations and security expressions to link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[`LeaveRequestService`].
 
 .Pre- and PostAuthorizate annotations to allow both individual users and users with HR role.
 [source,java]
 ----
-@PreAuthorize("#employee == authentication.name or hasRole('HR')")
+@PreAuthorize("#employee == authentication.name or hasRole('HR')") <1>
 public LeaveRequest request(String employee, LocalDate from, LocalDate to) {
 	LeaveRequest leaveRequest = LeaveRequest.builder()
 		.employee(employee)
@@ -592,19 +596,65 @@ public LeaveRequest request(String employee, LocalDate from, LocalDate to) {
 	return repo.save(leaveRequest);
 }
 
-@PreAuthorize("#employee == authentication.name or hasRole('HR')")
+@PreAuthorize("#employee == authentication.name or hasRole('HR')") <2>
 public List<LeaveRequest> retrieveFor(String employee) {
 	return repo.findByEmployee(employee);
 }
 
-@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')")
+@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')") <2>
 public Optional<LeaveRequest> retrieve(UUID id) {
 	return repo.findById(id);
 }
 ----
+<1> Notice how `#employee` refers to the method argument name.
+<2> If you frequently use the exact same security expression, consider creating your own meta annotations.
+<3> We authorize on the `returnObject`, after making the call out to the repository, as the `UUID` argument contains insufficient information for our security expression.
+
+If you rerun the tests after adding these new annotations, you will see new `AuthorizeUser` test failures pop up.
 
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)
+The `LeaveRequestServiceTest.AuthorizeUser` tests will now fail, as "an Authentication object was not found in the SecurityContext".
+We can resolve these failures in much the same way as we saw before with `@WithMockUser`, this time using the `username` argument value to match our request employee.
+
+.Add mock user with username Alice to all `AuthorizeUser` tests.
+[source,java]
+----
+@Nested
+@WithMockUser(username = "Alice")
+class AuthorizeUser {
+	....
+}
+----
+
+There's one interesting test failure that persists, even after adding `@WithMockUser`, and it revolves around retrieving a non existing leave request.
+`testRetrieveByIdMissing` calls out to `LeaveRequestService.retrieve(UUID)`, which is protected through `@PostAuthorize`.
+
+Think for a moment how you would protect an empty `Optional` response, when there's no `employee` field to use in the Spring Expression.
+Also consider what a potential attacker could learn about the existence of leave requests if we would not block requests to non existing identifiers.
+
+To be safe, we wrote our security expression to deny access when the corresponding leave request can not be found, through `returnObject.orElse(null)?.employee == authentication.name`.
+The implication is that we now have to handle these cases differently in our tests as well.
+
+.Rewrite assertions around retrieving an unknown leave request.
+[source,diff]
+----
+@Test
+void testRetrieveByIdMissing() {
+	UUID randomUUID = UUID.randomUUID();
+-	Optional<LeaveRequest> retrieved = service.retrieve(randomUUID); <1>	
++	assertThrows(AccessDeniedException.class, () -> service.retrieve(randomUUID)); <2>
+	verify(repository).findById(randomUUID); <3>
+-	assertThat(retrieved).isEmpty(); <4>
+}
+----
+<1> We no longer get an `Optional` response to verify.
+<2> Instead we assert the method call is blocked with a Spring Security Exception.
+<3> Notice how the method still calls out to the repository as before.
+<4> The empty `Optional` assertion is removed, as exception handling takes over.
+
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+
+
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 
 == 5. Convert JWT claims
