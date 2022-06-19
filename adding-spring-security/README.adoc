@@ -698,12 +698,83 @@ void beforeEach() {
 ----
 <1> The subject claim will be turned into the `Authentication` object `name`, as used in our security expressions.
 
+That should only leave `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` with test failures,
+which we will finally fix in the next section, by introducing claim mapping.
+
 == 5. Convert JWT claims
+One final and challenging part of adding Spring Security, is aligning the JSON Web Token claims returned by your token provider
+with the Authentication objects used throughout your application for authorization.
+These details will differ from provider to provider, and thus need fine tuning whenever you which between providers.
+And while there are some common claims, such as `subject` for the user name, you might still want to map other claims to get the user's roles or preferred name.
 
+In our case we're using Keycloak, which wraps assigned roles within a `realm_access` claim.
+See how these claims are encoded in the below JSON Web Token payload snippet.
 
+.`realm_access` claim taken from decoded Keycloak JSON Web Token payload.
+[source,json]
+----
+"realm_access": {
+  "roles": [
+    "offline_access",
+    "uma_authorization",
+    "HR"
+  ]
+},
+----
 
+Because of the nested structure of these claims, we have to https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction[manually extract the authorities].
+The process is a little involved, and hard to introduce gradually, so instead, here's the full annotated class.
 
-/////
+.WebSecurityConfig for custom JSON Web Token claim conversion.
+[source,java]
+----
+@EnableWebSecurity <1>
+@ConditionalOnWebApplication <2>
+public class WebSecurityConfig {
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		return http
+			.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+			.oauth2ResourceServer(oauth2 -> oauth2
+				.jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakRealmRoleConverter()))) <3>
+			.build();
+	}
+
+}
+
+class KeycloakRealmRoleConverter implements Converter<Jwt, JwtAuthenticationToken> {
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public JwtAuthenticationToken convert(Jwt jwt) {
+		Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().getOrDefault("realm_access", Map.of());
+		List<String> roles = (List<String>) realmAccess.getOrDefault("roles", List.of()); <4>
+		List<GrantedAuthority> authorities = roles.stream()
+			.map(roleName -> "ROLE_" + roleName)
+			.map(SimpleGrantedAuthority::new) <5>
+			.collect(Collectors.toList());
+		return new JwtAuthenticationToken(jwt, authorities); <6>
+	}
+
+}
+----
+<1> We introduce a new `WebSecurityConfig`, annotated with `@EnableWebSecurity`.
+<2> By adding `@ConditionalOnWebApplication`, the presence of this class will not interfere with `LeaveRequestServiceTest`.
+<3> We wire up our custom authentication converter, as indicated in the documentation.
+<4> Defensively, we extract first the `realm_access` claim, and then the `roles` contained within.
+<5> Any roles are prefixed with `ROLE_` and converted into granted authorities.
+<6> Finally, we return a complete Authentication object for use in our application.
+
+When you add this final piece to your application code, all tests should now pass again!
+
+Even the `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` tests that we postponed previously now pass.
+These are the only tests that check the token claim mapping as part of their execution, so there is some value in these tests after all.
+
+== Conclusion
+We have now added Spring Security to our application, to allow any user to authenticate, while only granting some users special privileges.
+We worked through the challenges of picking the right dependency, and iteratively solving our tests failures as we first added authentication, and then authorization.
+We saw how some test approaches require less or more effort once you start addition security to your application, so take this into account when designing your tests.
 
 If you got stuck at any point, https://github.com/timtebeek/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 
@@ -719,11 +790,3 @@ You can now choose to:
 * link:../access-decision-voter/[restrict which users can access what objects]
 * link:../permission-evaluator/[separate read and write permissions on objects]
 * link:../spring-cloud-gateway-oidc-tokenrelay/[route requests through a gateway]
-
-== References
-- https://docs.spring.io/spring-security/reference/servlet/getting-started.html[Hello Spring Security]
-- https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
-- https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/index.html[Authorization Chapter]
-- https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/method-security.html[Method Security]
-- https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/index.html[Testing Chapter]
-////
