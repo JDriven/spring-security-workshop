@@ -653,30 +653,59 @@ void testRetrieveByIdMissing() {
 <4> The empty `Optional` assertion is removed, as exception handling takes over.
 
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+We see a similar pattern in test failures for `LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser` that we previously saw for `AuthorizeRole` in the same test file.
+Where we used to be able to pass in just any `jwt()`, we not have to provide a token with matching characteristics, in this case a username `Alice`.
 
+Repeat the below JWT change for each of the unit tests in `LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser`.
+
+.Set subject claim to Alice to match authorization expressions.
+[source,java]
+----
+@Test
+void testRequest() throws Exception {
+	mockmvc.perform(post("/request/{employee}", "Alice")
+		.param("from", "2022-11-30")
+		.param("to", "2022-12-03")
+		.with(jwt().jwt(builder -> builder.subject("Alice")))) <1>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.status").value("PENDING"));
+}
+----
+<1> Set the subject to Alice, to match the POST request URL value.
 
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+If you already adopted the suggested approach of mocking the `JwtDecoder` response for `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeUser` above,
+then the tests should already pass.
+Here is the relevant section from that approach again; scroll up for the full details.
+
+.Mock the JwtDecoder response to return a `Jwt` with username alice.
+[source,java]
+----
+@MockBean
+private JwtDecoder jwtDecoder;
+
+@BeforeEach
+void beforeEach() {
+	when(jwtDecoder.decode(anyString()))
+		.thenReturn(Jwt.withTokenValue("token")
+			.subject("alice") <1>
+			.header("alg", "none")
+			.build());
+}
+----
+<1> The subject claim will be turned into the `Authentication` object `name`, as used in our security expressions.
 
 == 5. Convert JWT claims
 
 
-////
 
-== Mock Keycloak
-To save you from having to setup an OpenID Connect provider just yet, we've recorded the requests and responses needed for this workshop.
-https://github.com/timtebeek/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/src/test/resources[Follow these instructions to run WireMock].
-These recordings come from Keycloak, with setup covered in the link:../spring-cloud-gateway-oidc-tokenrelay/README.adoc[Spring Cloud Gateway with OpenID Connect workshop].
 
-== Getting things done
-* Read link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#what-happens-when-you-add-the-dependency[What happens when you add the dependency?] and add the Spring Security dependencies to the project in the link:pom.xml[pom.xml].
-* link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#fixing-our-tests-part-1[Fix the user authorization tests] in the `AuthorizeUser` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
+/////
 
-Now we have secured the application on a user level, but what about roles?
-
-* Read about link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#roles-and-authorizations[authorization on role level] and apply the suggested changes in the application.
-* link:https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/README.adoc#fixing-our-tests-part-2[Fix the role authorization tests] in the `AuthorizeRole` tests in the link:leaveapp-initial/src/test/java/com/jdriven/leaverequest/[test package]
-
-If you get stuck at any point, https://github.com/timtebeek/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
+If you got stuck at any point, https://github.com/timtebeek/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
 
