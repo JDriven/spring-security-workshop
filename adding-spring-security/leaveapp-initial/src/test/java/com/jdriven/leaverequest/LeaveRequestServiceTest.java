@@ -2,6 +2,7 @@ package com.jdriven.leaverequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -51,6 +52,14 @@ class LeaveRequestServiceTest {
 			verify(repository).findById(saved.getId());
 			assertThat(retrieved).isPresent();
 			assertThat(retrieved).get().isSameAs(saved);
+		}
+
+		@Test
+		void testRetrieveByIdMissing() {
+			UUID randomUUID = UUID.randomUUID();
+			Optional<LeaveRequest> retrieved = service.retrieve(randomUUID);
+			verify(repository).findById(randomUUID);
+			assertThat(retrieved).isEmpty();
 		}
 
 		@Test
