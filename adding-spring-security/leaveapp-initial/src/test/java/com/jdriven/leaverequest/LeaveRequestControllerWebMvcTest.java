@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.jdriven.leaverequest.LeaveRequest.Status;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.jdriven.leaverequest.LeaveRequest.Status.APPROVED;
+import static com.jdriven.leaverequest.LeaveRequest.Status.DENIED;
+import static com.jdriven.leaverequest.LeaveRequest.Status.PENDING;
 import static java.time.LocalDate.of;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -36,42 +37,44 @@ class LeaveRequestControllerWebMvcTest {
 	@Nested
 	class AuthorizeUser {
 
+		// TODO Authenticate as user Alice when making these requests
+
 		@Test
 		void testRequest() throws Exception {
 			when(service.request(anyString(), any(), any()))
-					.thenReturn(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.PENDING));
+					.thenReturn(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 			mockmvc.perform(post("/request/{employee}", "Alice")
-					.param("from", "2019-11-30")
-					.param("to", "2019-12-03"))
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("PENDING"));
+					.param("from", "2022-11-30")
+					.param("to", "2022-12-03"))
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("PENDING"));
 		}
 
 		@Test
-		void testViewId() throws Exception {
+		void testViewRequest() throws Exception {
 			when(service.retrieve(any()))
-					.thenReturn(
-							Optional.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
-			// XXX Authenticate as Alice when making this request
-			mockmvc.perform(get("/view/id/{id}", UUID.randomUUID()))
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("APPROVED"));
+					.thenReturn(Optional.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED)));
+			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("APPROVED"));
 		}
 
 		@Test
 		void testViewEmployee() throws Exception {
 			when(service.retrieveFor("Alice"))
-					.thenReturn(List.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
-			// XXX Authenticate as Alice when making this request
+					.thenReturn(List.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED)));
 			mockmvc.perform(get("/view/employee/{employee}", "Alice"))
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$[0].employee").value("Alice"))
-					.andExpect(jsonPath("$[0].status").value("APPROVED"));
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$[0].employee").value("Alice"),
+							jsonPath("$[0].status").value("APPROVED"));
 		}
 
 	}
@@ -79,22 +82,22 @@ class LeaveRequestControllerWebMvcTest {
 	@Nested
 	class AuthorizeRole {
 
+		// TODO Authenticate with HR role when making these requests
+
 		@Test
 		void testApprove() throws Exception {
 			when(service.approve(any()))
-					.thenReturn(
-							Optional.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
-			// XXX Authenticate with HR role when making this request
+					.thenReturn(Optional.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED)));
 			mockmvc.perform(post("/approve/{id}", UUID.randomUUID()))
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("APPROVED"));
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("APPROVED"));
 		}
 
 		@Test
 		void testApproveMissing() throws Exception {
-			// XXX Authenticate with HR role when making this request
 			mockmvc.perform(post("/approve/{id}", UUID.randomUUID()))
 					.andExpect(status().isNoContent());
 		}
@@ -102,33 +105,31 @@ class LeaveRequestControllerWebMvcTest {
 		@Test
 		void testDeny() throws Exception {
 			when(service.deny(any()))
-					.thenReturn(
-							Optional.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.DENIED)));
-			// XXX Authenticate with HR role when making this request
+					.thenReturn(Optional.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), DENIED)));
 			mockmvc.perform(post("/deny/{id}", UUID.randomUUID()))
-					.andExpect(status().isAccepted())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$.employee").value("Alice"))
-					.andExpect(jsonPath("$.status").value("DENIED"));
+					.andExpectAll(
+							status().isAccepted(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$.employee").value("Alice"),
+							jsonPath("$.status").value("DENIED"));
 		}
 
 		@Test
-		void testViewIdMissing() throws Exception {
-			// XXX Authenticate with HR role when making this request
-			mockmvc.perform(get("/view/id/{id}", UUID.randomUUID()))
+		void testViewRequestMissing() throws Exception {
+			mockmvc.perform(get("/view/request/{id}", UUID.randomUUID()))
 					.andExpect(status().isNoContent());
 		}
 
 		@Test
 		void testViewAll() throws Exception {
 			when(service.retrieveAll())
-					.thenReturn(List.of(new LeaveRequest("Alice", of(2019, 11, 30), of(2019, 12, 3), Status.APPROVED)));
-			// XXX Authenticate with HR role when making this request
+					.thenReturn(List.of(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), APPROVED)));
 			mockmvc.perform(get("/view/all"))
-					.andExpect(status().isOk())
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-					.andExpect(jsonPath("$[0].employee").value("Alice"))
-					.andExpect(jsonPath("$[0].status").value("APPROVED"));
+					.andExpectAll(
+							status().isOk(),
+							content().contentType(MediaType.APPLICATION_JSON),
+							jsonPath("$[0].employee").value("Alice"),
+							jsonPath("$[0].status").value("APPROVED"));
 		}
 
 	}

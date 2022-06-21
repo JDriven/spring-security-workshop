@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class LeaveRequestService {
+class LeaveRequestService {
 
 	private final LeaveRequestRepository repo;
 
@@ -26,18 +26,6 @@ public class LeaveRequestService {
 		return repo.save(leaveRequest);
 	}
 
-	public Optional<LeaveRequest> approve(UUID id) {
-		Optional<LeaveRequest> found = repo.findById(id);
-		found.ifPresent(lr -> lr.setStatus(Status.APPROVED));
-		return found;
-	}
-
-	public Optional<LeaveRequest> deny(UUID id) {
-		Optional<LeaveRequest> found = repo.findById(id);
-		found.ifPresent(lr -> lr.setStatus(Status.DENIED));
-		return found;
-	}
-
 	public Optional<LeaveRequest> retrieve(UUID id) {
 		return repo.findById(id);
 	}
@@ -48,6 +36,18 @@ public class LeaveRequestService {
 
 	public List<LeaveRequest> retrieveAll() {
 		return repo.findAll();
+	}
+
+	public Optional<LeaveRequest> approve(UUID id) {
+		Optional<LeaveRequest> found = repo.findById(id);
+		found.ifPresent(lr -> lr.setStatus(Status.APPROVED));
+		return found;
+	}
+
+	public Optional<LeaveRequest> deny(UUID id) {
+		Optional<LeaveRequest> found = repo.findById(id);
+		found.ifPresent(lr -> lr.setStatus(Status.DENIED));
+		return found;
 	}
 
 }

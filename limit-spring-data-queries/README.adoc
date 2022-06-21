@@ -15,4 +15,4 @@ Up to you to implement these and have them checked by Spring Security.
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/master/limit-spring-data-queries
+https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries

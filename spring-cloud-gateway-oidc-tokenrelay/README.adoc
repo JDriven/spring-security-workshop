@@ -20,4 +20,4 @@ We cover link:keycloak/README.adoc[Keycloak setup in our example].
 - https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/master/spring-cloud-gateway-oidc-tokenrelay
+https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay

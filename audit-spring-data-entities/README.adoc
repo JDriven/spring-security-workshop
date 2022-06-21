@@ -13,4 +13,4 @@ A first draft of the entities and repositories has been provided; Up to you to w
 - https://docs.spring.io/spring-data/jpa/docs/2.7.x/reference/html/#auditing[Spring Data JPA Reference on Auditing]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/master/audit-spring-data-entities
+https://github.com/timtebeek/spring-security-samples/tree/main/audit-spring-data-entities

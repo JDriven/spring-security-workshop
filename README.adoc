@@ -1,23 +1,11 @@
 = Spring Security Workshop
 
 image:https://badges.gitter.im/spring-security-workshop/community.svg[link="https://gitter.im/spring-security-workshop/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
-A collection of Spring Security 5.2+ challenges; Part of a https://github.com/timtebeek/spring-security-samples[Spring Security blog series],
+A collection of Spring Security 5.7+ challenges; Part of a https://github.com/timtebeek/spring-security-samples[Spring Security blog series],
 and closely linked to the https://github.com/timtebeek/spring-security-samples[Spring Security Samples repository].
 
 The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
 While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.
-
-
-== Submodules
-
-NOTE: If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
-
-. link:adding-spring-security/[Adding Spring Security]
-. link:audit-spring-data-entities/[Auditing Spring Data Entities]
-. link:limit-spring-data-queries/[Securing Spring Data Queries]
-. link:access-decision-voter/[Custom Access Decision Voter]
-. link:permission-evaluator/[Custom Permission Evaluator]
-. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]
 
 == Requirements
 
@@ -27,5 +15,33 @@ In order to participate, you will need the following:
 - Java 11, or 17
 - IDE of your choice
 - https://projectlombok.org/[Lombok IDE plugin]
+- `https://curl.se/[curl]` or `https://httpie.io/[httpie]`
+- `docker-compose`, for Keycloak (optional)
 
 TIP: Use https://sdkman.io/ to easily install Java.
+
+== Getting started
+
+1. Clone this Git repository.
+
+  git clone https://github.com/timtebeek/spring-security-workshop.git
+
+2. Verify the tests for the `adding-spring-security` module (only).
+
+  ./mvnw -B verify --file adding-spring-security/pom.xml
+
+3. The other modules will have failing tests, as their implementation is (intentionally) incomplete.
+It's up to you to implement the functionality to fix the tests!
+
+4. If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
+
+5. Once you have completed the basics, continue with any of the other modules.
+
+== Submodules
+
+. link:adding-spring-security/[Adding Spring Security]: Secure an existing application. Start here!
+. link:audit-spring-data-entities/[Auditing Spring Data Entities]: Automatically track who modifies an entry, and when.
+. link:limit-spring-data-queries/[Securing Spring Data Queries]: Limit your query results to the active user.
+. link:access-decision-voter/[Custom Access Decision Voter]: Restrict which users can access what objects.
+. link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
+. link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
