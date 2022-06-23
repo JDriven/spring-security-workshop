@@ -203,8 +203,8 @@ http://localhost:8090/auth/realms/spring-cloud-gateway-realm/.well-known/openid-
 
 === Running Keycloak (or WireMock stubs)
 During development we will either
-link:adding-spring-security/keycloak/[use Keycloak] or 
-link:adding-spring-security/wiremock/[WireMock] to serve the configured `issuer-uri` endpoint.
+link:keycloak/[use Keycloak] or 
+link:wiremock/[WireMock] to serve the configured `issuer-uri` endpoint.
 WireMock is the easiest one to get working quickly, as it does not require Docker compose;
 Keycloak takes some more effort, but can be used for your own projects as well.
 
