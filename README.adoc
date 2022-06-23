@@ -7,6 +7,8 @@ and closely linked to the https://github.com/timtebeek/spring-security-samples[S
 The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
 While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.
 
+https://forms.gle/TsYonMZye3w3iQFQ7[All feedback much appreciated]!
+
 == Requirements
 
 In order to participate, you will need the following:
