@@ -182,7 +182,7 @@ At the very least the log line and dialog serve as a reminder to configure exact
 == 2. Configure OAuth2 resource server
 Since we wish to configure our application to function as an OAuth2 resource server,
 we can provide the required configuration to make the generated security password go away.
-https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
+https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
 
 .application.yml snippet to configure oauth2 resource server.
 [source,yaml]
@@ -328,10 +328,10 @@ Running the tests we see `GET` requests now get a `401 Unauthorized` response, w
 DEBUG --- [main] o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost/request/Alice
 DEBUG --- [main] o.s.s.w.access.AccessDeniedHandlerImpl   : Responding with 403 status code
 ----
-By default Spring Security adds https://docs.spring.io/spring-security/reference/5.7.1/servlet/exploits/csrf.html[Cross Site Request Forgery] protection for `POST` requests.
+By default Spring Security adds https://docs.spring.io/spring-security/reference/5.7.2/servlet/exploits/csrf.html[Cross Site Request Forgery] protection for `POST` requests.
 This protects our resource server from malicious requests; and it's best not to disable this.
 One way to get around this requirement for tests is to add `csrf` tokens to our POST requests, through 
-https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/csrf.html[`SecurityMockMvcRequestPostProcessors#csrf()`] from `spring-security-test`.
+https://docs.spring.io/spring-security/reference/5.7.2/servlet/test/mockmvc/csrf.html[`SecurityMockMvcRequestPostProcessors#csrf()`] from `spring-security-test`.
 But if we only do that, we would then get a `401 Unauthorized` response!
 
 So let's look into a proper fix; First, add the `spring-security-test` dependency to the link:leaveapp-initial/pom.xml[leaveapp-initial/pom.xml] file.
@@ -349,7 +349,7 @@ So let's look into a proper fix; First, add the `spring-security-test` dependenc
 
 This library provides us with `SecurityMockMvcRequestPostProcessors#jwt()`, among others,
 which we add to our test methods to have them pass a valid JWT along with each request.
-https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/oauth2.html#testing-jwt[The JWT can be configured] in a number of different ways.
+https://docs.spring.io/spring-security/reference/5.7.2/servlet/test/mockmvc/oauth2.html#testing-jwt[The JWT can be configured] in a number of different ways.
 Update your tests with the callouts seen below.
 
 [source,java]
@@ -448,7 +448,7 @@ void testRequest() throws Exception {
 	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
 }
 ----
-<1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.1/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in. +
+<1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.2/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in. +
 If we do not add the mock bean, the application will call out to the `issuer-uri` upon receiving the first `Authorization` header.
 And hosting a OIDC server for your tests is just not feasible or desirable.
 <2> We mock the `JwtDecoder.decode(String)` to always return the same `Jwt` value. +
@@ -478,7 +478,7 @@ For instance:
 === Configuring method security
 Since all requests pass through link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[`LeaveRequestService`], this seems like the perfect place to add our security restrictions.
 We'll add a variety of security annotation and expressions, all of which are documented extensively in 
-https://docs.spring.io/spring-security/reference/5.7.1/servlet/authorization/method-security.html[the Authorization chapter of Spring Security].
+https://docs.spring.io/spring-security/reference/5.7.2/servlet/authorization/method-security.html[the Authorization chapter of Spring Security].
 
 The security annotation handling needs to be enabled through `@EnableMethodSecurity(jsr250Enabled = true)`,
 as without this annotation the security annotations will not enforce anything!
@@ -722,7 +722,7 @@ See how these claims are encoded in the below JSON Web Token payload snippet.
 },
 ----
 
-Because of the nested structure of these claims, we have to https://docs.spring.io/spring-security/reference/5.7.1/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction[manually extract the authorities].
+Because of the nested structure of these claims, we have to https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction[manually extract the authorities].
 The process is a little involved, and hard to introduce gradually, so instead, here's the full annotated class.
 
 .WebSecurityConfig for custom JSON Web Token claim conversion.
