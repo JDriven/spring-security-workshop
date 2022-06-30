@@ -605,7 +605,7 @@ public List<LeaveRequest> retrieveFor(String employee) {
 	return repo.findByEmployee(employee);
 }
 
-@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')") <2>
+@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')") <3>
 public Optional<LeaveRequest> retrieve(UUID id) {
 	return repo.findById(id);
 }
