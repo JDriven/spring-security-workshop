@@ -612,7 +612,7 @@ public Optional<LeaveRequest> retrieve(UUID id) {
 ----
 <1> Notice how `#employee` refers to the method argument name. For simplicity we use the name rather than an identifier.
 <2> If you frequently use the exact same security expression, consider creating your own meta annotations.
-<3> We authorize on the `returnObject`, after making the call out to the repository, as the `UUID` argument contains insufficient information for our security expression.
+<3> We _post_ authorize on the `returnObject`, after making the call out to the repository, as the `UUID` argument contains insufficient information for our security expression.
 
 If you rerun the tests after adding these new annotations, you will see new `AuthorizeUser` test failures pop up.
 
