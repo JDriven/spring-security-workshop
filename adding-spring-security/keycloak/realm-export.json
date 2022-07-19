@@ -572,7 +572,7 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "k725YLf1lT3nC88Ki8L3plZa8Z3Jeo37",
       "redirectUris": [
         "http://localhost:8080/*"
       ],

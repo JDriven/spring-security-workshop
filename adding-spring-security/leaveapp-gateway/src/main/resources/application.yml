@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: leaveapp-gateway
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8090/auth/realms/spring-cloud-gateway-realm
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: spring-cloud-gateway-client
+            client-secret: k725YLf1lT3nC88Ki8L3plZa8Z3Jeo37
+            scope: openid
+
+  cloud:
+    gateway:
+      default-filters:
+      - TokenRelay
+
+      routes:
+      - id: httpbin
+        uri: http://localhost:8100/
+        predicates:
+        - Path=/**
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud.gateway: DEBUG
+        http.server.reactive: DEBUG
+        web.reactive: DEBUG
+        security: DEBUG

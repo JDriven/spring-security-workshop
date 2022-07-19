@@ -10,5 +10,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>leaveapp-initial</module>
+		<module>leaveapp-gateway</module>
 	</modules>
 </project>
