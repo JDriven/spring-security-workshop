@@ -9,6 +9,8 @@ While submodules can be combined to form a larger solution, we thought separatin
 
 https://forms.gle/TsYonMZye3w3iQFQ7[All feedback much appreciated]!
 
+https://docs.google.com/presentation/d/1LlxcWd3KqTJBcxETh1Rc9MOhkwV-pdQwW93t7tYfnQE/edit?usp=sharing[Slides JBCNConf 2022].
+
 == Requirements
 
 In order to participate, you will need the following:
