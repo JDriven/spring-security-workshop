@@ -1,8 +1,9 @@
 package com.jdriven.gateway;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -56,9 +56,11 @@ class TravelGatewayApplicationTest {
 	}
 
 	private static WebTestClientConfigurer oauth2Authentication() {
-		Map<String, Object> claims = Map.of("sub", "Subject A");
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("sub", "Subject A");
 		OidcIdToken token = new OidcIdToken("jwt", Instant.now(), Instant.MAX, claims);
-		Collection<? extends GrantedAuthority> auths = List.of(new SimpleGrantedAuthority("user"));
+		Collection<SimpleGrantedAuthority> auths = new ArrayList<>();
+		auths.add(new SimpleGrantedAuthority("user"));
 		OAuth2User principal = new DefaultOidcUser(auths, token);
 		Authentication auth = new OAuth2AuthenticationToken(principal, auths, "keycloak");
 		return mockAuthentication(auth);
