@@ -12,7 +12,7 @@ and https://httpbin.org/[httpbin] for debugging.
 2. Open http://localhost:8090 and login with username `admin` and password `Pa55w0rd`.
 3. Add a new realm named `spring-cloud-gateway-realm`.
 4. Import `realm-export.json`, with `If a resource exists: Skip`.
-5. Add a new user with username `spring-cloud-gateway-user`.
+5. Add a new user with username `alice`.
 6. Under credentials set user password to `password` with `Temporary: OFF`.
 
 == What you'll get
@@ -22,7 +22,7 @@ and https://httpbin.org/[httpbin] for debugging.
  - `Access Type: confidential` and `Credentials Secret:k725YLf1lT3nC88Ki8L3plZa8Z3Jeo37` 
  - `Valid Redirect URIs: http://localhost:8080/*`
  - `Access Token Lifespan: 20 minutes`
-* a user named `spring-cloud-gateway-user`.
+* a user named `alice`.
 
 == Getting a JSON Web Token
 
@@ -31,7 +31,7 @@ For that we will throw up a quick httpbin service, which echoes back the request
 
 1. Open http://localhost:8080/get in your browser
 2. The browser will redirect you to Keycloak to login
-3. Use `spring-cloud-gateway-user` / `password` to login.
+3. Use `alice` / `password` to login.
 4. Your browser will show you the GET request details.
 5. Your access token is the value behind `Bearer` under `headers > Authorization`.
 
