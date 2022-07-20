@@ -7,15 +7,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.jdriven.leaverequest.LeaveRequest.Status;
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import static org.springframework.http.ResponseEntity.accepted;
 import static org.springframework.http.ResponseEntity.noContent;
@@ -39,7 +37,7 @@ class LeaveRequestController {
 	@PostMapping("/approve/{id}")
 	public ResponseEntity<LeaveRequestDTO> approve(@PathVariable UUID id) {
 		Optional<LeaveRequest> approved = service.approve(id);
-		if (approved.isEmpty()) {
+		if (!approved.isPresent()) {
 			return noContent().build();
 		}
 		return accepted().body(new LeaveRequestDTO(approved.get()));
@@ -48,7 +46,7 @@ class LeaveRequestController {
 	@PostMapping("/deny/{id}")
 	public ResponseEntity<LeaveRequestDTO> deny(@PathVariable UUID id) {
 		Optional<LeaveRequest> denied = service.deny(id);
-		if (denied.isEmpty()) {
+		if (!denied.isPresent()) {
 			return noContent().build();
 		}
 		return accepted().body(new LeaveRequestDTO(denied.get()));
@@ -57,7 +55,7 @@ class LeaveRequestController {
 	@GetMapping("/view/request/{id}")
 	public ResponseEntity<LeaveRequestDTO> viewRequest(@PathVariable UUID id) {
 		Optional<LeaveRequest> retrieved = service.retrieve(id);
-		if (retrieved.isEmpty()) {
+		if (!retrieved.isPresent()) {
 			return noContent().build();
 		}
 		return ok(new LeaveRequestDTO(retrieved.get()));
