@@ -27,13 +27,20 @@ and https://httpbin.org/[httpbin] for debugging.
 == Getting a JSON Web Token
 
 We want to extract a valid JSON Web Token to use in our leave application tests.
-For that we will throw up a quick httpbin service, which echoes back the request details.
+For that we will throw up two quick components;
+ - first a OAuth2 Client application, named Leave App Gateway;
+ - secondly httpbin, which echoes back the request details.
 
-1. Open http://localhost:8080/get in your browser
-2. The browser will redirect you to Keycloak to login
-3. Use `alice` / `password` to login.
-4. Your browser will show you the GET request details.
-5. Your access token is the value behind `Bearer` under `headers > Authorization`.
+0. Ensure `leaveapp-initial` is not running.
+1. Navigate to `spring-security-workshop/adding-spring-security/leaveapp-gateway/`
+2. Start the leaveapp-gateway application `./mvnw spring-boot:run`
+3. Open http://localhost:8080/get in your browser.
+4. The browser will redirect you to Keycloak to login.
+5. Use `alice` / `password` to login.
+6. Keycloak will redirect you back to the gateway.
+7. The gateway will call out to httpbin.
+8. Httpbin will show you the GET request details.
+9. Your access token is the value behind `Bearer` under `headers > Authorization`.
 
 .Example GET response containing Bearer token.
 [source,yml]
