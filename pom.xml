@@ -12,6 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
+		<!-- 11 & 17+ work as well! -->
 		<java.version>8</java.version>
 	</properties>
 	<modules>
