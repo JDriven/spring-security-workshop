@@ -17,8 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
       - name: Compile all modules
-        run: ./mvnw -B test-compile --file pom.xml
+        run: ./mvnw -B -Dstyle.color=always test-compile --file pom.xml
       - name: Test Adding Spring Security module
-        run: ./mvnw -B verify --file adding-spring-security/pom.xml
+        run: ./mvnw -B -Dstyle.color=always verify --file adding-spring-security/pom.xml
       - name: Spotless Check
-        run: ./mvnw -B spotless:check
+        run: ./mvnw -B -Dstyle.color=always spotless:check
