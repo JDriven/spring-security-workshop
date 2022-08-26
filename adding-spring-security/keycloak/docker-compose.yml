@@ -27,7 +27,9 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
     ports:
+      # Disable 8090 when recording with WireMock
       - 8090:8080
+      - 8091:8080
     depends_on:
       - postgres
 

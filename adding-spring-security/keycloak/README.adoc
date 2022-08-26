@@ -13,7 +13,8 @@ and https://httpbin.org/[httpbin] for debugging.
 3. Add a new realm named `spring-cloud-gateway-realm`.
 4. Import `realm-export.json`, with `If a resource exists: Skip`.
 5. Add a new user with username `alice`.
-6. Under credentials set user password to `password` with `Temporary: OFF`.
+6. Under Credentials set user password to `password` with `Temporary: OFF`.
+7. Under Role Mappings add `offline_access` to Assigned Roles.
 
 == What you'll get
 

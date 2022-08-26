@@ -230,10 +230,16 @@ The reason we're now getting `40x` responses, is because our requests lack an `A
 To solve this, we have to actually pass a Bearer token along with our requests.
 Here's a token value to get your requests through with a `HTTP/1.1 20x` response:
 
-.Show full JSON Web Token valid through August 7th 2022.
+.Show Alice's JSON Web Token valid through August 23th 2032.
 [%collapsible]
 ====
-  eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRSS1mdW1sLTRyTnBrdVZxWVg0elpuZlRUZW1hSkxoZ183Z0dULTZiSFlVIn0.eyJqdGkiOiI0OWFkZmVlOS02MGEwLTQxMTItOGI1OS1hZWEwOTliYjlmYTIiLCJleHAiOjE2NTk4OTg3NjYsIm5iZiI6MCwiaWF0IjoxNTczNDk4NzY2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYWQ4MjRkZmMtNmFmZi00NWEzLWJlOWQtOTU0ZDUwZmJkYjdhIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJwMGtsejZlc0VYNnYtWU8tXzVGd2JITk95N2NudklibEsweTBiWi1iUVpNIiwiYXV0aF90aW1lIjoxNTczNDk4NzY2LCJzZXNzaW9uX3N0YXRlIjoiZjIyMjY4ZTAtOTJlZS00MDU4LTgzMzctMzkyNDg4YjJlNTQwIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcGhvbmUgbWljcm9wcm9maWxlLWp3dCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIGFkZHJlc3MiLCJ1cG4iOiJhbGljZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhZGRyZXNzIjp7fSwibmFtZSI6IkFsaWNlIiwiZ3JvdXBzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWxpY2UiLCJnaXZlbl9uYW1lIjoiQWxpY2UifQ.hHK8E-01eFb4UZtBjclVronp-6jfVbhxh9U0m0DEdYQE8YGWFCjMxUcfeI0Rx9zueeC_HJsFT4wcegs8Qh6Z2n7IGWbf0Vtg0fzVH9vFXkwbFBdbCZJz4MZ1Zc3cpC2UrSnuPDc8EIn1FQrKIEF8nqEcNzcL3ujxligvOern2A4xUS1GLqrLKmbPPbKocESZb75EMbmEPFDoctgI1n4vniOz9j242WxbcMjM7INeIsPCKWqvgaeYHOKlgW2CfHfsLPr_XQw5VvCMWJ1GHficCwwjyL-PeemHmBS6eO6EnHpl5Ftm7siATcZuJXQHTosb6b38Gkw2s6-yGQJcbQc01g
+  eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUOUpHbFdTc244UXFoUkZlX19LWU5kRGVQWm1xLVU1c2RZRWppQjFwNEpVIn0.eyJleHAiOjE5NzY4NzYzMzIsImlhdCI6MTY2MTUxNjMzMiwiYXV0aF90aW1lIjoxNjYxNTE2MzMyLCJqdGkiOiJiNjc1YWJiMS05OTU5LTRhMDUtYTgxZS1iY2U1MWVjYjlkYzgiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTUzYmJkODYtNWQ1Yy00MmFkLTgyNjEtN2E5MzlmZjFjZWIyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJyWHpXNVItdUhnRHJYTGRZUFZ3TDdmQUtwNGZNQ0ZuRmJDcl9RUllaREhVIiwic2Vzc2lvbl9zdGF0ZSI6ImMwZjNmNzYzLTc2NzQtNDZmNi1iMWNmLWQ5OWZiMDNmNDZhZiIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJjMGYzZjc2My03Njc0LTQ2ZjYtYjFjZi1kOTlmYjAzZjQ2YWYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFsaWNlIn0.V9sQJ_8yP4qHXMFq5fNQUG8KddHWVO5aiK6k08liiHXPDJw4sZwOHHSANS-7esxZOBcuvoxPOMYFEjY8k33-PhuAbswoZaFSGSf19ksgC5s2dRlskFW1Z6QQNGEOtitSTk0O3xZ8606ZBsRR1asx-X6MMXejwY5wtCl53mwcBlCB_Vs32UsXk8E7QbsVSCfl-Inpab2w4reDb635n8wOo2RGLhK_8kxdR_8p7FEuKLUrzI12eU9IvWZf0XQvNC-W_Niw52W1DIQ_SSnlMt17jIKvRRBOmBiSDq1gXz56oYEWGaDPVZG_u_ooWD8WqyOXq9gP4EsXK_J0LvLOCp85Vg
+====
+
+.Show HR JSON Web Token valid through August 23th 2032.
+[%collapsible]
+====
+  eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUOUpHbFdTc244UXFoUkZlX19LWU5kRGVQWm1xLVU1c2RZRWppQjFwNEpVIn0.eyJleHAiOjE5NzY4NzY0MjcsImlhdCI6MTY2MTUxNjQyNywiYXV0aF90aW1lIjoxNjYxNTE2NDI3LCJqdGkiOiI4NTc1MzBmMS02YWNkLTQ4MGEtOGYwNi0yNTIzZjk1ZTllMGIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYTJmYjE3NmQtMWYwMy00ZWM1LWJiMGQtZTI3Y2VmYTUwY2FjIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJsb0FuTlF5Q1Ntc1NjSlZnSjNubTdEN3hUVWhpc2Z0YlY1bjF5NWY5blp3Iiwic2Vzc2lvbl9zdGF0ZSI6ImRlMjkzZjVlLTc0NmUtNGRmNi1iMjFjLWQ2Nzc5ZTE5YjBkNyIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJIUiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInNpZCI6ImRlMjkzZjVlLTc0NmUtNGRmNi1iMjFjLWQ2Nzc5ZTE5YjBkNyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImJvYiIsInByZWZlcnJlZF91c2VybmFtZSI6ImJvYiIsImdpdmVuX25hbWUiOiJib2IifQ.YesLamdNivBSa1eqxroBM6aKEaTeTf75c0Wfdsfwz8hWtjqQgNf9GglS7-kWK_lWc0PfH5zyU2X0slYM0ZRCUo-8j6oM5v3OLkc77Qlc5uszUVrVcGOAcHe4jjSnqLfqsavPmruRXtzbCJncqvYuR0LW5Nfu1UWxyT28UPiwXVC9juobgXraStmOlxaDXIP8JZWdEPqqpqrOjlLVuwMsXQi5g-3L89idU7Bfaz0ujHMt9JX83gKxzQDf6I825fmGPQNabruI8gPOWMxTT-XzDoSfUgUOZ-jXSa0bCADKrjAEpw5Q9KOnFzncoO6u6nQuUpwYvWfqRafACm0oy0P6Xw
 ====
 
 If you're curious what information is contained within this token, you can easily decode the token into it's three parts using https://jwt.io.
@@ -244,22 +250,21 @@ If you're curious what information is contained within this token, you can easil
 [source,json]
 ----
 {
-  "jti": "49adfee9-60a0-4112-8b59-aea099bb9fa2",
-  "exp": 1659898766,
-  "nbf": 0,
-  "iat": 1573498766,
+  "exp": 1976876332,
+  "iat": 1661516332,
+  "auth_time": 1661516332,
+  "jti": "b675abb1-9959-4a05-a81e-bce51ecb9dc8",
   "iss": "http://localhost:8090/auth/realms/spring-cloud-gateway-realm",
   "aud": "account",
-  "sub": "ad824dfc-6aff-45a3-be9d-954d50fbdb7a",
+  "sub": "153bbd86-5d5c-42ad-8261-7a939ff1ceb2",
   "typ": "Bearer",
   "azp": "spring-cloud-gateway-client",
-  "nonce": "p0klz6esEX6v-YO-_5FwbHNOy7cnvIblK0y0bZ-bQZM",
-  "auth_time": 1573498766,
-  "session_state": "f22268e0-92ee-4058-8337-392488b2e540",
-  "acr": "1",
+  "nonce": "rXzW5R-uHgDrXLdYPVwL7fAKp4fMCFnFbCr_QRYZDHU",
+  "session_state": "c0f3f763-7674-46f6-b1cf-d99fb03f46af",
   "realm_access": {
     "roles": [
       "offline_access",
+      "default-roles-spring-cloud-gateway-realm",
       "uma_authorization"
     ]
   },
@@ -272,17 +277,10 @@ If you're curious what information is contained within this token, you can easil
       ]
     }
   },
-  "scope": "openid phone microprofile-jwt offline_access profile email address",
-  "upn": "alice",
-  "email_verified": true,
-  "address": {},
-  "name": "Alice",
-  "groups": [
-    "offline_access",
-    "uma_authorization"
-  ],
-  "preferred_username": "alice",
-  "given_name": "Alice"
+  "scope": "openid email profile",
+  "sid": "c0f3f763-7674-46f6-b1cf-d99fb03f46af",
+  "email_verified": false,
+  "preferred_username": "alice"
 }
 ----
 ====
