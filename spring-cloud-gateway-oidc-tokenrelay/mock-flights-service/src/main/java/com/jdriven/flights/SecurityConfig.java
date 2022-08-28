@@ -23,7 +23,7 @@ public class SecurityConfig {
 		// TODO Validate tokens through configured OpenID Provider (also requires application.yml changes)
 
 		// Require authentication for all requests
-		http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
 
 		// Allow showing pages within a frame
 		http.headers().frameOptions().sameOrigin();
