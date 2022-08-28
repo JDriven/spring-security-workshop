@@ -16,8 +16,8 @@ We cover link:keycloak/README.adoc[Keycloak setup in our example].
 
 == References
 - https://cloud.spring.io/spring-cloud-gateway/reference/html/[Spring Cloud Gateway]
-- https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/login/core.html[OAuth 2.0 Login]
-- https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/login/core.html[OAuth 2.0 Login]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
 
 == Solution
 https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay

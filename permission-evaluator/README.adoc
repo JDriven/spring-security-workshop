@@ -11,7 +11,7 @@ The access permissions are stored in a repository; Up to you to verify access th
 * link:src/test/java/com/jdriven/service/SpreadsheetServiceIntegrationTest.java[Run the tests] to verify your implementation
 
 == References
-- https://docs.spring.io/spring-security/reference/5.7.2/servlet/authorization/expression-based.html#el-permission-evaluator[The PermissionEvaluator interface]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#el-permission-evaluator[The PermissionEvaluator interface]
 
 == Solution
 https://github.com/timtebeek/spring-security-samples/tree/main/permission-evaluator

@@ -11,8 +11,8 @@ Up to you to implement these and have them checked by Spring Security.
 * link:src/test/java/com/jdriven/PreferencesRepositoryIntegrationTest.java[Run the tests] to verify your implementation
 
 == References
-- https://docs.spring.io/spring-security/reference/5.7.2/servlet/authorization/expression-based.html#_method_security_expressions[Method Security Expressions]
-- https://docs.spring.io/spring-security/reference/5.7.2/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#_method_security_expressions[Method Security Expressions]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
 
 == Solution
 https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries
