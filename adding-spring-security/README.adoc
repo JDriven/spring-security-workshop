@@ -184,7 +184,7 @@ Since we wish to configure our application to function as an OAuth2 resource ser
 we can provide the required configuration to make the generated security password go away.
 https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
 
-.application.yml snippet to configure oauth2 resource server.
+.src/main/resources/application.yml snippet to configure oauth2 resource server.
 [source,yaml]
 ----
 spring:
@@ -797,9 +797,26 @@ class UsernameSubClaimAdapter implements Converter<Map<String, Object>, Map<Stri
 ----
 <1> We introduce a new `WebSecurityConfig`, annotated with `@EnableWebSecurity`.
 <2> By adding `@ConditionalOnWebApplication`, the presence of this class will not interfere with `LeaveRequestServiceTest`.
-<3> Our JwtDecoder requires the `issuer-uri` to 
+<3> Our JwtDecoder requires the `issuer-uri`, so we only conditionally load this bean.
 <4> We wire up our customized `JwtDecoder`, as indicated in the documentation.
 <5> Finally, we extract the `preferred_username` claim, and override the `sub` claim.
+
+With this converter in place, our Authentication object should now user the user's preferred name as name attribute.
+
+There's just a minor inconvenience, as the default property value in `src/main/resources/application.yml`,
+triggers the conditional `JwtDecoder` bean in `LeaveRequestControllerSpringBootWebEnvMockTest`, which breaks our application context initialization..
+To get around this, we set the property value to `false` in `src/test/resources/application.yml`, to make the auto-configuration back off.
+
+.src/test/resources/application.yml
+[source,yaml]
+----
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: false
+----
 
 === Granted authorities
 Keycloak by default wraps the assigned roles inside a claim called `realm_access`.
