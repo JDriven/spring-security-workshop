@@ -709,16 +709,107 @@ with the Authentication objects used throughout your application for authorizati
 These details will differ from provider to provider, and thus need fine tuning whenever you which between providers.
 And while there are some common claims, such as `subject` for the user name, you might still want to map other claims to get the user's roles or preferred name.
 
-In our case we're using Keycloak, which wraps assigned roles within a `realm_access` claim.
-See how these claims are encoded in the below JSON Web Token payload snippet.
+Let's take another closer look at the JSON Web Token returned by Keycloak for Bob from HR.
+
+.Decoded JSON Web Token payload for Bob from HR.
+[source,json]
+----
+{
+  "exp": 1976876427,
+  "iat": 1661516427,
+  "auth_time": 1661516427,
+  "jti": "857530f1-6acd-480a-8f06-2523f95e9e0b",
+  "iss": "http://localhost:8090/auth/realms/spring-cloud-gateway-realm",
+  "aud": "account",
+  "sub": "a2fb176d-1f03-4ec5-bb0d-e27cefa50cac", <1>
+  "typ": "Bearer",
+  "azp": "spring-cloud-gateway-client",
+  "nonce": "loAnNQyCSmsScJVgJ3nm7D7xTUhisftbV5n1y5f9nZw",
+  "session_state": "de293f5e-746e-4df6-b21c-d6779e19b0d7",
+  "realm_access": {
+    "roles": [
+      "offline_access",
+      "default-roles-spring-cloud-gateway-realm",
+      "HR", <2>
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "scope": "openid email profile",
+  "sid": "de293f5e-746e-4df6-b21c-d6779e19b0d7",
+  "email_verified": false,
+  "name": "bob",
+  "preferred_username": "bob", <3>
+  "given_name": "bob"
+}
+----
+<1> Notice how the `sub` claim is a generated UUID.
+<2> Bob's `HR` role is nested under `$.realm_access.roles`.
+<3> Bob's preferred username is `bob`.
+
+Up to now we had set the `sub` or subject claim in our tests explicitly to `alice`, or assigned the `HR` role directly.
+For our application to work with Keycloak JSON Web Tokens, we have to properly convert the JWT claims.
+
+=== Preferred name
+Spring Security assumes the https://github.com/spring-projects/spring-security/blob/5.7.3/oauth2/oauth2-resource-server/src/main/java/org/springframework/security/oauth2/server/resource/authentication/JwtAuthenticationToken.java#L49[JWT subject as authentication name],
+which is what we use in our method security expressions.
+So to ensure the authentication name matches the `#employee` username passed into our web requests, we have to https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-claimsetmapping-rename[rename the `sub` claim].
+
+[source,java]
+----
+@EnableWebSecurity <1>
+@ConditionalOnWebApplication <2>
+class WebSecurityConfig {
+
+	@Bean
+	@ConditionalOnProperty(name = "spring.security.oauth2.resourceserver.jwt.issuer-uri") <3>
+	JwtDecoder jwtDecoderByIssuerUri(OAuth2ResourceServerProperties properties) {
+		String issuerUri = properties.getJwt().getIssuerUri();
+		NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder) JwtDecoders.fromIssuerLocation(issuerUri);
+		// Use preferred_username from claims as authentication name, instead of UUID subject
+		jwtDecoder.setClaimSetConverter(new UsernameSubClaimAdapter()); <4>
+		return jwtDecoder;
+	}
+
+}
+
+class UsernameSubClaimAdapter implements Converter<Map<String, Object>, Map<String, Object>> {
+
+	private final MappedJwtClaimSetConverter delegate = MappedJwtClaimSetConverter.withDefaults(Collections.emptyMap());
+
+	@Override
+	public Map<String, Object> convert(Map<String, Object> claims) {
+		Map<String, Object> convertedClaims = this.delegate.convert(claims);
+		String username = (String) convertedClaims.get("preferred_username"); <5>
+		convertedClaims.put("sub", username);
+		return convertedClaims;
+	}
+
+}
+----
+<1> We introduce a new `WebSecurityConfig`, annotated with `@EnableWebSecurity`.
+<2> By adding `@ConditionalOnWebApplication`, the presence of this class will not interfere with `LeaveRequestServiceTest`.
+<3> Our JwtDecoder requires the `issuer-uri` to 
+<4> We wire up our customized `JwtDecoder`, as indicated in the documentation.
+<5> Finally, we extract the `preferred_username` claim, and override the `sub` claim.
+
+=== Granted authorities
+Keycloak by default wraps the assigned roles inside a claim called `realm_access`.
+Within that claim there's a `roles` field, which hold a collection of roles.
 
 .`realm_access` claim taken from decoded Keycloak JSON Web Token payload.
 [source,json]
 ----
 "realm_access": {
   "roles": [
-    "offline_access",
-    "uma_authorization",
     "HR"
   ]
 },
@@ -727,51 +818,52 @@ See how these claims are encoded in the below JSON Web Token payload snippet.
 Because of the nested structure of these claims, we have to https://docs.spring.io/spring-security/reference/5.7.2/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction[manually extract the authorities].
 The process is a little involved, and hard to introduce gradually, so instead, here's the full annotated class.
 
-.WebSecurityConfig for custom JSON Web Token claim conversion.
+.SecurityFilterChain for custom JSON Web Token claim conversion.
 [source,java]
 ----
-@EnableWebSecurity <1>
-@ConditionalOnWebApplication <2>
-public class WebSecurityConfig {
-
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http
-			.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-			.oauth2ResourceServer(oauth2 -> oauth2
-				.jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakRealmRoleConverter()))) <3>
-			.build();
-	}
-
+@Bean
+SecurityFilterChain filterChain(HttpSecurity http) throws Exception { <1>
+	return http
+		.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+		.oauth2ResourceServer(oauth2 -> oauth2
+			.jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakRealmRoleConverter()))) <1>
+		.build();
 }
+----
+<1> We add a `SecurityFilterChain` to our `WebSecurityConfig`.
+<2> We wire up our custom authentication converter, as indicated in the documentation.
 
+.KeycloakRealmRoleConverter to unpack realm_access roles into GrantedAuthorities.
+[source,java]
+----
 class KeycloakRealmRoleConverter implements Converter<Jwt, JwtAuthenticationToken> {
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public JwtAuthenticationToken convert(Jwt jwt) {
 		Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().getOrDefault("realm_access", Map.of());
-		List<String> roles = (List<String>) realmAccess.getOrDefault("roles", List.of()); <4>
+		List<String> roles = (List<String>) realmAccess.getOrDefault("roles", List.of()); <1>
 		List<GrantedAuthority> authorities = roles.stream()
 			.map(roleName -> "ROLE_" + roleName)
-			.map(SimpleGrantedAuthority::new) <5>
+			.map(SimpleGrantedAuthority::new) <2>
 			.collect(Collectors.toList());
-		return new JwtAuthenticationToken(jwt, authorities); <6>
+		return new JwtAuthenticationToken(jwt, authorities); <3>
 	}
 
 }
 ----
-<1> We introduce a new `WebSecurityConfig`, annotated with `@EnableWebSecurity`.
-<2> By adding `@ConditionalOnWebApplication`, the presence of this class will not interfere with `LeaveRequestServiceTest`.
-<3> We wire up our custom authentication converter, as indicated in the documentation.
-<4> Defensively, we extract first the `realm_access` claim, and then the `roles` contained within.
-<5> Any roles are prefixed with `ROLE_` and converted into granted authorities.
-<6> Finally, we return a complete Authentication object for use in our application.
+<1> Defensively, we extract first the `realm_access` claim, and then the `roles` contained within.
+<2> Any roles are prefixed with `ROLE_` and converted into granted authorities.
+<3> Finally, we return a complete Authentication object for use in our application.
 
 When you add this final piece to your application code, all tests should now pass again!
 
 Even the `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` tests that we postponed previously now pass.
 These are the only tests that check the token claim mapping as part of their execution, so there is some value in these tests after all.
+
+== Verification
+At this stage you can choose to revisit the JWTs shown previously for both Alice and Bob from HR, as well as the HTTPie / curl commands from before.
+All web requests should now be working as expected, provided you pass in the correct Bearer token.
 
 == Conclusion
 We have now added Spring Security to our application, to allow any user to authenticate, while only granting some users special privileges.
