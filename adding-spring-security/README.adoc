@@ -580,7 +580,7 @@ Check back after we discussed converting JWT claims, and ignore these failing te
 The more challenging methods to secure are the methods that are accessible both to individual users, as well as users with the HR role.
 Users should only be able to submit and view their own leave requests (only), while users with HR role have no such restrictions.
 
-To protect these methods we will use a mix of https://docs.spring.io/spring-security/reference/servlet/authorization/expression-based.html#el-pre-post-annotations[pre- and post authorization annotations].
+To protect these methods we will use a mix of https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#el-pre-post-annotations[pre- and post authorization annotations].
 These annotations take a Spring-EL expression as argument, which has access to the method arguments and returned object, as well as the authenticated user and built-in expressions.
 
 Add the below annotations and security expressions to link:leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java[`LeaveRequestService`].
