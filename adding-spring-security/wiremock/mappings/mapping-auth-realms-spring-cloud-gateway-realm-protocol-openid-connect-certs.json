@@ -1,5 +1,5 @@
 {
-  "id" : "e25c86e9-42cb-4f36-957f-39cd783a45cc",
+  "id" : "c11b6348-61cb-3910-8276-d00a1ee8b876",
   "request" : {
     "url" : "/auth/realms/spring-cloud-gateway-realm/protocol/openid-connect/certs",
     "method" : "GET"
@@ -8,11 +8,15 @@
     "status" : 200,
     "bodyFileName" : "body-auth-realms-spring-cloud-gateway-realm-protocol-openid-connect-certs.json",
     "headers" : {
-      "Connection" : "keep-alive",
-      "Cache-Control" : "no-cache, must-revalidate, no-transform, no-store",
-      "Content-Type" : "application/json",
-      "Date" : "Fri, 01 Nov 2019 14:35:29 GMT"
+      "Cache-Control" : "no-cache",
+      "X-XSS-Protection" : "1; mode=block",
+      "X-Frame-Options" : "SAMEORIGIN",
+      "Referrer-Policy" : "no-referrer",
+      "Date" : "Fri, 26 Aug 2022 11:56:55 GMT",
+      "Strict-Transport-Security" : "max-age=31536000; includeSubDomains",
+      "X-Content-Type-Options" : "nosniff",
+      "Content-Type" : "application/json"
     }
   },
-  "uuid" : "e25c86e9-42cb-4f36-957f-39cd783a45cc"
+  "uuid" : "c11b6348-61cb-3910-8276-d00a1ee8b876"
 }
