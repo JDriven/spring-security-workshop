@@ -701,7 +701,7 @@ which we will finally fix in the next section, by introducing claim mapping.
 == 5. Convert JWT claims
 One final and challenging part of adding Spring Security, is aligning the JSON Web Token claims returned by your token provider
 with the Authentication objects used throughout your application for authorization.
-These details will differ from provider to provider, and thus need fine tuning whenever you which between providers.
+These details will differ from provider to provider, and thus need fine tuning whenever you switch between providers.
 And while there are some common claims, such as `subject` for the user name, you might still want to map other claims to get the user's roles or preferred name.
 
 Let's take another closer look at the JSON Web Token returned by Keycloak for Bob from HR.
