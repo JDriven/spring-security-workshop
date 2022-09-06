@@ -184,18 +184,13 @@ Since we wish to configure our application to function as an OAuth2 resource ser
 we can provide the required configuration to make the generated security password go away.
 https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/jwt.html[As indicated in the documentation], configuration takes the form of:
 
-.src/main/resources/application.yml snippet to configure oauth2 resource server.
-[source,yaml]
+.src/main/resources/application.properties snippet to configure oauth2 resource server.
+[source,properties]
 ----
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8090/auth/realms/spring-cloud-gateway-realm
+spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8090/auth/realms/spring-cloud-gateway-realm
 ----
 
-Add the above snippet to link:leaveapp-initial/src/main/resources/application.yml[application.yml].
+Add the above snippet to link:leaveapp-initial/src/main/resources/application.properties[application.properties].
 
 Once added, the application will call out to the configured `issuer-uri` during startup, to configure the `JwtDecoder` through the
 https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig[OpenID Provider Configuration Information endpoint] at:
