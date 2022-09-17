@@ -94,22 +94,22 @@ http :8080/view/all
 [source,bash]
 ----
 # Create a leave request for a specific user and time window
-curl -X POST 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
+curl -v -X POST 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
 
 # View leave requests for employee
-curl http://localhost:8080/view/employee/alice
+curl -v http://localhost:8080/view/employee/alice
 
 # Approve leave request
-curl -X POST http://localhost:8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+curl -v -X POST http://localhost:8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
 
 # Deny leave request
-curl -X POST http://localhost:8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+curl -v -X POST http://localhost:8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
 
 # View leave request
-curl http://localhost:8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+curl -v http://localhost:8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
 
 # View all leave requests
-curl http://localhost:8080/view/all
+curl -v http://localhost:8080/view/all
 ----
 ====
 
@@ -290,11 +290,11 @@ export token=eyJhbGciOiJ...
 
 # Create a leave request for a specific user and time window
 http POST ':8080/request/alice?from=2022-08-21&to=2022-09-11' "Authorization: Bearer ${token}"
-curl -X POST -H "Authorization: Bearer ${token}" 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
+curl -v -X POST -H "Authorization: Bearer ${token}" 'http://localhost:8080/request/alice?from=2022-08-21&to=2022-09-11'
 
 # View all leave requests
 http :8080/view/all "Authorization: Bearer ${token}"
-curl -H "Authorization: Bearer ${token}" http://localhost:8080/view/all
+curl -v -H "Authorization: Bearer ${token}" http://localhost:8080/view/all
 ----
 
 Perfect; our application now at the very least requires a valid JWT for any request.
