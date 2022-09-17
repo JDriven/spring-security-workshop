@@ -417,32 +417,39 @@ Next, here's that same test, but now with all the bits and pieces to pass an aut
 @MockBean
 private JwtDecoder jwtDecoder; <1>
 
-@BeforeEach
-void beforeEach() {
-	when(jwtDecoder.decode(anyString())) <2>
-		.thenReturn(Jwt.withTokenValue("token")
-			.subject("alice")
-			.header("alg", "none")
-			.build());
-}
+@Nested
+class AuthorizeUser {
 
-@Test
-void testRequest() throws Exception {
-	HttpHeaders headers = new HttpHeaders();
-	headers.setBearerAuth("some.random.token"); <3>
-	HttpEntity<?> httpEntity = new HttpEntity<>(headers); <4>
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString())) <2>
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("alice")
+				.header("alg", "none")
+				.build());
+	}
 	
-	LocalDate from = of(2022, 11, 30);
-	LocalDate to = of(2022, 12, 3);
-	ResponseEntity<LeaveRequestDTO> response = restTemplate.exchange( <5>
-		"/request/{employee}?from={from}&to={to}",
-		HttpMethod.POST, httpEntity, LeaveRequestDTO.class, "alice", from, to);
-	assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
-	assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
-	assertThat(response.getBody().getEmployee()).isEqualTo("alice");
-	assertThat(response.getBody().getFromDate()).isEqualTo(from);
-	assertThat(response.getBody().getToDate()).isEqualTo(to);
-	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+	@Test
+	void testRequest() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth("some.random.token"); <3>
+		HttpEntity<?> httpEntity = new HttpEntity<>(headers); <4>
+		
+		LocalDate from = of(2022, 11, 30);
+		LocalDate to = of(2022, 12, 3);
+		ResponseEntity<LeaveRequestDTO> response = restTemplate.exchange( <5>
+			"/request/{employee}?from={from}&to={to}",
+			HttpMethod.POST, httpEntity, LeaveRequestDTO.class, "alice", from, to);
+		assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+		assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
+		assertThat(response.getBody().getEmployee()).isEqualTo("alice");
+		assertThat(response.getBody().getFromDate()).isEqualTo(from);
+		assertThat(response.getBody().getToDate()).isEqualTo(to);
+		assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+	}
+
+	// ...
+
 }
 ----
 <1> We provide a `@MockBean JwtDecoder` to https://docs.spring.io/spring-security/reference/5.7.3/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor[prevent the deferred JWT decoder initialization] from triggering once a JWT is passed in. +
@@ -684,13 +691,19 @@ Here is the relevant section from that approach again; scroll up for the full de
 @MockBean
 private JwtDecoder jwtDecoder;
 
-@BeforeEach
-void beforeEach() {
-	when(jwtDecoder.decode(anyString()))
-		.thenReturn(Jwt.withTokenValue("token")
-			.subject("alice") <1>
-			.header("alg", "none")
-			.build());
+@Nested
+class AuthorizeUser {
+
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString()))
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("alice") <1>
+				.header("alg", "none")
+				.build());
+	}
+
+	// ...
 }
 ----
 <1> The subject claim will be turned into the `Authentication` object `name`, as used in our security expressions.
