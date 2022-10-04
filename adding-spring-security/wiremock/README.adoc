@@ -13,6 +13,9 @@ To serve the recorded mappings with WireMock:
 http://localhost:8090/auth/realms/spring-cloud-gateway-realm/.well-known/openid-configuration
 
 == Recording with WireMock
+
+NOTE: Not needed for the workshop! Only here to inform how we captured these recordings.
+
 We've previously ran WireMock in proxy mode to record the calls made to our Keycloak OpenID Connect provider:
 [source,bash]
 ----
