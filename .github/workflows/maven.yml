@@ -16,6 +16,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
+          cache: 'maven'
       - name: Compile all modules
         run: ./mvnw -B -Dstyle.color=always test-compile --file pom.xml
       - name: Test Adding Spring Security module
