@@ -827,8 +827,8 @@ spring:
 ----
 
 === Granted authorities
-Keycloak by default wraps the assigned roles inside a claim called `realm_access`.
-Within that claim there's a `roles` field, which hold a collection of roles.
+Keycloak (but also wiremock which behaves like keycloak) wraps the assigned roles inside a claim called `realm_access` by default.
+Within that claim there's a `roles` field, that holds a collection of roles.
 
 .`realm_access` claim taken from decoded Keycloak JSON Web Token payload.
 [source,json]
@@ -866,8 +866,8 @@ class KeycloakRealmRoleConverter implements Converter<Jwt, JwtAuthenticationToke
 	@Override
 	@SuppressWarnings("unchecked")
 	public JwtAuthenticationToken convert(Jwt jwt) {
-		Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().getOrDefault("realm_access", Map.of());
-		List<String> roles = (List<String>) realmAccess.getOrDefault("roles", List.of()); <1>
+		Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().getOrDefault("realm_access", Collections.emptyMap());
+		List<String> roles = (List<String>) realmAccess.getOrDefault("roles", Collections.emptyList()); <1>
 		List<GrantedAuthority> authorities = roles.stream()
 			.map(roleName -> "ROLE_" + roleName)
 			.map(SimpleGrantedAuthority::new) <2>
@@ -881,9 +881,30 @@ class KeycloakRealmRoleConverter implements Converter<Jwt, JwtAuthenticationToke
 <2> Any roles are prefixed with `ROLE_` and converted into granted authorities.
 <3> Finally, we return a complete Authentication object for use in our application.
 
-When you add this final piece to your application code, all tests should now pass again!
+When you add this final piece to your application code, all we need to do is pass in the claim in our tests.
 
-Even the `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` tests that we postponed previously now pass.
+In the `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` add the claim `realm_access` with the correct "HR" role.
+
+[source,java]
+----
+@Nested
+class AuthorizeRole {
+
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString()))
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("bob") <1>
+				.header("alg", "none")
+                .claim("realm_access", Collections.singletonMap("roles", Collections.singletonList("HR")))
+				.build());
+	}
+
+	// ...
+}
+----
+
+The `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` tests that we postponed previously now pass.
 These are the only tests that check the token claim mapping as part of their execution, so there is some value in these tests after all.
 
 == Verification
