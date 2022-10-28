@@ -827,7 +827,7 @@ spring:
 ----
 
 === Granted authorities
-Keycloak (but also wiremock which behaves like keycloak) wraps the assigned roles inside a claim called `realm_access` by default.
+Both Keycloak and the WireMock stubbed responses wrap the assigned roles inside a claim called `realm_access` by default.
 Within that claim there's a `roles` field, that holds a collection of roles.
 
 .`realm_access` claim taken from decoded Keycloak JSON Web Token payload.
@@ -885,6 +885,7 @@ When you add this final piece to your application code, all we need to do is pas
 
 In the `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole` add the claim `realm_access` with the correct "HR" role.
 
+.JwtDecoder mocked response of JWT with HR role.
 [source,java]
 ----
 @Nested
@@ -896,7 +897,7 @@ class AuthorizeRole {
 			.thenReturn(Jwt.withTokenValue("token")
 				.subject("bob") <1>
 				.header("alg", "none")
-                .claim("realm_access", Collections.singletonMap("roles", Collections.singletonList("HR")))
+				.claim("realm_access", Collections.singletonMap("roles", Collections.singletonList("HR")))
 				.build());
 	}
 
