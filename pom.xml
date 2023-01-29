@@ -11,7 +11,8 @@
 	<artifactId>spring-security-workshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<properties
+	<properties>
+		<!-- Works Java 11 and up -->
 		<java.version>11</java.version>
 	</properties>
 	<modules>
