@@ -13,4 +13,4 @@ The access permissions are stored in a repository; Up to you to verify access th
 - https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/architecture.html#authz-voter-adaptation[AuthorizationManager]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/main/access-decision-voter
+https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter
