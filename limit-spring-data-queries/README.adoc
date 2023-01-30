@@ -7,7 +7,7 @@ Up to you to implement these and have them checked by Spring Security.
 
 == Getting things done
 * https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#entities--repositories[PreAuthorize, PostAuthorize and configure] the application enabling the user to save and find preferences by id
-* Now make sure only the link:https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#limit-query-result[preferences are returned] for the authorized user
+* Now make sure only the link:https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries#limit-query-result[preferences are returned] for the authorized user
 * link:src/test/java/com/jdriven/PreferencesRepositoryIntegrationTest.java[Run the tests] to verify your implementation
 
 == References
@@ -15,4 +15,4 @@ Up to you to implement these and have them checked by Spring Security.
 - https://docs.spring.io/spring-security/reference/5.7.3/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries
+https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries
