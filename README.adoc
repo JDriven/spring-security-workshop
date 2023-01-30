@@ -13,19 +13,19 @@ https://forms.gle/TsYonMZye3w3iQFQ7[All feedback much appreciated]!
 In order to participate, you will need the following:
 
 - Basic Spring knowledge
-- Java 8, 11, or 17+
+- Java 11+
 - IDE of your choice
 - https://projectlombok.org/[Lombok IDE plugin]
-- `https://curl.se/[curl]` or `https://httpie.io/[httpie]`
+- `https://curl.se/[curl]` or `https://httpie.io/[httpie]` or `IntelliJ HTTP Client`
 - `docker-compose`, for Keycloak (optional)
 
-TIP: Use https://sdkman.io/ to easily install Java.
+TIP: Use https://sdkman.io/ or https://scoop-docs.vercel.app/ to easily install Java.
 
 == Getting started
 
 1. Clone this Git repository.
 
-  git clone https://github.com/timtebeek/spring-security-workshop.git
+  git clone https://github.com/jdriven/spring-security-workshop.git
 
 2. Verify the tests for the `adding-spring-security` module (only).
 
