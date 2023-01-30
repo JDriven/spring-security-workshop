@@ -463,7 +463,7 @@ This ensures the JWT handling is triggered, to decode the dummy value.
 <5> We switch from `TestRestTemplate.postForEntity(...)` to `TestRestTemplate.exchange(...)`, as needed to pass the header.
 
 As you can see, this quickly becomes cumbersome, even when common elements are extracted out into methods.
-Have a look at the reference implementation to see https://github.com/timtebeek/spring-security-samples/blob/main/adding-spring-security/leaveapp-complete/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java#L69[the complete converted test].
+Have a look at the reference implementation to see https://github.com/jdriven/spring-security-samples/blob/main/adding-spring-security/leaveapp-complete/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java#L69[the complete converted test].
 
 There's little value in converting all these tests by hand; just know that it can be done, but try to limit or avoid these types of tests.
 You might want to get some practice if these types of tests are common in your application, but otherwise feel free to delete the test, or copy the complete sample.
@@ -917,7 +917,7 @@ We have now added Spring Security to our application, to allow any user to authe
 We worked through the challenges of picking the right dependency, and iteratively solving our tests failures as we first added authentication, and then authorization.
 We saw how some test approaches require less or more effort once you start addition security to your application, so take this into account when designing your tests.
 
-If you got stuck at any point, https://github.com/timtebeek/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
+If you got stuck at any point, https://github.com/jdriven/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/[leaveapp-complete] shows the application in a final form, with `src/main` and `src/test` updated to the above specification.
 
 Your implementation could of course differ from ours; It'll be interesting to compare your approach with ours!
 
