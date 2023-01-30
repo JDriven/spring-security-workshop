@@ -9,9 +9,9 @@ We cover link:keycloak/README.adoc[Keycloak setup in our example].
 
 == Getting things done
 * link:keycloak/README.adoc[Start a local Keycloak] instance with Docker
-* https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#code[Update] the `SecurityConfig` in the link:travel-gateway/[`travel-gateway`] module
-* https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration[Update] the link:travel-gateway/src/main/resources/application.yml[`application.yml`] with the proper keycloak settings and properly configure the gateway to replay the tokens
-* Now we finished the configuration for the `travel-gateway`, continue with the link:https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration-1[hotels and flights services]
+* https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#code[Update] the `SecurityConfig` in the link:travel-gateway/[`travel-gateway`] module
+* https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration[Update] the link:travel-gateway/src/main/resources/application.yml[`application.yml`] with the proper keycloak settings and properly configure the gateway to replay the tokens
+* Now we finished the configuration for the `travel-gateway`, continue with the link:https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration-1[hotels and flights services]
 * Start the flights, hotels and gateway applications and link:http://localhost:8080/[open the webpage]. You should see a login screen and once logged in you can navigate through the hotels and flights pages.
 
 == References
@@ -20,4 +20,4 @@ We cover link:keycloak/README.adoc[Keycloak setup in our example].
 - https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
 
 == Solution
-https://github.com/timtebeek/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay
+https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay
