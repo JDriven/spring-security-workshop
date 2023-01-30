@@ -123,7 +123,7 @@ However, even figuring out which dependency to add can be difficult these days!
 
 === Which dependency to add?
 Looking at https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.0&packaging=jar&jvmVersion=11&groupId=com.example&artifactId=demo&name=demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.demo&dependencies=security,oauth2-client,oauth2-resource-server,okta,data-ldap,azure-active-directory[start.spring.io]
-we can see there are already six different dependencies related to Spring Security and/or OAuth2.
+we can see there are already five different dependencies related to Spring Security and/or OAuth2.
 In part this is down to a https://spring.io/blog/2019/11/14/spring-security-oauth-2-0-roadmap-update[restructuring of OAuth2 support],
 with OAuth2 resource server and client support now https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix[moved into Spring Security 5.2+].
 As of June 1st 2022 the https://spring.io/blog/2022/06/01/spring-security-oauth-reaches-end-of-life[Spring Security OAuth project has reached End-of-Life].

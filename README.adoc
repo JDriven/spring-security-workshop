@@ -31,7 +31,7 @@ TIP: Use https://sdkman.io/ or https://scoop-docs.vercel.app/ to easily install 
 
   ./mvnw -B verify --file adding-spring-security/pom.xml
 
-3. The other modules will have failing tests, as their implementation is (intentionally) incomplete.
+3. The other modules will have compilation failures or failing tests, as their implementation is (intentionally) incomplete.
 It's up to you to implement the functionality to fix the tests!
 
 4. If you are new to Spring Security, start with link:adding-spring-security/README.adoc[Adding Spring Security]!
