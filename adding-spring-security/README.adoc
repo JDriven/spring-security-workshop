@@ -347,7 +347,7 @@ So let's look into a proper fix; First, add the `spring-security-test` dependenc
 This library provides us with `SecurityMockMvcRequestPostProcessors#jwt()`, among others,
 which we add to our test methods to have them pass a valid JWT along with each request.
 https://docs.spring.io/spring-security/reference/5.7.3/servlet/test/mockmvc/oauth2.html#testing-jwt[The JWT can be configured] in a number of different ways.
-Update your tests with the callouts seen below.
+Update all the tests in `LeaveRequestControllerWebMvcTest` with the `jwt()` addition as seen below.
 
 [source,java]
 ----
@@ -375,7 +375,7 @@ void testRequest() throws Exception {
 Later on, we will set the subject name to `Alice` to match our requests.
 
 Coincidentally, this also already resolves the CSRF issue with POST requests,
-as the CsrfFilter is skipped through the `JwtRequestPostProcessor`.
+as the `CsrfFilter` is skipped through the `JwtRequestPostProcessor`.
 If you repeat this pattern for all test methods and rerun the tests,
 you'll find all tests within `LeaveRequestControllerWebMvcTest` pass again!
 
