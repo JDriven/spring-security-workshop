@@ -13,7 +13,7 @@ https://forms.gle/TsYonMZye3w3iQFQ7[All feedback much appreciated]!
 In order to participate, you will need the following:
 
 - Basic Spring knowledge
-- Java 11+
+- Java 17+
 - IDE of your choice
 - https://projectlombok.org/[Lombok IDE plugin]
 - `https://curl.se/[curl]` or `https://httpie.io/[httpie]` or `IntelliJ HTTP Client`
