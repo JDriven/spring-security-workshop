@@ -32,16 +32,15 @@ For that we will throw up two quick components;
  - first a OAuth2 Client application, named Leave App Gateway;
  - secondly httpbin, which echoes back the request details.
 
-0. Ensure `leaveapp-initial` is not running.
-1. Navigate to `spring-security-workshop/adding-spring-security/leaveapp-gateway/`
-2. Start the leaveapp-gateway application `./mvnw spring-boot:run`
-3. Open http://localhost:8080/get in your browser.
-4. The browser will redirect you to Keycloak to login.
-5. Use `alice` / `password` to login.
-6. Keycloak will redirect you back to the gateway.
-7. The gateway will call out to httpbin.
-8. Httpbin will show you the GET request details.
-9. Your access token is the value behind `Bearer` under `headers > Authorization`.
+. Ensure `leaveapp-initial` is not running.
+. Start the leaveapp-gateway application `./mvnw spring-boot:run --file adding-spring-security/leaveapp-gateway/pom.xml`
+. Open http://localhost:8080/get in your browser.
+. The browser will redirect you to Keycloak to login.
+. Use `alice` / `password` to login.
+. Keycloak will redirect you back to the gateway.
+. The gateway will call out to httpbin.
+. Httpbin will show you the GET request details.
+. Your access token is the value behind `Bearer` under `headers > Authorization`.
 
 .Example GET response containing Bearer token.
 [source,yml]
