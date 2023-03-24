@@ -1,9 +1,9 @@
 package com.jdriven.repo;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
