@@ -58,7 +58,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity(
 					"/request/{employee}?from={from}&to={to}",
 					null, LeaveRequestDTO.class, "alice", from, to);
-			assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+			assertThat(response.getStatusCode()).isEqualTo(ACCEPTED);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().getFromDate()).isEqualTo(from);
@@ -72,7 +72,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			// XXX Authenticate as alice when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/request/{id}",
 					LeaveRequestDTO.class, saved.getId());
-			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
+			assertThat(response.getStatusCode()).isEqualTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
@@ -85,7 +85,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/employee/{employee}", GET,
 					null,
 					TYPE_REFERENCE, "alice");
-			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
+			assertThat(response.getStatusCode()).isEqualTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().get(0).getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().get(0).getStatus()).isEqualByComparingTo(PENDING);
@@ -106,7 +106,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/approve/{id}", null,
 					LeaveRequestDTO.class, saved.getId());
-			assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+			assertThat(response.getStatusCode()).isEqualTo(ACCEPTED);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().getStatus()).isEqualByComparingTo(APPROVED);
@@ -117,7 +117,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/approve/{id}", null,
 					LeaveRequestDTO.class, UUID.randomUUID());
-			assertThat(response.getStatusCode()).isEqualByComparingTo(NO_CONTENT);
+			assertThat(response.getStatusCode()).isEqualTo(NO_CONTENT);
 		}
 
 		@Test
@@ -126,7 +126,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity("/deny/{id}", null,
 					LeaveRequestDTO.class, saved.getId());
-			assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+			assertThat(response.getStatusCode()).isEqualTo(ACCEPTED);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().getStatus()).isEqualByComparingTo(DENIED);
@@ -138,7 +138,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			ResponseEntity<LeaveRequestDTO> response = restTemplate.getForEntity("/view/request/{id}",
 					LeaveRequestDTO.class,
 					UUID.randomUUID());
-			assertThat(response.getStatusCode()).isEqualByComparingTo(NO_CONTENT);
+			assertThat(response.getStatusCode()).isEqualTo(NO_CONTENT);
 		}
 
 		@Test
@@ -147,7 +147,7 @@ class LeaveRequestControllerSpringBootWebEnvRandomPortTest {
 			// XXX Authenticate with HR role when making this request
 			ResponseEntity<List<LeaveRequestDTO>> response = restTemplate.exchange("/view/all", GET, null,
 					TYPE_REFERENCE);
-			assertThat(response.getStatusCode()).isEqualByComparingTo(OK);
+			assertThat(response.getStatusCode()).isEqualTo(OK);
 			assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
 			assertThat(response.getBody().get(0).getEmployee()).isEqualTo("alice");
 			assertThat(response.getBody().get(0).getStatus()).isEqualByComparingTo(PENDING);

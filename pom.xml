@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.10</version>
+		<version>3.0.5</version>
 		<relativePath />
 	</parent>
 	<groupId>com.jdriven</groupId>
@@ -12,8 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<!-- Works Java 11 and up -->
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<modules>
 		<module>adding-spring-security</module>
@@ -28,7 +27,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2021.0.6</version>
+				<version>2022.0.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
