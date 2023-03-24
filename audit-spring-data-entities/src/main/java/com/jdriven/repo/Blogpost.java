@@ -1,9 +1,8 @@
 package com.jdriven.repo;
 
-import jakarta.persistence.Entity;
-
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
+import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
