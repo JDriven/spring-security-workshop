@@ -6,11 +6,11 @@ volumes:
 
 services:
   postgres:
-      image: postgres:14
-      environment:
-        POSTGRES_DB: keycloak
-        POSTGRES_USER: keycloak
-        POSTGRES_PASSWORD: password
+    image: postgres:14
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
 
   keycloak:
     image: quay.io/keycloak/keycloak:21.0.1
