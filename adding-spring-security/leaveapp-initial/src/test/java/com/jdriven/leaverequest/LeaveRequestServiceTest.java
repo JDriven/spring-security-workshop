@@ -40,14 +40,14 @@ class LeaveRequestServiceTest {
 
 		@Test
 		void testRequest() {
-			LeaveRequest leaveRequest = service.request("Alice", of(2022, 11, 30), of(2022, 12, 03));
+			LeaveRequest leaveRequest = service.request("alice", of(2022, 11, 30), of(2022, 12, 03));
 			verify(repository).save(leaveRequest);
 		}
 
 		@Test
 		void testRetrieveById() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
 			Optional<LeaveRequest> retrieved = service.retrieve(saved.getId());
 			verify(repository).findById(saved.getId());
 			assertThat(retrieved).isPresent();
@@ -65,9 +65,9 @@ class LeaveRequestServiceTest {
 		@Test
 		void testRetrieveForEmployee() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
-			List<LeaveRequest> retrieved = service.retrieveFor("Alice");
-			verify(repository).findByEmployee("Alice");
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+			List<LeaveRequest> retrieved = service.retrieveFor("alice");
+			verify(repository).findByEmployee("alice");
 			assertThat(retrieved).containsExactly(saved);
 		}
 
@@ -80,14 +80,14 @@ class LeaveRequestServiceTest {
 
 		@Test
 		void testRequest() {
-			LeaveRequest leaveRequest = service.request("Alice", of(2022, 11, 30), of(2022, 12, 03));
+			LeaveRequest leaveRequest = service.request("alice", of(2022, 11, 30), of(2022, 12, 03));
 			verify(repository).save(leaveRequest);
 		}
 
 		@Test
 		void testRetrieveById() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
 			Optional<LeaveRequest> retrieved = service.retrieve(saved.getId());
 			verify(repository).findById(saved.getId());
 			assertThat(retrieved).isPresent();
@@ -97,16 +97,16 @@ class LeaveRequestServiceTest {
 		@Test
 		void testRetrieveForEmployee() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
-			List<LeaveRequest> retrieved = service.retrieveFor("Alice");
-			verify(repository).findByEmployee("Alice");
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+			List<LeaveRequest> retrieved = service.retrieveFor("alice");
+			verify(repository).findByEmployee("alice");
 			assertThat(retrieved).containsExactly(saved);
 		}
 
 		@Test
 		void testApprove() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
 			Optional<LeaveRequest> approved = service.approve(saved.getId());
 			verify(repository).findById(saved.getId());
 			assertThat(approved).isPresent();
@@ -117,7 +117,7 @@ class LeaveRequestServiceTest {
 		@Test
 		void testDeny() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
 			Optional<LeaveRequest> denied = service.deny(saved.getId());
 			verify(repository).findById(saved.getId());
 			assertThat(denied).isPresent();
@@ -128,7 +128,7 @@ class LeaveRequestServiceTest {
 		@Test
 		void testRetrieveAll() {
 			LeaveRequest saved = repository
-					.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
+					.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 03), PENDING));
 			List<LeaveRequest> denied = service.retrieveAll();
 			verify(repository).findAll();
 			assertThat(denied).containsExactly(saved);
