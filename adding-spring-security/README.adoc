@@ -328,7 +328,7 @@ Running the tests we see `GET` requests now get a `401 Unauthorized` response, w
 - The `403 Forbidden` response takes a little more diving into; Debug logging through `logging.level.org.springframework.security: DEBUG` points us in the right direction:
 [source,text]
 ----
-DEBUG --- [main] o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost/request/Alice
+DEBUG --- [main] o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost/request/alice
 DEBUG --- [main] o.s.s.w.access.AccessDeniedHandlerImpl   : Responding with 403 status code
 ----
 By default Spring Security adds https://docs.spring.io/spring-security/reference/5.7.3/servlet/exploits/csrf.html[Cross Site Request Forgery] protection for `POST` requests.
@@ -364,21 +364,21 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @Test
 void testRequest() throws Exception {
 	when(service.request(anyString(), any(), any()))
-		.thenReturn(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
-	mockmvc.perform(post("/request/{employee}", "Alice")
+		.thenReturn(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+	mockmvc.perform(post("/request/{employee}", "alice")
 		.param("from", "2022-11-30")
 		.param("to", "2022-12-03")
 		.with(jwt())) <2>
 		.andExpectAll(
 			status().isAccepted(),
 			content().contentType(MediaType.APPLICATION_JSON),
-			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.employee").value("alice"),
 			jsonPath("$.status").value("PENDING"));
 }
 ----
 <1> To keep the tests readable, we will use a static import.
 <2> For now, we will use a plain `jwt()` with a `sub` (subject) claim of value `user`. +
-Later on, we will set the subject name to `Alice` to match our requests.
+Later on, we will set the subject name to `alice` to match our requests.
 
 Coincidentally, this also already resolves the CSRF issue with POST requests,
 as the `CsrfFilter` is skipped through the `JwtRequestPostProcessor`.
@@ -405,10 +405,10 @@ void testRequest() {
 	LocalDate to = of(2022, 12, 3);
 	ResponseEntity<LeaveRequestDTO> response = restTemplate.postForEntity(
 		"/request/{employee}?from={from}&to={to}",
-		null, LeaveRequestDTO.class, "Alice", from, to);
+		null, LeaveRequestDTO.class, "alice", from, to);
 	assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
 	assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
-	assertThat(response.getBody().getEmployee()).isEqualTo("Alice");
+	assertThat(response.getBody().getEmployee()).isEqualTo("alice");
 	assertThat(response.getBody().getFromDate()).isEqualTo(from);
 	assertThat(response.getBody().getToDate()).isEqualTo(to);
 	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
@@ -417,7 +417,7 @@ void testRequest() {
 
 Next, here's that same test, but now with all the bits and pieces to pass an authorization header, to trigger the JWT handling, which we mock to decode the token.
 
-.Test to POST new leave request for user Alice, with Authorization header.
+.Test to POST new leave request for user `alice`, with `Authorization` header.
 [source,java]
 ----
 @MockBean
@@ -566,13 +566,13 @@ Luckily that's easy enough; Add the following to each of the authorized role tes
 @Test
 void testApprove() throws Exception {
 	LeaveRequest saved = repository
-		.save(new LeaveRequest("Alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+		.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
 	mockmvc.perform(post("/approve/{id}", saved.getId())
 		.with(jwt().authorities(new SimpleGrantedAuthority("ROLE_HR")))) <1>
 		.andExpectAll(
 			status().isAccepted(),
 			content().contentType(MediaType.APPLICATION_JSON),
-			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.employee").value("alice"),
 			jsonPath("$.status").value("APPROVED"));
 }
 ----
@@ -626,11 +626,11 @@ If you rerun the tests after adding these new annotations, you will see new `Aut
 The `LeaveRequestServiceTest.AuthorizeUser` tests will now fail, as "an Authentication object was not found in the SecurityContext".
 We can resolve these failures in much the same way as we saw before with `@WithMockUser`, this time using the `username` argument value to match our request employee.
 
-.Add mock user with username Alice to all `AuthorizeUser` tests.
+.Add mock user with username `alice` to all `AuthorizeUser` tests.
 [source,java]
 ----
 @Nested
-@WithMockUser(username = "Alice")
+@WithMockUser(username = "alice")
 class AuthorizeUser {
 	....
 }
@@ -664,27 +664,27 @@ void testRetrieveByIdMissing() {
 
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 We see a similar pattern in test failures for `LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser` that we previously saw for `AuthorizeRole` in the same test file.
-Where we used to be able to pass in just any `jwt()`, we not have to provide a token with matching characteristics, in this case a username `Alice`.
+Where we used to be able to pass in just any `jwt()`, we not have to provide a token with matching characteristics, in this case a username `alice`.
 
 Repeat the below JWT change for each of the unit tests in `LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser`.
 
-.Set subject claim to Alice to match authorization expressions.
+.Set subject claim to `alice` to match authorization expressions.
 [source,java]
 ----
 @Test
 void testRequest() throws Exception {
-	mockmvc.perform(post("/request/{employee}", "Alice")
+	mockmvc.perform(post("/request/{employee}", "alice")
 		.param("from", "2022-11-30")
 		.param("to", "2022-12-03")
-		.with(jwt().jwt(builder -> builder.subject("Alice")))) <1>
+		.with(jwt().jwt(builder -> builder.subject("alice")))) <1>
 		.andExpectAll(
 			status().isAccepted(),
 			content().contentType(MediaType.APPLICATION_JSON),
-			jsonPath("$.employee").value("Alice"),
+			jsonPath("$.employee").value("alice"),
 			jsonPath("$.status").value("PENDING"));
 }
 ----
-<1> Set the subject to Alice, to match the POST request URL value.
+<1> Set the subject to `alice`, to match the POST request URL value.
 
 ==== Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 If you already adopted the suggested approach of mocking the `JwtDecoder` response for `LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeUser` above,
