@@ -1,4 +1,28 @@
-= Spring Security Workshop
+:title: Spring Security Workshop
+:toc: left
+:toclevels: 3
+:sectnums:
+:source-highlighter: highlightjs
+:icons: font
+:imagesdir: ./images
+:experimental:
+ifdef::env-github[:outfilesuffix: .adoc]
+
+ifndef::env-github[]
+= {title}
+endif::[]
+
+ifdef::env-github,env-browser[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github,env-browser[]
+IMPORTANT: An always updated version of this document is https://github.com/JDriven/spring-security-workshop/blob/gh-pages/ebook.pdf[available here] as a PDF e-book.
+endif::[]
 
 A collection of Spring Security 5.7+ challenges; Part of a https://github.com/timtebeek/spring-security-samples[Spring Security blog series],
 and closely linked to the https://github.com/timtebeek/spring-security-samples[Spring Security Samples repository].
