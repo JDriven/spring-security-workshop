@@ -15,8 +15,8 @@ jobs:
           fetch-depth: '0'
       - name: asciidoctor-ghpages
         uses: manoelcampos/asciidoctor-ghpages-action@v2
-        with:
-          pdf_build: true
+        #with:
+          # pdf_build: true
           # asciidoctor_params: --attribute=nofooter
           # adoc_file_ext: .ascii # default is .adoc
           # source_dir: docs/ # default is .
