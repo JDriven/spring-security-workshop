@@ -63,6 +63,7 @@ It's up to you to implement the functionality to fix the tests!
 
 5. Once you have completed the basics, continue with any of the other modules.
 
+ifdef::env-github[]
 == Submodules
 
 . link:adding-spring-security/[Adding Spring Security]: Secure an existing application. Start here!
@@ -72,7 +73,14 @@ It's up to you to implement the functionality to fix the tests!
 . link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
 . link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
 
+endif::[]
+
 
 ifndef::env-github[]
-include::adding-spring-security/README.adoc[]
+include::adding-spring-security/README.adoc[leveloffset=+1]
+include::audit-spring-data-entities/README.adoc[leveloffset=+1]
+include::limit-spring-data-queries/README.adoc[leveloffset=+1]
+include::access-decision-voter/README.adoc[leveloffset=+1]
+include::permission-evaluator/README.adoc[leveloffset=+1
+include::spring-cloud-gateway-oidc-tokenrelay/README.adoc[leveloffset=+1]
 endif::[]
