@@ -8,9 +8,7 @@
 :experimental:
 ifdef::env-github[:outfilesuffix: .adoc]
 
-ifndef::env-github[]
 = {title}
-endif::[]
 
 ifdef::env-github,env-browser[]
 :caution-caption: :fire:
@@ -70,3 +68,8 @@ It's up to you to implement the functionality to fix the tests!
 . link:access-decision-voter/[Custom Access Decision Voter]: Restrict which users can access what objects.
 . link:permission-evaluator/[Custom Permission Evaluator]: Separate read and write permissions on objects.
 . link:spring-cloud-gateway-oidc-tokenrelay/[Spring Cloud Gateway with OpenID Connect and TokenRelay]: Route requests through a gateway.
+
+
+ifndef::env-github[]
+include::adding-spring-security/README.adoc[]
+endif::[]
