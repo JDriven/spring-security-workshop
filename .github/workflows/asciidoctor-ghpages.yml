@@ -1,0 +1,23 @@
+name: GitHub Pages Publish
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: asciidoctor-ghpages
+        uses: manoelcampos/asciidoctor-ghpages-action@v2
+        with:
+          pdf_build: true
+          # asciidoctor_params: --attribute=nofooter
+          # adoc_file_ext: .ascii # default is .adoc
+          # source_dir: docs/ # default is .
+          # slides_build: true
+          # pre_build:
+          # post_build:
