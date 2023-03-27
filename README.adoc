@@ -8,7 +8,10 @@
 :experimental:
 ifdef::env-github[:outfilesuffix: .adoc]
 
+
+ifdef::env-github[]
 = {title}
+endif::[]
 
 ifdef::env-github,env-browser[]
 :caution-caption: :fire:
