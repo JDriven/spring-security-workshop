@@ -10,13 +10,13 @@ jobs:
         java: [ '17', '20' ]
     name: Java ${{ matrix.java }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Sources
+        uses: actions/checkout@v3
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-          cache: 'maven'
       - name: Compile all modules
         run: ./mvnw -B -Dstyle.color=always test-compile --file pom.xml
       - name: Test Adding Spring Security module

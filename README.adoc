@@ -1,4 +1,6 @@
-:title: Spring Security Workshop
+= Spring Security Workshop
+
+:author: JDriven B.V.
 :toc: left
 :toclevels: 3
 :sectnums:
@@ -8,7 +10,6 @@
 :experimental:
 ifdef::env-github[:outfilesuffix: .adoc]
 
-= {title}
 
 ifdef::env-github,env-browser[]
 :caution-caption: :fire:
