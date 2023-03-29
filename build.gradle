@@ -1,0 +1,33 @@
+plugins {
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'org.asciidoctor.jvm.gems' version '3.3.2'
+}
+
+configurations {
+    asciidoctorExtensions
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://plugins.gradle.org/m2/'
+    }
+    maven {
+        url 'https://repo.spring.io/release'
+    }
+}
+
+dependencies {
+    asciidoctorExtensions "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.5"
+}
+
+asciidoctor {
+    configurations "asciidoctorExtensions"
+    sourceDir "."
+    sources "README.adoc"
+    outputOptions {
+        backends "spring-html"
+    }
+}
+
+asciidoctor.dependsOn(asciidoctorGemsPrepare)

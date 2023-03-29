@@ -1,0 +1,84 @@
+= Keycloak
+
+We use https://www.keycloak.org/[Keycloak] as our OpenID Connect provider.
+
+== Running keycloak
+
+We will use https://docs.docker.com/compose/[Docker compose] to run Keycloak,
+along with a https://www.postgresql.org/[PostgreSQL] database
+and https://httpbin.org/[httpbin] for debugging.
+
+1. Start Keycloak through `docker-compose up`.
+2. Open http://localhost:8090 and login with username `admin` and password `Pa55w0rd`.
+3. Add a new realm named `spring-cloud-gateway-realm`.
+4. Import `realm-export.json`, with `If a resource exists: Skip`.
+5. Add a new user with username `alice`.
+6. Under Credentials set user password to `password` with `Temporary: OFF`.
+7. Under Role Mappings add `offline_access` to Assigned Roles.
+
+== What you'll get
+
+* a realm named `spring-cloud-gateway-realm`.
+* a client named `spring-cloud-gateway-client` with:
+ - `Access Type: confidential` and `Credentials Secret:k725YLf1lT3nC88Ki8L3plZa8Z3Jeo37` 
+ - `Valid Redirect URIs: http://localhost:8080/*`
+ - `Access Token Lifespan: 20 minutes`
+* a user named `alice`.
+
+== Getting a JSON Web Token
+
+We want to extract a valid JSON Web Token to use in our leave application tests.
+For that we will throw up two quick components;
+ - first a OAuth2 Client application, named Leave App Gateway;
+ - secondly httpbin, which echoes back the request details.
+
+. Ensure `leaveapp-initial` is not running.
+. Start the leaveapp-gateway application `./mvnw spring-boot:run --file adding-spring-security/leaveapp-gateway/pom.xml`
+. Open http://localhost:8080/get in your browser.
+. The browser will redirect you to Keycloak to login.
+. Use `alice` / `password` to login.
+. Keycloak will redirect you back to the gateway.
+. The gateway will call out to httpbin.
+. Httpbin will show you the GET request details.
+. Your access token is the value behind `Bearer` under `headers > Authorization`.
+
+.Example GET response containing Bearer token.
+[source,yml]
+----
+{
+"args": {},
+"headers": {
+"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+"Accept-Encoding": "gzip, deflate, br",
+"Accept-Language": "en-US,en;q=0.9,nl;q=0.8",
+"Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ2TFlRY2lfcUJoLVlhbUlTQXU2VWNoQ2E5S0tRMFZyelZVOFJFMVljT0VrIn0.eyJleHAiOjE2NTgwNzUyNDUsImlhdCI6MTY1ODA3NDA0NSwiYXV0aF90aW1lIjoxNjU4MDczOTc2LCJqdGkiOiJlOGIyNmNkMi03ZjE4LTQ4OTctODUyZi1lN2EwZjMxMDdmMTIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUyNzc2NjAtMTVjNy00NmI5LTg1MzAtM2Q3OGU5Y2JhZWZjIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJxLV85YlZDTlJwaWxIMnJEMVdHMDV2aE00clZweDJWbkRnZ2xLdVVtSklFIiwic2Vzc2lvbl9zdGF0ZSI6IjZmM2JhMTFmLTk3YzAtNGIwNi04ZjA0LWE5MGY1ZWMyNjNkZCIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI2ZjNiYTExZi05N2MwLTRiMDYtOGYwNC1hOTBmNWVjMjYzZGQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktdXNlciJ9.DsxVL1FGsVQFI39P6nx0l0iwAlofyEPblyG0CuhwY2UaNM3tk-64QYbXc-9t00xzLRs-R8z-RQOjrdPSryVQnuWl4rLY61szFYM3Eb19BgcGLlAjws9HRbgBNFFNgaDV7gvs88ST4qLRrtbeptc7uKgy_Os8DkygmpcQTo7RWI-PqHXj2qPZGw6eIJ99af9chcelh7vIowcXroThdrHtnyUaicE28xfCY371lGN1fwBQWnZYfD47s6WjikE2v41SkcZqjqk5DG5fEQ0PE2RvqaoU5-o_MDRIVssKj7KNFmCcXXYMyYgWHajzsiP86-LpQuoXtNrx6KlgZVP5orBZMA",
+"Content-Length": "0",
+"Cookie": "io=alRa3Yc4OknyPT4TAAAG; SESSION=4ebed83d-c838-48ca-9bd3-d56611b9da93",
+"Dnt": "1",
+"Forwarded": "proto=http;host=\"localhost:8080\";for=\"[0:0:0:0:0:0:0:1%0]:60280\"",
+"Host": "localhost:8100",
+"Sec-Ch-Ua": "\".Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"103\", \"Chromium\";v=\"103\"",
+"Sec-Ch-Ua-Mobile": "?0",
+"Sec-Ch-Ua-Platform": "\"Linux\"",
+"Sec-Fetch-Dest": "document",
+"Sec-Fetch-Mode": "navigate",
+"Sec-Fetch-Site": "none",
+"Sec-Fetch-User": "?1",
+"Upgrade-Insecure-Requests": "1",
+"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.",
+"X-Forwarded-Host": "localhost:8080"
+},
+"origin": "0:0:0:0:0:0:0:1%0",
+"url": "http://localhost:8080/get"
+}
+----
+
+== Cleaning up
+
+Once you're done running Keycloak, you can shut it down and clean it up through:
+
+.Clean up Keycloak
+[source,bash]
+----
+docker-compose down --volumes
+----

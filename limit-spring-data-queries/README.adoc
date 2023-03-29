@@ -1,0 +1,18 @@
+= Securing Spring Data methods
+
+The goal of this workshop is to integrate Spring Data with Spring Security, such that we do not have to explicitly pass our active user as argument when retrieving user preferences.
+
+A PreferencesRepository has been provided with annotated methods containing placeholder security expressions;
+Up to you to implement these and have them checked by Spring Security.
+
+== Getting things done
+* https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#entities--repositories[PreAuthorize, PostAuthorize and configure] the application enabling the user to save and find preferences by id
+* Now make sure only the link:https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries#limit-query-result[preferences are returned] for the authorized user
+* link:src/test/java/com/jdriven/PreferencesRepositoryIntegrationTest.java[Run the tests] to verify your implementation
+
+== References
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#_method_security_expressions[Method Security Expressions]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/integrations/data.html[Spring Data & Spring Security Configuration]
+
+== Solution
+https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries

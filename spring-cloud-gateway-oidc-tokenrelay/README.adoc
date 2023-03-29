@@ -1,0 +1,23 @@
+= Spring Cloud Gateway with OpenID Connect and Token Relay
+
+The goal of this workshop is to secure a gateway with OpenID, and have JSON Web tokens relayed to backend services.
+An OpenID provider, gateway and two backend services have been provided;
+Up to you to connect the gateway and backend services to Keycloak, and have the Gateway propagate tokens to the backend.
+
+This workshop requires an OpenID Connect provider, client and user to complete.
+We cover link:keycloak/README.adoc[Keycloak setup in our example].
+
+== Getting things done
+* link:keycloak/README.adoc[Start a local Keycloak] instance with Docker
+* https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#code[Update] the `SecurityConfig` in the link:travel-gateway/[`travel-gateway`] module
+* https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration[Update] the link:travel-gateway/src/main/resources/application.yml[`application.yml`] with the proper keycloak settings and properly configure the gateway to replay the tokens
+* Now we finished the configuration for the `travel-gateway`, continue with the link:https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration-1[hotels and flights services]
+* Start the flights, hotels and gateway applications and link:http://localhost:8080/[open the webpage]. You should see a login screen and once logged in you can navigate through the hotels and flights pages.
+
+== References
+- https://cloud.spring.io/spring-cloud-gateway/reference/html/[Spring Cloud Gateway]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/login/core.html[OAuth 2.0 Login]
+- https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/index.html[OAuth 2.0 Resource Server]
+
+== Solution
+https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay
