@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Spring Security Workshop</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Spring Security Workshop</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_requirements">1. Requirements</a></li>
+<li><a href="#_getting_started">2. Getting started</a></li>
+<li><a href="#_adding_spring_security">3. Adding Spring Security</a>
+<ul class="sectlevel2">
+<li><a href="#_context_leave_application">3.1. Context: Leave application</a></li>
+<li><a href="#_0_verify_initial_application">3.2. 0. Verify initial application</a>
+<ul class="sectlevel3">
+<li><a href="#_running_the_tests">3.2.1. Running the tests</a></li>
+<li><a href="#_running_the_application">3.2.2. Running the application</a></li>
+</ul>
+</li>
+<li><a href="#_1_adding_spring_security_dependency">3.3. 1. Adding Spring Security dependency</a>
+<ul class="sectlevel3">
+<li><a href="#_which_dependency_to_add">3.3.1. Which dependency to add?</a></li>
+<li><a href="#_what_happens_when_you_add_the_dependency">3.3.2. What happens when you add the dependency?</a></li>
+</ul>
+</li>
+<li><a href="#_2_configure_oauth2_resource_server">3.4. 2. Configure OAuth2 resource server</a>
+<ul class="sectlevel3">
+<li><a href="#_running_keycloak_or_wiremock_stubs">3.4.1. Running Keycloak (or WireMock stubs)</a></li>
+<li><a href="#_authenticated_requests">3.4.2. Authenticated requests</a></li>
+</ul>
+</li>
+<li><a href="#_3_fixing_the_web_tests">3.5. 3. Fixing the web tests</a>
+<ul class="sectlevel3">
+<li><a href="#_tests_using_springboottestwebenvironment_webenvironment_none">3.5.1. Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)</a></li>
+<li><a href="#_tests_using_webmvctestcontrollers_leaverequestcontroller_class">3.5.2. Tests using @WebMvcTest(controllers = LeaveRequestController.class)</a></li>
+<li><a href="#_tests_using_springboottestwebenvironment_webenvironment_mock">3.5.3. Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)</a></li>
+<li><a href="#_tests_using_springboottestwebenvironment_webenvironment_random_port">3.5.4. Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</a></li>
+</ul>
+</li>
+<li><a href="#_4_adding_authorization">3.6. 4. Adding authorization</a>
+<ul class="sectlevel3">
+<li><a href="#_configuring_method_security">3.6.1. Configuring method security</a></li>
+<li><a href="#_require_hr_role">3.6.2. Require HR role</a></li>
+<li><a href="#_require_user_or_hr_role">3.6.3. Require user <em>or</em> HR role</a></li>
+</ul>
+</li>
+<li><a href="#_5_convert_jwt_claims">3.7. 5. Convert JWT claims</a>
+<ul class="sectlevel3">
+<li><a href="#_preferred_name">3.7.1. Preferred name</a></li>
+<li><a href="#_granted_authorities">3.7.2. Granted authorities</a></li>
+</ul>
+</li>
+<li><a href="#_verification">3.8. Verification</a></li>
+<li><a href="#_conclusion">3.9. Conclusion</a></li>
+<li><a href="#_whats_next">3.10. What&#8217;s next?</a></li>
+</ul>
+</li>
+<li><a href="#_auditing_spring_data_entities">4. Auditing Spring Data Entities</a>
+<ul class="sectlevel2">
+<li><a href="#_getting_things_done">4.1. Getting things done</a></li>
+<li><a href="#_references">4.2. References</a></li>
+<li><a href="#_solution">4.3. Solution</a></li>
+</ul>
+</li>
+<li><a href="#_securing_spring_data_methods">5. Securing Spring Data methods</a>
+<ul class="sectlevel2">
+<li><a href="#_getting_things_done_2">5.1. Getting things done</a></li>
+<li><a href="#_references_2">5.2. References</a></li>
+<li><a href="#_solution_2">5.3. Solution</a></li>
+</ul>
+</li>
+<li><a href="#_custom_access_decision_voter">6. Custom Access Decision Voter</a>
+<ul class="sectlevel2">
+<li><a href="#_getting_things_done_3">6.1. Getting things done</a></li>
+<li><a href="#_references_3">6.2. References</a></li>
+<li><a href="#_solution_3">6.3. Solution</a></li>
+</ul>
+</li>
+<li><a href="#_spring_cloud_gateway_with_openid_connect_and_token_relay">Spring Cloud Gateway with OpenID Connect and Token Relay</a>
+<ul class="sectlevel1">
+<li><a href="#_getting_things_done_4">1. Getting things done</a></li>
+<li><a href="#_references_4">2. References</a></li>
+<li><a href="#_solution_4">3. Solution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+An always updated version of this document is <a href="https://github.com/JDriven/spring-security-workshop/blob/gh-pages/ebook.pdf">available here</a> as a PDF e-book.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A collection of Spring Security 5.7+ challenges; Part of a <a href="https://github.com/timtebeek/spring-security-samples">Spring Security blog series</a>,
+and closely linked to the <a href="https://github.com/timtebeek/spring-security-samples">Spring Security Samples repository</a>.</p>
+</div>
+<div class="paragraph">
+<p>The project is divided into separate submodules, each of which demonstrates a single feature in isolation.
+While submodules can be combined to form a larger solution, we thought separating the functionality would make it easier to comprehend and extend.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://forms.gle/TsYonMZye3w3iQFQ7">All feedback much appreciated</a>!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_requirements">1. Requirements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to participate, you will need the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Basic Spring knowledge</p>
+</li>
+<li>
+<p>Java 17+</p>
+</li>
+<li>
+<p>IDE of your choice</p>
+</li>
+<li>
+<p><a href="https://projectlombok.org/">Lombok IDE plugin</a></p>
+</li>
+<li>
+<p><code><a href="https://curl.se/">curl</a></code> or <code><a href="https://httpie.io/">httpie</a></code> or <code>IntelliJ HTTP Client</code></p>
+</li>
+<li>
+<p><code>docker-compose</code>, for Keycloak (optional)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Use <a href="https://sdkman.io/" class="bare">https://sdkman.io/</a> or <a href="https://scoop-docs.vercel.app/" class="bare">https://scoop-docs.vercel.app/</a> to easily install Java.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_started">2. Getting started</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone this Git repository.</p>
+<div class="literalblock">
+<div class="content">
+<pre>git clone https://github.com/jdriven/spring-security-workshop.git</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the tests for the <code>adding-spring-security</code> module (only).</p>
+<div class="literalblock">
+<div class="content">
+<pre>./mvnw -B verify --file adding-spring-security/pom.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The other modules will have compilation failures or failing tests, as their implementation is (intentionally) incomplete.
+It&#8217;s up to you to implement the functionality to fix the tests!</p>
+</li>
+<li>
+<p>If you are new to Spring Security, start with <a href="adding-spring-security/README.adoc">Adding Spring Security</a>!</p>
+</li>
+<li>
+<p>Once you have completed the basics, continue with any of the other modules.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_spring_security">3. Adding Spring Security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Adding Spring Security to an existing application can be quite a daunting prospect.
+Merely adding the required dependencies to your project sets off a chain of events which can break your application and tests.</p>
+</div>
+<div class="paragraph">
+<p>Maybe you&#8217;re suddenly shown a login prompt which expects a generated password logged on startup.<br>
+Maybe your tests now get the dreaded <code>401 Unauthorized</code>, or subsequently a <code>403 Forbidden</code>.<br>
+Maybe you get a <code>ClassCastException</code> when trying to use your <code>Authentication#getPrincipal()</code>.<br>
+So this should be fun!</p>
+</div>
+<div class="paragraph">
+<p>We will walk you through adding Spring Security to an existing application,
+by explaining what happens when you first add the dependencies, what to do next, and how to fix your tests.</p>
+</div>
+<div class="sect2">
+<h3 id="_context_leave_application">3.1. Context: Leave application</h3>
+<div class="paragraph">
+<p>Imagine a Human Resources department that has a small application to track and approve/deny leave requests.
+Initially this application was only used from within the HR department, who received requests via phone or email.
+You can see the application in this state in <a href="leaveapp-initial/">leaveapp-initial</a>, along with the current set of application tests.</p>
+</div>
+<div class="paragraph">
+<p>Now we want to open up this application to all employees, so they can view and file (only their own) leave requests themselves.
+Anyone from the HR department can then either approve or deny a leave request, and view all requests.
+Up to you to implement these requirements for this small application.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_0_verify_initial_application">3.2. 0. Verify initial application</h3>
+<div class="paragraph">
+<p>Before we make any changes, it&#8217;s good to get familiar with <a href="leaveapp-initial/">the leave application</a> that we will work on.
+Look through the code to see there&#8217;s a single
+<a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestController.java">controller</a>,
+backed by a <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java">service</a>,
+which connects to a <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestRepository.java">repository</a>,
+to store <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequest.java">LeaveRequest</a>s.</p>
+</div>
+<div class="sect3">
+<h4 id="_running_the_tests">3.2.1. Running the tests</h4>
+<div class="paragraph">
+<p>In terms of tests, there&#8217;s a single <a href="leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestServiceTest.java">test for the service</a>,
+and three different ways to test the controller:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>once <a href="leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerWebMvcTest.java">through @WebMvcTest</a>,</p>
+</li>
+<li>
+<p>once more <a href="leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvMockTest.java">through @SpringBootTest(webEnvironment = WebEnvironment.MOCK)</a>,</p>
+</li>
+<li>
+<p>and finally <a href="leaveapp-initial/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java">through @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>That way, ideally, at least one of these methods will look familiar to what you know from your own projects.</p>
+</div>
+<div class="paragraph">
+<p>All these tests should already pass on your machine as well, so go ahead and give that a try, either through your IDE,
+or using the below command as run from the workshop repository root.</p>
+</div>
+<div class="listingblock">
+<div class="title">Run the tests</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># ~/workspace/spring-security-workshop $
+./mvnw verify --file adding-spring-security/leaveapp-initial/pom.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_application">3.2.2. Running the application</h4>
+<div class="paragraph">
+<p>You should also be able to start the application through <code>LeaveRequestApplication</code> without any further changes,
+either through your IDE, or again, using the below command as run from the workshop repository root.</p>
+</div>
+<div class="listingblock">
+<div class="title">Run the application</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># ~/workspace/spring-security-workshop $
+./mvnw spring-boot:run --file adding-spring-security/leaveapp-initial/pom.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once running you can immediately see an empty array of leave requests using this url: <a href="http://localhost:8080/view/all" class="bare">http://localhost:8080/view/all</a>.</p>
+</div>
+<div class="paragraph">
+<p>To populate your application with leave requests, run any of the below <code>curl</code> or <code>HTTPie</code> commands.</p>
+</div>
+<details>
+<summary class="title">HTTPie commands to create, view and approve/deny leave requests.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Create a leave request for a specific user and time window
+http POST ':8080/request/alice?from=2022-08-21&amp;to=2022-09-11'
+
+# View leave requests for employee
+http :8080/view/employee/alice
+
+# Approve leave request
+http POST :8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# Deny leave request
+http POST :8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View leave request
+http :8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View all leave requests
+http :8080/view/all</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Curl commands to create, view and approve/deny leave requests.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Create a leave request for a specific user and time window
+curl -v -X POST 'http://localhost:8080/request/alice?from=2022-08-21&amp;to=2022-09-11'
+
+# View leave requests for employee
+curl -v http://localhost:8080/view/employee/alice
+
+# Approve leave request
+curl -v -X POST http://localhost:8080/approve/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# Deny leave request
+curl -v -X POST http://localhost:8080/deny/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View leave request
+curl -v http://localhost:8080/view/request/2a37e1b6-d7e3-45fd-8b50-59357425d62e
+
+# View all leave requests
+curl -v http://localhost:8080/view/all</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>All of the above should just work on your machine.
+If it did, you&#8217;re ready to start making changes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1_adding_spring_security_dependency">3.3. 1. Adding Spring Security dependency</h3>
+<div class="paragraph">
+<p>The first step in adding security to our application is picking the right dependency to add to our project.
+However, even figuring out which dependency to add can be difficult these days!</p>
+</div>
+<div class="sect3">
+<h4 id="_which_dependency_to_add">3.3.1. Which dependency to add?</h4>
+<div class="paragraph">
+<p>Looking at <a href="https://start.spring.io/#!type=maven-project&amp;language=java&amp;platformVersion=2.7.0&amp;packaging=jar&amp;jvmVersion=11&amp;groupId=com.example&amp;artifactId=demo&amp;name=demo&amp;description=Demo%20project%20for%20Spring%20Boot&amp;packageName=com.example.demo&amp;dependencies=security,oauth2-client,oauth2-resource-server,okta,data-ldap,azure-active-directory">start.spring.io</a>
+we can see there are already five different dependencies related to Spring Security and/or OAuth2.
+In part this is down to a <a href="https://spring.io/blog/2019/11/14/spring-security-oauth-2-0-roadmap-update">restructuring of OAuth2 support</a>,
+with OAuth2 resource server and client support now <a href="https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix">moved into Spring Security 5.2+</a>.
+As of June 1st 2022 the <a href="https://spring.io/blog/2022/06/01/spring-security-oauth-reaches-end-of-life">Spring Security OAuth project has reached End-of-Life</a>.</p>
+</div>
+<div class="paragraph">
+<p>In short we now advise against using the Spring Cloud Starter dependencies, and push towards using Spring Security support for OAuth2.</p>
+</div>
+<div class="paragraph">
+<p>If your service will act as an OAuth2 resource server, by accepting JSON Web Tokens passed in from a gateway, you can use <code>spring-boot-starter-oauth2-resource-server</code>.
+We expect this to be the most common form within a micro-services landscape, where a central gateway assumes the OAuth2 client role.
+It is also what we will use throughout this blog post, although much of the details below apply to other forms as well.</p>
+</div>
+<div class="paragraph">
+<p>If your service will act as an OAuth2 client to acquire JSON Web Tokens, you&#8217;ll most likely want to use <code>spring-boot-starter-oauth2-client</code>.</p>
+</div>
+<div class="paragraph">
+<p>Both starters will provide you with any transitive dependencies you might need for the most common security aspects.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what_happens_when_you_add_the_dependency">3.3.2. What happens when you add the dependency?</h4>
+<div class="paragraph">
+<p>Add the below dependency to <a href="leaveapp-initial/pom.xml">leaveapp-initial/pom.xml</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">oauth2-resource-server dependency snippet.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-oauth2-resource-server&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you rerun the tests, you will notice all web related tests now fail with either a HTTP <code>401 Unauthorized</code> or <code>403 Forbidden</code> response, depending on whether it&#8217;s a <code>GET</code> or <code>POST</code> request.</p>
+</div>
+<div class="paragraph">
+<p>When you run <code>LeaveRequestApplication</code> as before, and again open <a href="http://localhost:8080/view/all" class="bare">http://localhost:8080/view/all</a> in the browser, you are now presented with a login dialog.</p>
+</div>
+<div class="paragraph">
+<div class="title">Please sign in</div>
+<p><span class="image"><img src="./images/docs/signin.png" alt="Please sign in"></span></p>
+</div>
+<div class="paragraph">
+<p>When you open the same endpoint from the commandline you immediately get a <code>HTTP/1.1 401</code> response.</p>
+</div>
+<div class="paragraph">
+<p>We turn to the application logs to find out what happened in our application.
+As it turns out, there&#8217;s a curious new logline from
+<a href="https://github.com/spring-projects/spring-boot/blob/2.7.x/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/servlet/UserDetailsServiceAutoConfiguration.java#L89"><code>UserDetailsServiceAutoConfiguration</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using generated security password warning</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">WARN UserDetailsServiceAutoConfiguration :
+
+Using generated security password: 9c991bee-bf35-4970-92ed-e5458d561a73
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This auto configuration triggers when no other security configuration has been provided.
+It sets up our application with a default user and generated password, as a fallback of sorts.
+After all, if you&#8217;re adding Spring Security to your class path you will want some form of security.
+At the very least the log line and dialog serve as a reminder to configure exactly what you want in your application.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_configure_oauth2_resource_server">3.4. 2. Configure OAuth2 resource server</h3>
+<div class="paragraph">
+<p>Since we wish to configure our application to function as an OAuth2 resource server,
+we can provide the required configuration to make the generated security password go away.
+<a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/jwt.html">As indicated in the documentation</a>, configuration takes the form of:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/application.properties snippet to configure oauth2 resource server.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8090/auth/realms/spring-cloud-gateway-realm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add the above snippet to <a href="leaveapp-initial/src/main/resources/application.properties">application.properties</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once added, the application will call out to the configured <code>issuer-uri</code> during startup, to configure the <code>JwtDecoder</code> through the
+<a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig">OpenID Provider Configuration Information endpoint</a> at:
+<a href="http://localhost:8090/auth/realms/spring-cloud-gateway-realm/.well-known/openid-configuration" class="bare">http://localhost:8090/auth/realms/spring-cloud-gateway-realm/.well-known/openid-configuration</a></p>
+</div>
+<div class="paragraph">
+<p>But before we launch our application, we first need to ensure the issuer-uri is available, by running Keycloak.</p>
+</div>
+<div class="sect3">
+<h4 id="_running_keycloak_or_wiremock_stubs">3.4.1. Running Keycloak (or WireMock stubs)</h4>
+<div class="paragraph">
+<p>During development we will either
+<a href="keycloak/">use Keycloak</a> or
+<a href="wiremock/">WireMock</a> to serve the configured <code>issuer-uri</code> endpoint.
+WireMock is the easiest one to get working quickly, as it does not require Docker compose;
+Keycloak takes some more effort, but can be used for your own projects as well.</p>
+</div>
+<div class="paragraph">
+<p>Go ahead and run either Keycloak, or the WireMock stubs using the linked instructions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The existing JSON Web Token provided below will only work with the WireMock stubs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_authenticated_requests">3.4.2. Authenticated requests</h4>
+<div class="paragraph">
+<p>Next, launch the <code>LeaveRequestApplication</code> again, as you did before.</p>
+</div>
+<div class="paragraph">
+<p>Now, when you open <a href="http://localhost:8080/view/all" class="bare">http://localhost:8080/view/all</a> in the browser, you are no longer presented with a login dialog.
+Instead, you immediately get a <code>401 Unauthorized</code> error response. <em>"Progress"</em>!</p>
+</div>
+<div class="paragraph">
+<p>The <code>UserDetailsServiceAutoConfiguration</code> warning about a <code>generated security password</code> has disappeared from the logs.
+The <code>UserDetailsServiceAutoConfiguration</code> from before has instead been replaced by
+<a href="https://github.com/spring-projects/spring-boot/blob/2.7.x/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/resource/servlet/OAuth2ResourceServerJwtConfiguration.java#L138"><code>OAuth2ResourceServerJwtConfiguration</code></a>,
+which has provided us with a <code>JwtDecoder</code> to handle incoming tokens.
+Unless you provide your own <code>SecurityFilterChain</code>, this sets up your application to require a JSON Web Token for each request.</p>
+</div>
+<div class="paragraph">
+<p>The reason we&#8217;re now getting <code>40x</code> responses, is because our requests lack an <code>Authorization</code> header with <code>Bearer eyJhbGciOiJ&#8230;&#8203;</code> JSON Web Token.
+To solve this, we have to actually pass a Bearer token along with our requests.
+Here&#8217;s a token value to get your requests through with a <code>HTTP/1.1 20x</code> response:</p>
+</div>
+<details>
+<summary class="title">Show Alice&#8217;s JSON Web Token valid through August 23th 2032.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUOUpHbFdTc244UXFoUkZlX19LWU5kRGVQWm1xLVU1c2RZRWppQjFwNEpVIn0.eyJleHAiOjE5NzY4NzYzMzIsImlhdCI6MTY2MTUxNjMzMiwiYXV0aF90aW1lIjoxNjYxNTE2MzMyLCJqdGkiOiJiNjc1YWJiMS05OTU5LTRhMDUtYTgxZS1iY2U1MWVjYjlkYzgiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTUzYmJkODYtNWQ1Yy00MmFkLTgyNjEtN2E5MzlmZjFjZWIyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJyWHpXNVItdUhnRHJYTGRZUFZ3TDdmQUtwNGZNQ0ZuRmJDcl9RUllaREhVIiwic2Vzc2lvbl9zdGF0ZSI6ImMwZjNmNzYzLTc2NzQtNDZmNi1iMWNmLWQ5OWZiMDNmNDZhZiIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJjMGYzZjc2My03Njc0LTQ2ZjYtYjFjZi1kOTlmYjAzZjQ2YWYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFsaWNlIn0.V9sQJ_8yP4qHXMFq5fNQUG8KddHWVO5aiK6k08liiHXPDJw4sZwOHHSANS-7esxZOBcuvoxPOMYFEjY8k33-PhuAbswoZaFSGSf19ksgC5s2dRlskFW1Z6QQNGEOtitSTk0O3xZ8606ZBsRR1asx-X6MMXejwY5wtCl53mwcBlCB_Vs32UsXk8E7QbsVSCfl-Inpab2w4reDb635n8wOo2RGLhK_8kxdR_8p7FEuKLUrzI12eU9IvWZf0XQvNC-W_Niw52W1DIQ_SSnlMt17jIKvRRBOmBiSDq1gXz56oYEWGaDPVZG_u_ooWD8WqyOXq9gP4EsXK_J0LvLOCp85Vg</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Show HR JSON Web Token valid through August 23th 2032.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUOUpHbFdTc244UXFoUkZlX19LWU5kRGVQWm1xLVU1c2RZRWppQjFwNEpVIn0.eyJleHAiOjE5NzY4NzY0MjcsImlhdCI6MTY2MTUxNjQyNywiYXV0aF90aW1lIjoxNjYxNTE2NDI3LCJqdGkiOiI4NTc1MzBmMS02YWNkLTQ4MGEtOGYwNi0yNTIzZjk1ZTllMGIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvYXV0aC9yZWFsbXMvc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYTJmYjE3NmQtMWYwMy00ZWM1LWJiMGQtZTI3Y2VmYTUwY2FjIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3ByaW5nLWNsb3VkLWdhdGV3YXktY2xpZW50Iiwibm9uY2UiOiJsb0FuTlF5Q1Ntc1NjSlZnSjNubTdEN3hUVWhpc2Z0YlY1bjF5NWY5blp3Iiwic2Vzc2lvbl9zdGF0ZSI6ImRlMjkzZjVlLTc0NmUtNGRmNi1iMjFjLWQ2Nzc5ZTE5YjBkNyIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nLWNsb3VkLWdhdGV3YXktcmVhbG0iLCJIUiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInNpZCI6ImRlMjkzZjVlLTc0NmUtNGRmNi1iMjFjLWQ2Nzc5ZTE5YjBkNyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImJvYiIsInByZWZlcnJlZF91c2VybmFtZSI6ImJvYiIsImdpdmVuX25hbWUiOiJib2IifQ.YesLamdNivBSa1eqxroBM6aKEaTeTf75c0Wfdsfwz8hWtjqQgNf9GglS7-kWK_lWc0PfH5zyU2X0slYM0ZRCUo-8j6oM5v3OLkc77Qlc5uszUVrVcGOAcHe4jjSnqLfqsavPmruRXtzbCJncqvYuR0LW5Nfu1UWxyT28UPiwXVC9juobgXraStmOlxaDXIP8JZWdEPqqpqrOjlLVuwMsXQi5g-3L89idU7Bfaz0ujHMt9JX83gKxzQDf6I825fmGPQNabruI8gPOWMxTT-XzDoSfUgUOZ-jXSa0bCADKrjAEpw5Q9KOnFzncoO6u6nQuUpwYvWfqRafACm0oy0P6Xw</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>If you&#8217;re curious what information is contained within this token, you can easily decode the token into it&#8217;s three parts using <a href="https://jwt.io" class="bare">https://jwt.io</a>.</p>
+</div>
+<details>
+<summary class="title">Show decoded JSON Web Token payload.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "exp": 1976876332,
+  "iat": 1661516332,
+  "auth_time": 1661516332,
+  "jti": "b675abb1-9959-4a05-a81e-bce51ecb9dc8",
+  "iss": "http://localhost:8090/auth/realms/spring-cloud-gateway-realm",
+  "aud": "account",
+  "sub": "153bbd86-5d5c-42ad-8261-7a939ff1ceb2",
+  "typ": "Bearer",
+  "azp": "spring-cloud-gateway-client",
+  "nonce": "rXzW5R-uHgDrXLdYPVwL7fAKp4fMCFnFbCr_QRYZDHU",
+  "session_state": "c0f3f763-7674-46f6-b1cf-d99fb03f46af",
+  "realm_access": {
+    "roles": [
+      "offline_access",
+      "default-roles-spring-cloud-gateway-realm",
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "scope": "openid email profile",
+  "sid": "c0f3f763-7674-46f6-b1cf-d99fb03f46af",
+  "email_verified": false,
+  "preferred_username": "alice"
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The below <code>HTTPie</code> and <code>curl</code> commands should all produce <code>20x</code> responses when both Keycloak (stubs) and <code>LeaveRequestApplication</code> are running.</p>
+</div>
+<div class="listingblock">
+<div class="title">Requests authenticated through a JSON Web Token.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Store full token
+export token=eyJhbGciOiJ...
+
+# Create a leave request for a specific user and time window
+http POST ':8080/request/alice?from=2022-08-21&amp;to=2022-09-11' "Authorization: Bearer ${token}"
+curl -v -X POST -H "Authorization: Bearer ${token}" 'http://localhost:8080/request/alice?from=2022-08-21&amp;to=2022-09-11'
+
+# View all leave requests
+http :8080/view/all "Authorization: Bearer ${token}"
+curl -v -H "Authorization: Bearer ${token}" http://localhost:8080/view/all</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Perfect; our application now at the very least requires a valid JWT for any request.
+This covers our authentication needs for now; we will get to authorization at a later stage.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_fixing_the_web_tests">3.5. 3. Fixing the web tests</h3>
+<div class="paragraph">
+<p>Now we have an application that requires an OpenID Connect provider on startup, and a valid JWT for any request.
+Neither plays well with the tests we have, so we&#8217;re going to have to fix each of the different test flavors we have.</p>
+</div>
+<div class="paragraph">
+<p>The leave application has four different types of tests which each use a partial or full Spring application context, to simulate what you might find in an existing application.
+They are identified below using the annotation and argument that bootstraps the test application context.
+We&#8217;ll go over each test and the changes needed to make them pass again.</p>
+</div>
+<div class="sect3">
+<h4 id="_tests_using_springboottestwebenvironment_webenvironment_none">3.5.1. Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)</h4>
+<div class="paragraph">
+<p>Tests not using any web request are not (yet) broken.
+But don&#8217;t worry, we will break these as soon as we add authorization.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tests_using_webmvctestcontrollers_leaverequestcontroller_class">3.5.2. Tests using @WebMvcTest(controllers = LeaveRequestController.class)</h4>
+<div class="paragraph">
+<p>Next up, we want to make <code>LeaveRequestControllerWebMvcTest</code> pass again;
+We&#8217;re testing the controller in isolation here, using <code>@WebMvcTest</code> together with <code>MockMvc</code>.
+Running the tests we see <code>GET</code> requests now get a <code>401 Unauthorized</code> response, while <code>POST</code> requests get a <code>403 Forbidden</code> response.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>401 Unauthorized</code> response on <code>GET</code> requests we get because we&#8217;re not yet passing an <code>Authorization: Bearer eyJhbGciOiJ&#8230;&#8203;</code> header in our tests.</p>
+</li>
+<li>
+<p>The <code>403 Forbidden</code> response takes a little more diving into; Debug logging through <code>logging.level.org.springframework.security: DEBUG</code> points us in the right direction:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>DEBUG --- [main] o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost/request/alice
+DEBUG --- [main] o.s.s.w.access.AccessDeniedHandlerImpl   : Responding with 403 status code</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default Spring Security adds <a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/exploits/csrf.html">Cross Site Request Forgery</a> protection for <code>POST</code> requests.
+This protects our resource server from malicious requests; and it&#8217;s best not to disable this.
+One way to get around this requirement for tests is to add <code>csrf</code> tokens to our POST requests, through
+<a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/test/mockmvc/csrf.html"><code>SecurityMockMvcRequestPostProcessors#csrf()</code></a> from <code>spring-security-test</code>.
+But if we only do that, we would then get a <code>401 Unauthorized</code> response!</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s look into a proper fix; First, add the <code>spring-security-test</code> dependency to the <a href="leaveapp-initial/pom.xml">leaveapp-initial/pom.xml</a> file.</p>
+</div>
+<div class="listingblock">
+<div class="title">spring-security-test dependency snippet.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
+	&lt;scope&gt;test&lt;/scope&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice how we use the <code>test</code> scope, as this library is only needed on the test classpath.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This library provides us with <code>SecurityMockMvcRequestPostProcessors#jwt()</code>, among others,
+which we add to our test methods to have them pass a valid JWT along with each request.
+<a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/test/mockmvc/oauth2.html#testing-jwt">The JWT can be configured</a> in a number of different ways.
+Update all the tests in <code>LeaveRequestControllerWebMvcTest</code> with the <code>jwt()</code> addition as seen below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt; <i class="conum" data-value="1"></i><b>(1)</b>
+
+...
+
+@Test
+void testRequest() throws Exception {
+	when(service.request(anyString(), any(), any()))
+		.thenReturn(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+	mockmvc.perform(post("/request/{employee}", "alice")
+		.param("from", "2022-11-30")
+		.param("to", "2022-12-03")
+		.with(jwt())) <i class="conum" data-value="2"></i><b>(2)</b>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("alice"),
+			jsonPath("$.status").value("PENDING"));
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To keep the tests readable, we will use a static import.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>For now, we will use a plain <code>jwt()</code> with a <code>sub</code> (subject) claim of value <code>user</code>.<br>
+Later on, we will set the subject name to <code>alice</code> to match our requests.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Coincidentally, this also already resolves the CSRF issue with POST requests,
+as the <code>CsrfFilter</code> is skipped through the <code>JwtRequestPostProcessor</code>.
+If you repeat this pattern for all test methods and rerun the tests,
+you&#8217;ll find all tests within <code>LeaveRequestControllerWebMvcTest</code> pass again!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tests_using_springboottestwebenvironment_webenvironment_mock">3.5.3. Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)</h4>
+<div class="paragraph">
+<p>In short, for now, these tests need the same treatment as we saw with <code>@WebMvcMock</code>.
+So go ahead and add <code>jwt()</code> to the web requests to get these tests working again as well.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tests_using_springboottestwebenvironment_webenvironment_random_port">3.5.4. Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</h4>
+<div class="paragraph">
+<p>The most challenging tests to adapt, are the ones using <code>TestRestTemplate</code>, mostly as the API makes it cumbersome to add headers.
+And even once you manage to add the <code>Authorization</code> header successfully to each request, you still have to mock the token handling.</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s have a look at a complete example, to give you an idea of what&#8217;s involved.
+Here&#8217;s an unaltered test not yet passing authorization headers.</p>
+</div>
+<div class="listingblock">
+<div class="title">Unaltered test to POST new leave request for user Alice.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Test
+void testRequest() {
+	LocalDate from = of(2022, 11, 30);
+	LocalDate to = of(2022, 12, 3);
+	ResponseEntity&lt;LeaveRequestDTO&gt; response = restTemplate.postForEntity(
+		"/request/{employee}?from={from}&amp;to={to}",
+		null, LeaveRequestDTO.class, "alice", from, to);
+	assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+	assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
+	assertThat(response.getBody().getEmployee()).isEqualTo("alice");
+	assertThat(response.getBody().getFromDate()).isEqualTo(from);
+	assertThat(response.getBody().getToDate()).isEqualTo(to);
+	assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, here&#8217;s that same test, but now with all the bits and pieces to pass an authorization header, to trigger the JWT handling, which we mock to decode the token.</p>
+</div>
+<div class="listingblock">
+<div class="title">Test to POST new leave request for user <code>alice</code>, with <code>Authorization</code> header.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@MockBean
+private JwtDecoder jwtDecoder; <i class="conum" data-value="1"></i><b>(1)</b>
+
+@Nested
+class AuthorizeUser {
+
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString())) <i class="conum" data-value="2"></i><b>(2)</b>
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("alice")
+				.header("alg", "none")
+				.build());
+	}
+
+	@Test
+	void testRequest() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth("some.random.token"); <i class="conum" data-value="3"></i><b>(3)</b>
+		HttpEntity&lt;?&gt; httpEntity = new HttpEntity&lt;&gt;(headers); <i class="conum" data-value="4"></i><b>(4)</b>
+
+		LocalDate from = of(2022, 11, 30);
+		LocalDate to = of(2022, 12, 3);
+		ResponseEntity&lt;LeaveRequestDTO&gt; response = restTemplate.exchange( <i class="conum" data-value="5"></i><b>(5)</b>
+			"/request/{employee}?from={from}&amp;to={to}",
+			HttpMethod.POST, httpEntity, LeaveRequestDTO.class, "alice", from, to);
+		assertThat(response.getStatusCode()).isEqualByComparingTo(ACCEPTED);
+		assertThat(response.getHeaders().getContentType()).isEqualByComparingTo(APPLICATION_JSON);
+		assertThat(response.getBody().getEmployee()).isEqualTo("alice");
+		assertThat(response.getBody().getFromDate()).isEqualTo(from);
+		assertThat(response.getBody().getToDate()).isEqualTo(to);
+		assertThat(response.getBody().getStatus()).isEqualByComparingTo(PENDING);
+	}
+
+	// ...
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We provide a <code>@MockBean JwtDecoder</code> to <a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/test/mockmvc/oauth2.html#_authentication_requestpostprocessor">prevent the deferred JWT decoder initialization</a> from triggering once a JWT is passed in.<br>
+If we do not add the mock bean, the application will call out to the <code>issuer-uri</code> upon receiving the first <code>Authorization</code> header.
+And hosting a OIDC server for your tests is just not feasible or desirable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We mock the <code>JwtDecoder.decode(String)</code> to always return the same <code>Jwt</code> value.<br>
+The response should match your actually decoded tokens, which can be hard to keep in sync.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We provide a dummy value for the <code>Authorization: Bearer</code> header.<br>
+This ensures the JWT handling is triggered, to decode the dummy value.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We wrap the headers into a <code>HttpEntity</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>We switch from <code>TestRestTemplate.postForEntity(&#8230;&#8203;)</code> to <code>TestRestTemplate.exchange(&#8230;&#8203;)</code>, as needed to pass the header.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As you can see, this quickly becomes cumbersome, even when common elements are extracted out into methods.
+Have a look at the reference implementation to see <a href="https://github.com/jdriven/spring-security-samples/blob/main/adding-spring-security/leaveapp-complete/src/test/java/com/jdriven/leaverequest/LeaveRequestControllerSpringBootWebEnvRandomPortTest.java#L69">the complete converted test</a>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s little value in converting all these tests by hand; just know that it can be done, but try to limit or avoid these types of tests.
+You might want to get some practice if these types of tests are common in your application, but otherwise feel free to delete the test, or copy the complete sample.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_adding_authorization">3.6. 4. Adding authorization</h3>
+<div class="paragraph">
+<p>Our application now requires a JWT with every request, and decodes that into an Authentication object.
+While this is all fine and needed; it does not yet achieve much in terms of security;
+anyone can authenticate, file and view leave requests and approve or deny them as they see fit.
+We need to configure our application with some common sense roles and restrictions.
+For instance:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>we want users to only submit and view requests for themselves;</p>
+</li>
+<li>
+<p>only HR employees can approve or deny requests, and view all requests.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_configuring_method_security">3.6.1. Configuring method security</h4>
+<div class="paragraph">
+<p>Since all requests pass through <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java"><code>LeaveRequestService</code></a>, this seems like the perfect place to add our security restrictions.
+We&#8217;ll add a variety of security annotation and expressions, all of which are documented extensively in
+<a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/method-security.html">the Authorization chapter of Spring Security</a>.</p>
+</div>
+<div class="paragraph">
+<p>The security annotation handling needs to be enabled through <code>@EnableMethodSecurity(jsr250Enabled = true)</code>,
+as without this annotation the security annotations will not enforce anything!</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Previously one might have used <code>@EnableGlobalMethodSecurity</code>, but this has been simplified as of Spring Security 5.6.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Add the annotation to a new configuration class.
+The class itself does not have to be annotated with <code>@Configuration</code>, as <code>@EnableMethodSecurity</code> is already meta-annotated.</p>
+</div>
+<div class="listingblock">
+<div class="title">Enable method security through a new configuration class.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@EnableMethodSecurity(jsr250Enabled = true)
+public class MethodSecurityConfig {
+	// ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_require_hr_role">3.6.2. Require HR role</h4>
+<div class="paragraph">
+<p>The easiest methods to secure are the ones that are only accessible to users with the <code>HR</code> role.
+For this we will use the <code>@javax.annotation.security.RolesAllowed</code> annotation, with an argument value of <code>HR</code>.</p>
+</div>
+<div class="paragraph">
+<p>Go ahead and add these annotations to <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java"><code>LeaveRequestService</code></a> now.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RolesAllowed("HR")
+public Optional&lt;LeaveRequest&gt; approve(UUID id) {
+	Optional&lt;LeaveRequest&gt; found = repo.findById(id);
+	found.ifPresent(lr -&gt; lr.setStatus(Status.APPROVED));
+	return found;
+}
+
+@RolesAllowed("HR")
+public Optional&lt;LeaveRequest&gt; deny(UUID id) {
+	Optional&lt;LeaveRequest&gt; found = repo.findById(id);
+	found.ifPresent(lr -&gt; lr.setStatus(Status.DENIED));
+	return found;
+}
+
+@RolesAllowed("HR")
+public List&lt;LeaveRequest&gt; retrieveAll() {
+	return repo.findAll();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you rerun all tests, you will immediately notice any tests from classes annotated with <code>@SpringBootTest</code> using methods will fail.
+<code>LeaveRequestControllerWebMvcTest</code> is unaffected, as it uses a <code>@MockBean LeaveRequestService</code>, that does not trigger method security.</p>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_none_2">Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)</h5>
+<div class="paragraph">
+<p>Our <code>LeaveRequestServiceTest</code> methods now need an active user, where this was not needed before.
+We use the <code>@WithMockUser</code> annotation from <code>spring-security-test</code>, with arguments added to match the required <code>HR</code> role.</p>
+</div>
+<div class="listingblock">
+<div class="title">Add mock user with HR role to all <code>AuthorizeRole</code> tests.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Nested
+@WithMockUser(roles = "HR")
+class AuthorizeRole {
+	...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should immediately fix all test failures in <code>LeaveRequestServiceTest.AuthorizeRole</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_mock_2">Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)</h5>
+<div class="paragraph">
+<p>Previously we got away with passing in just any <code>jwt()</code> to our web controller tests using <code>@SpringBootTest</code>.
+Now, with the addition of <code>RolesAllowed</code>, tests such as <code>LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeRole</code>
+also need to pass a JSON Web Token with the <code>HR</code> role.
+Luckily that&#8217;s easy enough; Add the following to each of the authorized role test methods.</p>
+</div>
+<div class="listingblock">
+<div class="title">MockMvc test to approve a leave request as a user with HR role.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Test
+void testApprove() throws Exception {
+	LeaveRequest saved = repository
+		.save(new LeaveRequest("alice", of(2022, 11, 30), of(2022, 12, 3), PENDING));
+	mockmvc.perform(post("/approve/{id}", saved.getId())
+		.with(jwt().authorities(new SimpleGrantedAuthority("ROLE_HR")))) <i class="conum" data-value="1"></i><b>(1)</b>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("alice"),
+			jsonPath("$.status").value("APPROVED"));
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>jwt()</code> call from before, now adds a known authority to pass the authorization requirement on the service method.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With these roles added to each of the authorized roles tests, these should again pass.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_random_port_2">Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</h5>
+<div class="paragraph">
+<p>These tests now also fail, but before we fix these we first need to introduce a few more components.
+Check back after we discussed converting JWT claims, and ignore these failing tests for now.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_require_user_or_hr_role">3.6.3. Require user <em>or</em> HR role</h4>
+<div class="paragraph">
+<p>The more challenging methods to secure are the methods that are accessible both to individual users, as well as users with the HR role.
+Users should only be able to submit and view their own leave requests (only), while users with HR role have no such restrictions.</p>
+</div>
+<div class="paragraph">
+<p>To protect these methods we will use a mix of <a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#el-pre-post-annotations">pre- and post authorization annotations</a>.
+These annotations take a Spring-EL expression as argument, which has access to the method arguments and returned object, as well as the authenticated user and built-in expressions.</p>
+</div>
+<div class="paragraph">
+<p>Add the below annotations and security expressions to <a href="leaveapp-initial/src/main/java/com/jdriven/leaverequest/LeaveRequestService.java"><code>LeaveRequestService</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Pre- and PostAuthorizate annotations to allow both individual users and users with HR role.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@PreAuthorize("#employee == authentication.name or hasRole('HR')") <i class="conum" data-value="1"></i><b>(1)</b>
+public LeaveRequest request(String employee, LocalDate from, LocalDate to) {
+	LeaveRequest leaveRequest = LeaveRequest.builder()
+		.employee(employee)
+		.fromDate(from)
+		.toDate(to)
+		.build();
+	return repo.save(leaveRequest);
+}
+
+@PreAuthorize("#employee == authentication.name or hasRole('HR')") <i class="conum" data-value="2"></i><b>(2)</b>
+public List&lt;LeaveRequest&gt; retrieveFor(String employee) {
+	return repo.findByEmployee(employee);
+}
+
+@PostAuthorize("returnObject.orElse(null)?.employee == authentication.name or hasRole('HR')") <i class="conum" data-value="3"></i><b>(3)</b>
+public Optional&lt;LeaveRequest&gt; retrieve(UUID id) {
+	return repo.findById(id);
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice how <code>#employee</code> refers to the method argument name. For simplicity we use the name rather than an identifier.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If you frequently use the exact same security expression, consider creating your own meta annotations.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We <em>post</em> authorize on the <code>returnObject</code>, after making the call out to the repository, as the <code>UUID</code> argument contains insufficient information for our security expression.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you rerun the tests after adding these new annotations, you will see new <code>AuthorizeUser</code> test failures pop up.</p>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_none_3">Tests using @SpringBootTest(webEnvironment = WebEnvironment.NONE)</h5>
+<div class="paragraph">
+<p>The <code>LeaveRequestServiceTest.AuthorizeUser</code> tests will now fail, as "an Authentication object was not found in the SecurityContext".
+We can resolve these failures in much the same way as we saw before with <code>@WithMockUser</code>, this time using the <code>username</code> argument value to match our request employee.</p>
+</div>
+<div class="listingblock">
+<div class="title">Add mock user with username <code>alice</code> to all <code>AuthorizeUser</code> tests.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Nested
+@WithMockUser(username = "alice")
+class AuthorizeUser {
+	....
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one interesting test failure that persists, even after adding <code>@WithMockUser</code>, and it revolves around retrieving a non existing leave request.
+<code>testRetrieveByIdMissing</code> calls out to <code>LeaveRequestService.retrieve(UUID)</code>, which is protected through <code>@PostAuthorize</code>.</p>
+</div>
+<div class="paragraph">
+<p>Think for a moment how you would protect an empty <code>Optional</code> response, when there&#8217;s no <code>employee</code> field to use in the Spring Expression.
+Also consider what a potential attacker could learn about the existence of leave requests if we would not block requests to non existing identifiers.</p>
+</div>
+<div class="paragraph">
+<p>To be safe, we wrote our security expression to deny access when the corresponding leave request can not be found, through <code>returnObject.orElse(null)?.employee == authentication.name</code>.
+The implication is that we now have to handle these cases differently in our tests as well.</p>
+</div>
+<div class="listingblock">
+<div class="title">Rewrite assertions around retrieving an unknown leave request.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-diff hljs" data-lang="diff">@Test
+void testRetrieveByIdMissing() {
+	UUID randomUUID = UUID.randomUUID();
+-	Optional&lt;LeaveRequest&gt; retrieved = service.retrieve(randomUUID); <i class="conum" data-value="1"></i><b>(1)</b>
++	assertThrows(AccessDeniedException.class, () -&gt; service.retrieve(randomUUID)); <i class="conum" data-value="2"></i><b>(2)</b>
+	verify(repository).findById(randomUUID); <i class="conum" data-value="3"></i><b>(3)</b>
+-	assertThat(retrieved).isEmpty(); <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We no longer get an <code>Optional</code> response to verify.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Instead we assert the method call is blocked with a Spring Security Exception.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Notice how the method still calls out to the repository as before.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The empty <code>Optional</code> assertion is removed, as exception handling takes over.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_mock_3">Tests using @SpringBootTest(webEnvironment = WebEnvironment.MOCK)</h5>
+<div class="paragraph">
+<p>We see a similar pattern in test failures for <code>LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser</code> that we previously saw for <code>AuthorizeRole</code> in the same test file.
+Where we used to be able to pass in just any <code>jwt()</code>, we not have to provide a token with matching characteristics, in this case a username <code>alice</code>.</p>
+</div>
+<div class="paragraph">
+<p>Repeat the below JWT change for each of the unit tests in <code>LeaveRequestControllerSpringBootWebEnvMockTest.AuthorizeUser</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Set subject claim to <code>alice</code> to match authorization expressions.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Test
+void testRequest() throws Exception {
+	mockmvc.perform(post("/request/{employee}", "alice")
+		.param("from", "2022-11-30")
+		.param("to", "2022-12-03")
+		.with(jwt().jwt(builder -&gt; builder.subject("alice")))) <i class="conum" data-value="1"></i><b>(1)</b>
+		.andExpectAll(
+			status().isAccepted(),
+			content().contentType(MediaType.APPLICATION_JSON),
+			jsonPath("$.employee").value("alice"),
+			jsonPath("$.status").value("PENDING"));
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the subject to <code>alice</code>, to match the POST request URL value.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tests_using_springboottestwebenvironment_webenvironment_random_port_3">Tests using @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</h5>
+<div class="paragraph">
+<p>If you already adopted the suggested approach of mocking the <code>JwtDecoder</code> response for <code>LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeUser</code> above,
+then the tests should already pass.
+Here is the relevant section from that approach again; scroll up for the full details.</p>
+</div>
+<div class="listingblock">
+<div class="title">Mock the JwtDecoder response to return a <code>Jwt</code> with username alice.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@MockBean
+private JwtDecoder jwtDecoder;
+
+@Nested
+class AuthorizeUser {
+
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString()))
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("alice") <i class="conum" data-value="1"></i><b>(1)</b>
+				.header("alg", "none")
+				.build());
+	}
+
+	// ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The subject claim will be turned into the <code>Authentication</code> object <code>name</code>, as used in our security expressions.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>That should only leave <code>LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole</code> with test failures,
+which we will finally fix in the next section, by introducing claim mapping.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_convert_jwt_claims">3.7. 5. Convert JWT claims</h3>
+<div class="paragraph">
+<p>One final and challenging part of adding Spring Security, is aligning the JSON Web Token claims returned by your token provider
+with the Authentication objects used throughout your application for authorization.
+These details will differ from provider to provider, and thus need fine tuning whenever you switch between providers.
+And while there are some common claims, such as <code>subject</code> for the user name, you might still want to map other claims to get the user&#8217;s roles or preferred name.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s take another closer look at the JSON Web Token returned by Keycloak for Bob from HR.</p>
+</div>
+<div class="listingblock">
+<div class="title">Decoded JSON Web Token payload for Bob from HR.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "exp": 1976876427,
+  "iat": 1661516427,
+  "auth_time": 1661516427,
+  "jti": "857530f1-6acd-480a-8f06-2523f95e9e0b",
+  "iss": "http://localhost:8090/auth/realms/spring-cloud-gateway-realm",
+  "aud": "account",
+  "sub": "a2fb176d-1f03-4ec5-bb0d-e27cefa50cac", <i class="conum" data-value="1"></i><b>(1)</b>
+  "typ": "Bearer",
+  "azp": "spring-cloud-gateway-client",
+  "nonce": "loAnNQyCSmsScJVgJ3nm7D7xTUhisftbV5n1y5f9nZw",
+  "session_state": "de293f5e-746e-4df6-b21c-d6779e19b0d7",
+  "realm_access": {
+    "roles": [
+      "offline_access",
+      "default-roles-spring-cloud-gateway-realm",
+      "HR", <i class="conum" data-value="2"></i><b>(2)</b>
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "scope": "openid email profile",
+  "sid": "de293f5e-746e-4df6-b21c-d6779e19b0d7",
+  "email_verified": false,
+  "name": "bob",
+  "preferred_username": "bob", <i class="conum" data-value="3"></i><b>(3)</b>
+  "given_name": "bob"
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice how the <code>sub</code> claim is a generated UUID.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Bob&#8217;s <code>HR</code> role is nested under <code>$.realm_access.roles</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Bob&#8217;s preferred username is <code>bob</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Up to now we had set the <code>sub</code> or subject claim in our tests explicitly to <code>alice</code>, or assigned the <code>HR</code> role directly.
+For our application to work with Keycloak JSON Web Tokens, we have to properly convert the JWT claims.</p>
+</div>
+<div class="sect3">
+<h4 id="_preferred_name">3.7.1. Preferred name</h4>
+<div class="paragraph">
+<p>Spring Security assumes the <a href="https://github.com/spring-projects/spring-security/blob/5.7.3/oauth2/oauth2-resource-server/src/main/java/org/springframework/security/oauth2/server/resource/authentication/JwtAuthenticationToken.java#L49">JWT subject as authentication name</a>,
+which is what we use in our method security expressions.
+So to ensure the authentication name matches the <code>#employee</code> username passed into our web requests, we have to <a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-claimsetmapping-rename">rename the <code>sub</code> claim</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@EnableWebSecurity <i class="conum" data-value="1"></i><b>(1)</b>
+@ConditionalOnWebApplication <i class="conum" data-value="2"></i><b>(2)</b>
+class WebSecurityConfig {
+
+	@Bean
+	@ConditionalOnProperty(name = "spring.security.oauth2.resourceserver.jwt.issuer-uri") <i class="conum" data-value="3"></i><b>(3)</b>
+	JwtDecoder jwtDecoderByIssuerUri(OAuth2ResourceServerProperties properties) {
+		String issuerUri = properties.getJwt().getIssuerUri();
+		NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder) JwtDecoders.fromIssuerLocation(issuerUri);
+		// Use preferred_username from claims as authentication name, instead of UUID subject
+		jwtDecoder.setClaimSetConverter(new UsernameSubClaimAdapter()); <i class="conum" data-value="4"></i><b>(4)</b>
+		return jwtDecoder;
+	}
+
+}
+
+class UsernameSubClaimAdapter implements Converter&lt;Map&lt;String, Object&gt;, Map&lt;String, Object&gt;&gt; {
+
+	private final MappedJwtClaimSetConverter delegate = MappedJwtClaimSetConverter.withDefaults(Collections.emptyMap());
+
+	@Override
+	public Map&lt;String, Object&gt; convert(Map&lt;String, Object&gt; claims) {
+		Map&lt;String, Object&gt; convertedClaims = this.delegate.convert(claims);
+		String username = (String) convertedClaims.get("preferred_username"); <i class="conum" data-value="5"></i><b>(5)</b>
+		convertedClaims.put("sub", username);
+		return convertedClaims;
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We introduce a new <code>WebSecurityConfig</code>, annotated with <code>@EnableWebSecurity</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>By adding <code>@ConditionalOnWebApplication</code>, the presence of this class will not interfere with <code>LeaveRequestServiceTest</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Our JwtDecoder requires the <code>issuer-uri</code>, so we only conditionally load this bean.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We wire up our customized <code>JwtDecoder</code>, as indicated in the documentation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Finally, we extract the <code>preferred_username</code> claim, and override the <code>sub</code> claim.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With this converter in place, our Authentication object should now user the user&#8217;s preferred name as name attribute.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s just a minor inconvenience, as the default property value in <code>src/main/resources/application.yml</code>,
+triggers the conditional <code>JwtDecoder</code> bean in <code>LeaveRequestControllerSpringBootWebEnvMockTest</code>, which breaks our application context initialization..
+To get around this, we set the property value to <code>false</code> in <code>src/test/resources/application.yml</code>, to make the auto-configuration back off.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/resources/application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_granted_authorities">3.7.2. Granted authorities</h4>
+<div class="paragraph">
+<p>Both Keycloak and the WireMock stubbed responses wrap the assigned roles inside a claim called <code>realm_access</code> by default.
+Within that claim there&#8217;s a <code>roles</code> field, that holds a collection of roles.</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>realm_access</code> claim taken from decoded Keycloak JSON Web Token payload.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"realm_access": {
+  "roles": [
+    "HR"
+  ]
+},</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because of the nested structure of these claims, we have to <a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">manually extract the authorities</a>.
+The process is a little involved, and hard to introduce gradually, so instead, here&#8217;s the full annotated class.</p>
+</div>
+<div class="listingblock">
+<div class="title">SecurityFilterChain for custom JSON Web Token claim conversion.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+SecurityFilterChain filterChain(HttpSecurity http) throws Exception { <i class="conum" data-value="1"></i><b>(1)</b>
+	return http
+		.authorizeHttpRequests(authorize -&gt; authorize.anyRequest().authenticated())
+		.oauth2ResourceServer(oauth2 -&gt; oauth2
+			.jwt(jwt -&gt; jwt.jwtAuthenticationConverter(new KeycloakRealmRoleConverter()))) <i class="conum" data-value="1"></i><b>(1)</b>
+		.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We add a <code>SecurityFilterChain</code> to our <code>WebSecurityConfig</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We wire up our custom authentication converter, as indicated in the documentation.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">KeycloakRealmRoleConverter to unpack realm_access roles into GrantedAuthorities.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class KeycloakRealmRoleConverter implements Converter&lt;Jwt, JwtAuthenticationToken&gt; {
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public JwtAuthenticationToken convert(Jwt jwt) {
+		Map&lt;String, Object&gt; realmAccess = (Map&lt;String, Object&gt;) jwt.getClaims().getOrDefault("realm_access", Collections.emptyMap());
+		List&lt;String&gt; roles = (List&lt;String&gt;) realmAccess.getOrDefault("roles", Collections.emptyList()); <i class="conum" data-value="1"></i><b>(1)</b>
+		List&lt;GrantedAuthority&gt; authorities = roles.stream()
+			.map(roleName -&gt; "ROLE_" + roleName)
+			.map(SimpleGrantedAuthority::new) <i class="conum" data-value="2"></i><b>(2)</b>
+			.collect(Collectors.toList());
+		return new JwtAuthenticationToken(jwt, authorities); <i class="conum" data-value="3"></i><b>(3)</b>
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Defensively, we extract first the <code>realm_access</code> claim, and then the <code>roles</code> contained within.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Any roles are prefixed with <code>ROLE_</code> and converted into granted authorities.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Finally, we return a complete Authentication object for use in our application.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you add this final piece to your application code, all we need to do is pass in the claim in our tests.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole</code> add the claim <code>realm_access</code> with the correct "HR" role.</p>
+</div>
+<div class="listingblock">
+<div class="title">JwtDecoder mocked response of JWT with HR role.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Nested
+class AuthorizeRole {
+
+	@BeforeEach
+	void beforeEach() {
+		when(jwtDecoder.decode(anyString()))
+			.thenReturn(Jwt.withTokenValue("token")
+				.subject("bob") <i class="conum" data-value="1"></i><b>(1)</b>
+				.header("alg", "none")
+				.claim("realm_access", Collections.singletonMap("roles", Collections.singletonList("HR")))
+				.build());
+	}
+
+	// ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>LeaveRequestControllerSpringBootWebEnvRandomPortTest.AuthorizeRole</code> tests that we postponed previously now pass.
+These are the only tests that check the token claim mapping as part of their execution, so there is some value in these tests after all.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verification">3.8. Verification</h3>
+<div class="paragraph">
+<p>At this stage you can choose to revisit the JWTs shown previously for both Alice and Bob from HR, as well as the HTTPie / curl commands from before.
+All web requests should now be working as expected, provided you pass in the correct Bearer token.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conclusion">3.9. Conclusion</h3>
+<div class="paragraph">
+<p>We have now added Spring Security to our application, to allow any user to authenticate, while only granting some users special privileges.
+We worked through the challenges of picking the right dependency, and iteratively solving our tests failures as we first added authentication, and then authorization.
+We saw how some test approaches require less or more effort once you start addition security to your application, so take this into account when designing your tests.</p>
+</div>
+<div class="paragraph">
+<p>If you got stuck at any point, <a href="https://github.com/jdriven/spring-security-samples/tree/main/adding-spring-security/leaveapp-complete/">leaveapp-complete</a> shows the application in a final form, with <code>src/main</code> and <code>src/test</code> updated to the above specification.</p>
+</div>
+<div class="paragraph">
+<p>Your implementation could of course differ from ours; It&#8217;ll be interesting to compare your approach with ours!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_whats_next">3.10. What&#8217;s next?</h3>
+<div class="paragraph">
+<p>Congratulations, you solved the first challenge! 🥳</p>
+</div>
+<div class="paragraph">
+<p>You can now choose to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../audit-spring-data-entities/">automatically track who modifies an entry, and when</a></p>
+</li>
+<li>
+<p><a href="../limit-spring-data-queries/">limit your query results to the active user</a></p>
+</li>
+<li>
+<p><a href="../access-decision-voter/">restrict which users can access what objects</a></p>
+</li>
+<li>
+<p><a href="../permission-evaluator/">separate read and write permissions on objects</a></p>
+</li>
+<li>
+<p><a href="../spring-cloud-gateway-oidc-tokenrelay/">route requests through a gateway</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auditing_spring_data_entities">4. Auditing Spring Data Entities</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of this workshop is to have JPA link BlogPosts to the correct Author, based on the active user.</p>
+</div>
+<div class="paragraph">
+<p>A first draft of the entities and repositories has been provided; Up to you to wire up auditing!</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_things_done">4.1. Getting things done</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure the entities are <a href="https://github.com/jdriven/spring-security-samples/tree/main/audit-spring-data-entities#entities&#8212;&#8203;repositories">auditable with the <code>AuditingEntityListener</code></a></p>
+</li>
+<li>
+<p>Add proper configuration to <a href="https://github.com/jdriven/spring-security-samples/tree/main/audit-spring-data-entities#enable-jpa-auditing">authorize the author to post a blog</a></p>
+</li>
+<li>
+<p>Verify your implementation by <a href="src/test/java/com/jdriven/AuditSecurityConfigurationTest.java">running the tests</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references">4.2. References</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.7.x/reference/html/#auditing">Spring Data JPA Reference on Auditing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solution">4.3. Solution</h3>
+<div class="paragraph">
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/audit-spring-data-entities" class="bare">https://github.com/jdriven/spring-security-samples/tree/main/audit-spring-data-entities</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_securing_spring_data_methods">5. Securing Spring Data methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of this workshop is to integrate Spring Data with Spring Security, such that we do not have to explicitly pass our active user as argument when retrieving user preferences.</p>
+</div>
+<div class="paragraph">
+<p>A PreferencesRepository has been provided with annotated methods containing placeholder security expressions;
+Up to you to implement these and have them checked by Spring Security.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_things_done_2">5.1. Getting things done</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/timtebeek/spring-security-samples/tree/main/limit-spring-data-queries#entities&#8212;&#8203;repositories">PreAuthorize, PostAuthorize and configure</a> the application enabling the user to save and find preferences by id</p>
+</li>
+<li>
+<p>Now make sure only the <a href="https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries#limit-query-result">preferences are returned</a> for the authorized user</p>
+</li>
+<li>
+<p><a href="src/test/java/com/jdriven/PreferencesRepositoryIntegrationTest.java">Run the tests</a> to verify your implementation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references_2">5.2. References</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/expression-based.html#_method_security_expressions">Method Security Expressions</a></p>
+</li>
+<li>
+<p><a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/integrations/data.html">Spring Data &amp; Spring Security Configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solution_2">5.3. Solution</h3>
+<div class="paragraph">
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries" class="bare">https://github.com/jdriven/spring-security-samples/tree/main/limit-spring-data-queries</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_custom_access_decision_voter">6. Custom Access Decision Voter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of this workshop is to restrict access to spreadsheets based on the active user.</p>
+</div>
+<div class="paragraph">
+<p>The access permissions are stored in a repository; Up to you to verify access through a voter!</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_things_done_3">6.1. Getting things done</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>First we are going to add a <code>SpreadsheetAccessDecisionVoter</code> to the application as described <a href="https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter#accessdecisionvoter">here</a>. We&#8217;ll complete the implementation of the <code>hasSpreadsheetAccess</code> method in step 3.</p>
+</li>
+<li>
+<p>Now we have to configure the application properly, so the voter will be picked up by the configuration as described <a href="https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter#configuration">here</a></p>
+</li>
+<li>
+<p>Now we go back to our <code>SpreadsheetAccessDecisionVoter</code> and implement the <code>hasSpreadsheetAccess</code> method so our test will succeed.Don&#8217;t forget to make use of the <a href="src/main/java/com/jdriven/access/SpreadsheetAccessStore.java">access store</a> to verify the access. Some hints can be found <a href="https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter#tests">here</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references_3">6.2. References</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/authorization/architecture.html#authz-voter-adaptation">AuthorizationManager</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solution_3">6.3. Solution</h3>
+<div class="paragraph">
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter" class="bare">https://github.com/jdriven/spring-security-samples/tree/main/access-decision-voter</a></p>
+</div>
+<div class="paragraph">
+<p>include::permission-evaluator/README.adoc[leveloffset=+1
+:leveloffset: +1</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_spring_cloud_gateway_with_openid_connect_and_token_relay" class="sect0">Spring Cloud Gateway with OpenID Connect and Token Relay</h1>
+<div class="paragraph">
+<p>The goal of this workshop is to secure a gateway with OpenID, and have JSON Web tokens relayed to backend services.
+An OpenID provider, gateway and two backend services have been provided;
+Up to you to connect the gateway and backend services to Keycloak, and have the Gateway propagate tokens to the backend.</p>
+</div>
+<div class="paragraph">
+<p>This workshop requires an OpenID Connect provider, client and user to complete.
+We cover <a href="keycloak/README.adoc">Keycloak setup in our example</a>.</p>
+</div>
+<div class="sect1">
+<h2 id="_getting_things_done_4">1. Getting things done</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="keycloak/README.adoc">Start a local Keycloak</a> instance with Docker</p>
+</li>
+<li>
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#code">Update</a> the <code>SecurityConfig</code> in the <a href="travel-gateway/"><code>travel-gateway</code></a> module</p>
+</li>
+<li>
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration">Update</a> the <a href="travel-gateway/src/main/resources/application.yml"><code>application.yml</code></a> with the proper keycloak settings and properly configure the gateway to replay the tokens</p>
+</li>
+<li>
+<p>Now we finished the configuration for the <code>travel-gateway</code>, continue with the <a href="https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration-1">hotels and flights services</a></p>
+</li>
+<li>
+<p>Start the flights, hotels and gateway applications and <a href="http://localhost:8080/">open the webpage</a>. You should see a login screen and once logged in you can navigate through the hotels and flights pages.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references_4">2. References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://cloud.spring.io/spring-cloud-gateway/reference/html/">Spring Cloud Gateway</a></p>
+</li>
+<li>
+<p><a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/login/core.html">OAuth 2.0 Login</a></p>
+</li>
+<li>
+<p><a href="https://docs.spring.io/spring-security/reference/5.7.3/servlet/oauth2/resource-server/index.html">OAuth 2.0 Resource Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solution_4">3. Solution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay" class="bare">https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay</a></p>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
+</body>
+</html>
