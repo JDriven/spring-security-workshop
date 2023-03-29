@@ -1,7 +1,8 @@
 = Spring Security Workshop
 
 :author: JDriven B.V.
-:toc: left
+:doctype: book
+:toc:
 :toclevels: 3
 :sectnums:
 :source-highlighter: highlightjs
