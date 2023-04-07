@@ -8,7 +8,7 @@ This workshop requires an OpenID Connect provider, client and user to complete.
 We cover link:keycloak/README.adoc[Keycloak setup in our example].
 
 == Getting things done
-* link:keycloak/README.adoc[Start a local Keycloak] instance with Docker
+* link:../adding-spring-security/keycloak/README.adoc[Start a local Keycloak] instance with Docker
 * https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#code[Update] the `SecurityConfig` in the link:travel-gateway/[`travel-gateway`] module
 * https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration[Update] the link:travel-gateway/src/main/resources/application.yml[`application.yml`] with the proper keycloak settings and properly configure the gateway to replay the tokens
 * Now we finished the configuration for the `travel-gateway`, continue with the link:https://github.com/jdriven/spring-security-samples/tree/main/spring-cloud-gateway-oidc-tokenrelay#configuration-1[hotels and flights services]
