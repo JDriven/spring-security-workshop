@@ -2,14 +2,11 @@ version: '3'
 # from: https://github.com/keycloak/keycloak-containers/blob/main/docker-compose-examples/keycloak-postgres.yml
 
 volumes:
-  postgres_data:
-    driver: local
+  import:
 
 services:
   postgres:
     image: postgres:14
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -29,13 +26,15 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
       KC_HTTP_RELATIVE_PATH: /auth
-    command: start-dev
+    command: start-dev --import-realm
     ports:
       # Disable 8090 when recording with WireMock
       - 8090:8080
       - 8091:8080
     depends_on:
       - postgres
+    volumes:
+      - ./import:/opt/keycloak/data/import/:ro
 
   httpbin:
     image: kennethreitz/httpbin
