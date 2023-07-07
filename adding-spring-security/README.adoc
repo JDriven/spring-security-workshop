@@ -495,12 +495,12 @@ as without this annotation the security annotations will not enforce anything!
 
 NOTE: Previously one might have used `@EnableGlobalMethodSecurity`, but this has been simplified as of Spring Security 5.6.
 
-Add the annotation to a new configuration class.
-The class itself does not have to be annotated with `@Configuration`, as `@EnableMethodSecurity` is already meta-annotated.
+Add the annotation to a new configuration class. Don't forget to add the `@Configuration` annotation as well.
 
 .Enable method security through a new configuration class.
 [source,java]
 ----
+@Configuration
 @EnableMethodSecurity(jsr250Enabled = true)
 public class MethodSecurityConfig {
 	// ...
