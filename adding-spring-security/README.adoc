@@ -159,26 +159,6 @@ image:docs/signin.png[alt='Please sign in']
 
 When you open the same endpoint from the commandline you immediately get a `HTTP/1.1 401` response.
 
-We turn to the application logs to find out what happened in our application.
-As it turns out, there's a curious new logline from
-https://github.com/spring-projects/spring-boot/blob/2.7.x/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/servlet/UserDetailsServiceAutoConfiguration.java#L89[`UserDetailsServiceAutoConfiguration`]:
-
-.Using generated security password warning
-[source,text]
-----
-WARN UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 9c991bee-bf35-4970-92ed-e5458d561a73
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-----
-
-This auto configuration triggers when no other security configuration has been provided.
-It sets up our application with a default user and generated password, as a fallback of sorts.
-After all, if you're adding Spring Security to your class path you will want some form of security.
-At the very least the log line and dialog serve as a reminder to configure exactly what you want in your application.
-
-
 == 2. Configure OAuth2 resource server
 Since we wish to configure our application to function as an OAuth2 resource server,
 we can provide the required configuration to make the generated security password go away.
